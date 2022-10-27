@@ -1,4 +1,4 @@
-package com.remotegroup.inventory;
+package com.remotegroup.inventory.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
