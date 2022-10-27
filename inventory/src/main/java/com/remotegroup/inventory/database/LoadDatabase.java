@@ -18,11 +18,10 @@ class LoadDatabase {
   
   @Bean
   CommandLineRunner initDatabase(ProductRepository prRepository, PartRepository paRepository) {
-	return null;
 
-    /*return args -> {
-      Part pa1 = new Part(s.getSupplierId(), "Part1", "description", 5);
-      Part pa2 = new Part(s.getSupplierId(), "Part2", "description2", 30);
+    return args -> {
+      Part pa1 = new Part((long) 0, "Part1", "description", 5);
+      Part pa2 = new Part((long) 0, "Part2", "description2", 30);
       paRepository.save(pa1);
       paRepository.save(pa2);
       
@@ -31,6 +30,6 @@ class LoadDatabase {
       };
       
       log.info("Preloading " + prRepository.save(new Product("Bike1", 4.50, "comment", l, 7)));
-    };*/
+    };
   }
 }

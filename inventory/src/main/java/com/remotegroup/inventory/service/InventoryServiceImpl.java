@@ -4,6 +4,8 @@ package com.remotegroup.inventory.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.remotegroup.inventory.exceptions.PartNotFoundByProductException;
@@ -13,6 +15,7 @@ import com.remotegroup.inventory.part.domain.Part;
 import com.remotegroup.inventory.part.persistence.PartRepository;
 import com.remotegroup.inventory.product.domain.Product;
 import com.remotegroup.inventory.product.persistence.ProductRepository;
+import com.remotegroup.inventory.shareddomain.BackOrderSale;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -160,7 +163,7 @@ public class InventoryServiceImpl implements InventoryService{
 		}
 	}
 	
-	/*
+	
 	@Autowired
 	KafkaTemplate<String, Object> kafkaTemplate;
 	
@@ -171,6 +174,6 @@ public class InventoryServiceImpl implements InventoryService{
 		}catch(Exception e) {
 			
 		}
-	}*/
+	}
 }
 

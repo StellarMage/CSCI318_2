@@ -1,6 +1,7 @@
 package com.remotegroup;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ public class Controller {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void publish(@RequestBody Request request) {
-        kafkaTemplate.send("remotegroup", request.message());
+    public void publish(String data) {
+        kafkaTemplate.send("pByS", data);
     }
 }

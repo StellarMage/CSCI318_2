@@ -2,10 +2,12 @@ package com.remotegroup.sales.service;
 
 import com.remotegroup.sales.sale.domain.*;
 import com.remotegroup.sales.sale.persistence.*;
+import com.remotegroup.sales.shareddomain.Product;
 import com.remotegroup.sales.instoresale.domain.*;
 import com.remotegroup.sales.instoresale.persistence.*;
 import com.remotegroup.sales.onlinesale.domain.*;
 import com.remotegroup.sales.onlinesale.persistence.*;
+import com.remotegroup.Controller;
 import com.remotegroup.sales.backordersale.domain.*;
 import com.remotegroup.sales.backordersale.persistence.*;
 import com.remotegroup.sales.exceptions.*;
@@ -13,7 +15,9 @@ import com.remotegroup.sales.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,15 +35,16 @@ public class SaleServiceImpl implements SaleService{
 	private final OnlineSaleRepository onlineSaleRepository;
 	private final BackOrderSaleRepository backOrderSaleRepository;
 	private final RestTemplate restTemplate;
+	private final Controller controller;
 	//private final ProductRepository productRepository; kafkafix
 	
-	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder/*kafkafix, ProductRepository p*/){
+	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, Controller controller){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
 		this.onlineSaleRepository = o;
 		this.backOrderSaleRepository = b;
 		this.restTemplate = restTemplateBuilder.build();
-		//this.productRepository = p; kafkafix
+		this.controller = controller;
 	}
 	
 	@Override
@@ -216,16 +221,14 @@ public class SaleServiceImpl implements SaleService{
 			throw new BackOrderSaleNotFoundException(id);
 		}
 	}
-
-	/*kafkafix
+	
 	@Override
 	public Product getProductInfo(Long id) {
 		try {
-			Sale chosenSale = saleRepository.findById(id).orElseThrow(RuntimeException::new);
-			return productRepository.findById(chosenSale.itemId).get();
+			return controller.publish(Long.toString(id));
 		}catch(Exception e) {
 			throw new SaleNotFoundException(id);
 		}
 		
-	}*/
+	}
 }

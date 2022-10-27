@@ -5,10 +5,9 @@ import com.remotegroup.sales.instoresale.domain.*;
 import com.remotegroup.sales.onlinesale.domain.*;
 import com.remotegroup.sales.backordersale.domain.*;
 import com.remotegroup.sales.exceptions.*;
+import com.remotegroup.sales.shareddomain.*;
 
 import java.util.List;
-
-//import com.remotegroup.inventory.Product; kafkafix
 
 public interface SaleService {
 	
@@ -38,5 +37,5 @@ public interface SaleService {
 	public abstract void deleteBackOrderSale(Long id);
 	public abstract BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException;
 
-	//public abstract Product getProductInfo(Long id); kafkafix
+	public abstract Product getProductInfo(Long id);
 }

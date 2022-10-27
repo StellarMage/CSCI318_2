@@ -2,6 +2,7 @@ package com.remotegroup.sales.sale.controller;
 
 import com.remotegroup.sales.service.*;
 import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.shareddomain.*;
 
 import java.util.List;
 import java.util.function.Function;
@@ -64,9 +65,8 @@ public class SaleController {
 
 	//use case get product by id
 	//use case: get sale by id
-	/*kafkafix
 	@GetMapping("/sale/product/{id}")
 	Product getProductInfo(@PathVariable Long id) {
 		return salesService.getProductInfo(id);
-	}*/
+	}
 };
