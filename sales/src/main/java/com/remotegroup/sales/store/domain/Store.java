@@ -9,10 +9,10 @@ import javax.persistence.Id;
 @Entity
 public class Store {
 	private @Id @GeneratedValue Long id;
-	String address;
-	String manager;
+	public String address;
+	public String manager;
 
-	Store (){}
+	public Store (){}
 	
 	public Store(String a, String m){
 		address = a;

@@ -1,6 +1,6 @@
 package com.remotegroup.sales.onlinesale.persistence;
 
-import com.remotegroup.sales.onlinesale.domain.OnlineSale;
+import com.remotegroup.sales.onlinesale.domain.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

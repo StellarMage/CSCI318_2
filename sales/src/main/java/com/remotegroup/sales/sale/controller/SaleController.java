@@ -1,7 +1,7 @@
 package com.remotegroup.sales.sale.controller;
 
-import com.remotegroup.sales.service.SaleService;
-import com.remotegroup.sales.sale.domain.Sale;
+import com.remotegroup.sales.service.*;
+import com.remotegroup.sales.sale.domain.*;
 
 import java.util.List;
 import java.util.function.Function;

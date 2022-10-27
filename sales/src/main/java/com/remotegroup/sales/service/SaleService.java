@@ -1,9 +1,9 @@
 package com.remotegroup.sales.service;
 
-import com.remotegroup.sales.sale.domain.Sale;
-import com.remotegroup.sales.instoresale.domain.InStoreSale;
-import com.remotegroup.sales.onlinesale.domain.OnlineSale;
-import com.remotegroup.sales.backordersale.domain.BackOrderSale;
+import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.instoresale.domain.*;
+import com.remotegroup.sales.onlinesale.domain.*;
+import com.remotegroup.sales.backordersale.domain.*;
 import com.remotegroup.sales.exceptions.*;
 
 import java.util.List;

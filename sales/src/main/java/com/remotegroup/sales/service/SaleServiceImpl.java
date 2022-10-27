@@ -33,7 +33,7 @@ public class SaleServiceImpl implements SaleService{
 	private final RestTemplate restTemplate;
 	//private final ProductRepository productRepository; kafkafix
 	
-	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, ProductRepository p){
+	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder/*kafkafix, ProductRepository p*/){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
 		this.onlineSaleRepository = o;
@@ -213,7 +213,7 @@ public class SaleServiceImpl implements SaleService{
 			return backOrderSaleRepository.findById(id).get();
 			
 		}catch(Exception e) {
-			throw new BackOrderSaleNotFoundException();
+			throw new BackOrderSaleNotFoundException(id);
 		}
 	}
 

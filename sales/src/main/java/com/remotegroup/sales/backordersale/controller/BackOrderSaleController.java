@@ -1,7 +1,7 @@
 package com.remotegroup.sales.backordersale.controller;
 
 import com.remotegroup.sales.service.*;
-import com.remotegroup.sales.backordersale.domain.BackOrderSale;
+import com.remotegroup.sales.backordersale.domain.*;
 import com.remotegroup.sales.exceptions.*;
 
 import java.util.List;
