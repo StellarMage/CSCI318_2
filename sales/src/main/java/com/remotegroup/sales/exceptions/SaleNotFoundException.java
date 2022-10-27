@@ -1,7 +1,7 @@
-package com.remotegroup.sales;
+package com.remotegroup.sales.exceptions;
 
 public class SaleNotFoundException extends RuntimeException {
-	SaleNotFoundException(Long id){
+	public SaleNotFoundException(Long id){
 		super("Could not find sale "+id);
 	}
 }

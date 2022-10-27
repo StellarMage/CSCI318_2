@@ -1,5 +1,8 @@
 package com.remotegroup.sales.instoresale.controller;
 
+import com.remotegroup.sales.service.SaleService;
+import com.remotegroup.sales.instoresale.domain.InStoreSale;
+
 import java.util.List;
 import java.util.function.Function;
 

@@ -1,5 +1,7 @@
 package com.remotegroup.sales.backordersale.domain;
 
+import com.remotegroup.sales.sale.domain.Sale;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

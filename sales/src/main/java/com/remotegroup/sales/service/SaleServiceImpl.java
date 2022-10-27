@@ -1,5 +1,15 @@
 package com.remotegroup.sales.service;
 
+import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.sale.persistence.*;
+import com.remotegroup.sales.instoresale.domain.*;
+import com.remotegroup.sales.instoresale.persistence.*;
+import com.remotegroup.sales.onlinesale.domain.*;
+import com.remotegroup.sales.onlinesale.persistence.*;
+import com.remotegroup.sales.backordersale.domain.*;
+import com.remotegroup.sales.backordersale.persistence.*;
+import com.remotegroup.sales.exceptions.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +17,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/*kafkafix
 import com.remotegroup.inventory.Product;
 import com.remotegroup.inventory.ProductNotFoundException;
-import com.remotegroup.inventory.ProductRepository;
+import com.remotegroup.inventory.ProductRepository;*/
 
 @Service
 public class SaleServiceImpl implements SaleService{
@@ -20,7 +31,7 @@ public class SaleServiceImpl implements SaleService{
 	private final OnlineSaleRepository onlineSaleRepository;
 	private final BackOrderSaleRepository backOrderSaleRepository;
 	private final RestTemplate restTemplate;
-	private final ProductRepository productRepository;
+	//private final ProductRepository productRepository; kafkafix
 	
 	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, ProductRepository p){
 		this.saleRepository = saleRepository;
@@ -28,7 +39,7 @@ public class SaleServiceImpl implements SaleService{
 		this.onlineSaleRepository = o;
 		this.backOrderSaleRepository = b;
 		this.restTemplate = restTemplateBuilder.build();
-		this.productRepository = p;
+		//this.productRepository = p; kafkafix
 	}
 	
 	@Override
@@ -206,6 +217,7 @@ public class SaleServiceImpl implements SaleService{
 		}
 	}
 
+	/*kafkafix
 	@Override
 	public Product getProductInfo(Long id) {
 		try {
@@ -215,5 +227,5 @@ public class SaleServiceImpl implements SaleService{
 			throw new SaleNotFoundException(id);
 		}
 		
-	}
+	}*/
 }

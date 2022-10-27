@@ -1,8 +1,14 @@
 package com.remotegroup.sales.service;
 
+import com.remotegroup.sales.sale.domain.Sale;
+import com.remotegroup.sales.instoresale.domain.InStoreSale;
+import com.remotegroup.sales.onlinesale.domain.OnlineSale;
+import com.remotegroup.sales.backordersale.domain.BackOrderSale;
+import com.remotegroup.sales.exceptions.*;
+
 import java.util.List;
 
-import com.remotegroup.inventory.Product;
+//import com.remotegroup.inventory.Product; kafkafix
 
 public interface SaleService {
 	
@@ -32,5 +38,5 @@ public interface SaleService {
 	public abstract void deleteBackOrderSale(Long id);
 	public abstract BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException;
 
-	public abstract Product getProductInfo(Long id);
+	//public abstract Product getProductInfo(Long id); kafkafix
 }
