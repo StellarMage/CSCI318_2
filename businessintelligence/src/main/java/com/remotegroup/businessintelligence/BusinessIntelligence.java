@@ -7,15 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class BusinessIntillgence {
+public class BusinessIntelligence {
     private @Id @GeneratedValue Long id;
     int quantity;
     double price;
     double total;
 
-    BusinessIntillgence () {}
+    BusinessIntelligence () {}
 
-    public BusinessIntillgence(int q, double p){
+    public BusinessIntelligence(int q, double p){
         quantity = q;
         price = p;
         total = p * q;
@@ -46,17 +46,17 @@ public class BusinessIntillgence {
         this.total = this.price * this.quantity;
     }
 
-    public void setPrice(int p) {
+    public void setPrice(double p) {
     	this.price = p;
         this.total = this.price * this.quantity;
     }
 
-    public boolean equals(BusinessIntillgence o) {
+    public boolean equals(BusinessIntelligence o) {
         if (this == o)
             return true;
-        if (!(o instanceof BusinessIntillgence))
+        if (!(o instanceof BusinessIntelligence))
             return false;
-            BusinessIntillgence businessIntillgence = (BusinessIntillgence) o;
+            BusinessIntelligence businessIntillgence = (BusinessIntelligence) o;
         return Objects.equals(this.id, businessIntillgence.id) 
         && Objects.equals(this.quantity, businessIntillgence.quantity)
         && Objects.equals(this.price, businessIntillgence.price)
