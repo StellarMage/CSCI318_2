@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class BusinessIntelligenceController {
 	
+	@Autowired
 	BusinessIntelligenceRepository businessIntelligenceRepository;
 
 	//See all past BusinessIntelligence
