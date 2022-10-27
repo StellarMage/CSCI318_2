@@ -1,6 +1,4 @@
-package com.remotegroup.sales.onlinesale.domain;
-
-import com.remotegroup.sales.sale.domain.*;
+package com.remotegroup.sharedomain;
 
 import java.util.Objects;
 

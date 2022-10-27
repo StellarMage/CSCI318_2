@@ -1,4 +1,4 @@
-package com.remotegroup.inventory.shareddomain;
+package com.remotegroup.sharedomain;
 
 import java.util.Objects;
 

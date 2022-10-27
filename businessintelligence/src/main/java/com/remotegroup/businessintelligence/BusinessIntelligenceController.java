@@ -29,7 +29,6 @@ public class BusinessIntelligenceController {
 	@PostMapping("/business")
 	BusinessIntelligence newBusinessIntelligence(@RequestBody BusinessIntelligence businessIntelligence) {
 		return businessIntelligenceRepository.save(businessIntelligence);
-		//system.out.println("Value of Sale is: " + businessIntelligence.getTotal());
 	}
 	
 

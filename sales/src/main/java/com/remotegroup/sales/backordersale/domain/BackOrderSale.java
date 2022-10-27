@@ -15,9 +15,10 @@ public class BackOrderSale extends Sale {
 		super();
 	}
 
-	public BackOrderSale(Long p, String pn, Integer q, String dt, String ph){
+	public BackOrderSale(Long p, String pn, Integer q, String dt, String ph, double pP){
 		super();
 
+		this.productPrice = pP;
     	this.itemId = p;
     	this.itemName = pn;
     	this.quantity = q;

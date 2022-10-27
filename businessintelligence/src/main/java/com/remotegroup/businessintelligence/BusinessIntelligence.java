@@ -1,5 +1,7 @@
 package com.remotegroup.businessintelligence;
 
+import com.remotegroup.sharedomain.Sale;
+
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -9,16 +11,17 @@ import javax.persistence.Id;
 @Entity
 public class BusinessIntelligence {
     private @Id @GeneratedValue Long id;
+    Sale sale;
     int quantity;
     double price;
     double total;
 
     BusinessIntelligence () {}
 
-    public BusinessIntelligence(int q, double p){
-        quantity = q;
-        price = p;
-        total = p * q;
+    public BusinessIntelligence(Sale s){
+        quantity = s.getQuantity();
+        price = s.getProductPrice();
+        total = quantity * price;
     }
 
     public Long getId(){

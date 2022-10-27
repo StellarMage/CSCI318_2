@@ -14,14 +14,16 @@ public class Sale {
     public String itemName;
     public Integer quantity;
     public String DataTime;
+    public double productPrice;
 
     public Sale () {}
 
-    public Sale(Long p, String pn, Integer q, String dt){
+    public Sale(Long p, String pn, Integer q, String dt, double pP){
         itemId = p;
         itemName = pn;
         quantity = q;
         DataTime = dt;
+        productPrice = pP;
     }
     public Long getId(){
         return this.id;
@@ -41,6 +43,10 @@ public class Sale {
 
     public String getDataTime(){
         return DataTime;
+    }
+
+    public double getProductPrice(){
+        return productPrice;
     }
 
     public void setId(Long id) {
@@ -63,6 +69,10 @@ public class Sale {
         this.DataTime = newDataTime;
     }
 
+    public void setProductPrice(double newProductPrice){
+        this.productPrice = newProductPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -74,12 +84,13 @@ public class Sale {
         && Objects.equals(this.itemId, sale.itemId)
         && Objects.equals(this.itemName, sale.itemName)
         && Objects.equals(this.quantity, sale.quantity)
-        && Objects.equals(this.DataTime, sale.DataTime);
+        && Objects.equals(this.DataTime, sale.DataTime)
+        && Objects.equals(this.productPrice, sale.productPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.itemId, this.itemName, this.quantity);
+        return Objects.hash(this.id, this.itemId, this.itemName, this.quantity, this.productPrice);
     }
 
     @Override
@@ -89,6 +100,7 @@ public class Sale {
         + ", ProductName='" + this.itemName + '\''
         + ", quantity='" + this.quantity + '\''
         + ", DataTime='" + this.DataTime + '\''
+        + ", ProductPrice='" + this.productPrice + '\''
         + '}';
     }
 }
