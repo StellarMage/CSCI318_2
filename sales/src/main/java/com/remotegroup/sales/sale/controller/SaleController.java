@@ -1,5 +1,8 @@
 package com.remotegroup.sales.sale.controller;
 
+import com.remotegroup.sales.service.SaleService;
+import com.remotegroup.sales.sale.domain.Sale;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.Scanner;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.remotegroup.inventory.Product;
+//import com.remotegroup.inventory.Product;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -61,8 +64,9 @@ public class SaleController {
 
 	//use case get product by id
 	//use case: get sale by id
+	/*kafkafix
 	@GetMapping("/sale/product/{id}")
 	Product getProductInfo(@PathVariable Long id) {
 		return salesService.getProductInfo(id);
-	}
+	}*/
 };

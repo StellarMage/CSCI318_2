@@ -10,12 +10,12 @@ import javax.persistence.Id;
 public class Sale {
 
     protected @Id @GeneratedValue Long id;
-    Long itemId;
-    String itemName;
-    Integer quantity;
-    String DataTime;
+    public Long itemId;
+    public String itemName;
+    public Integer quantity;
+    public String DataTime;
 
-    Sale () {}
+    public Sale () {}
 
     public Sale(Long p, String pn, Integer q, String dt){
         itemId = p;
