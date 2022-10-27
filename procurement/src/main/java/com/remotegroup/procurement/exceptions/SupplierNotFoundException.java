@@ -1,7 +1,7 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.exceptions;
 
 public class SupplierNotFoundException extends RuntimeException {
-	SupplierNotFoundException(Long id){
+	public SupplierNotFoundException(Long id){
 		super("Could not find supplier "+id);
 	}
 }

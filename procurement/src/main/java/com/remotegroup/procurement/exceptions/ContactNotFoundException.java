@@ -1,7 +1,7 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.exceptions;
 
 public class ContactNotFoundException extends RuntimeException{
-	ContactNotFoundException(Long id){
+	public ContactNotFoundException(Long id){
 		super("could not find contact "+id);
 	}
 }

@@ -1,4 +1,4 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.contact.domain;
 
 import java.util.Objects;
 

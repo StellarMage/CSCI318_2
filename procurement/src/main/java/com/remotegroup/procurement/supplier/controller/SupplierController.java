@@ -1,4 +1,4 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.supplier.controller;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.remotegroup.procurement.service.ProcurementService;
+import com.remotegroup.procurement.supplier.domain.Supplier;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})

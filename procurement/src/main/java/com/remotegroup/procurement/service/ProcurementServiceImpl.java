@@ -1,4 +1,4 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.service;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -10,6 +10,15 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 //import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+
+import com.remotegroup.procurement.contact.controller.ContactController;
+import com.remotegroup.procurement.contact.controller.ContactModelAssembler;
+import com.remotegroup.procurement.contact.domain.Contact;
+import com.remotegroup.procurement.contact.persistence.ContactRepository;
+import com.remotegroup.procurement.exceptions.ContactNotFoundException;
+import com.remotegroup.procurement.exceptions.SupplierNotFoundException;
+import com.remotegroup.procurement.supplier.domain.Supplier;
+import com.remotegroup.procurement.supplier.persistence.SupplierRepository;
 
 @Service
 public class ProcurementServiceImpl implements ProcurementService{

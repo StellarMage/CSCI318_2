@@ -1,4 +1,4 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.contact.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.remotegroup.procurement.contact.domain.Contact;
+import com.remotegroup.procurement.service.ProcurementService;
+
 @RestController
 public class ContactController {
 	
@@ -21,6 +24,7 @@ public class ContactController {
 
 	//use case: looks up all contacts and transforms them into a REST collection resource.
 	@GetMapping("/contacts")
+	public
 	CollectionModel<EntityModel<Contact>> all() {
 		return procurementService.getContacts();
 	}

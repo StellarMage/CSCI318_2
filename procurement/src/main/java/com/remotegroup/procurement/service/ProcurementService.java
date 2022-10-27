@@ -1,9 +1,12 @@
-package com.remotegroup.procurement;
+package com.remotegroup.procurement.service;
 
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+
+import com.remotegroup.procurement.contact.domain.Contact;
+import com.remotegroup.procurement.supplier.domain.Supplier;
 
 public interface ProcurementService {
 	
