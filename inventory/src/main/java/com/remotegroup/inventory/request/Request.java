@@ -1,4 +1,4 @@
-package com.remotegroup;
+package com.remotegroup.inventory.request;
 
 //Emulating Java 14 record
 public class Request {

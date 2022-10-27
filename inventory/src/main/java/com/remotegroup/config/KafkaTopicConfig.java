@@ -9,8 +9,15 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     
     @Bean
-    public NewTopic pBySTopic() {
-        return TopicBuilder.name("pByS")
+    public NewTopic productBySaleFromSalesTopic() {
+        return TopicBuilder.name("productBySaleFromSales")
+                .build();
+
+    }
+
+    @Bean
+    public NewTopic productBySaleFromInventoryTopic() {
+        return TopicBuilder.name("productBySaleFromInventory")
                 .build();
 
     }

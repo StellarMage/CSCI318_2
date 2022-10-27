@@ -1,4 +1,4 @@
-package com.remotegroup;
+package com.remotegroup.sales.controller;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +12,14 @@ public class Controller {
     
     private KafkaTemplate<String, Object> kafkaTemplate;
 
+    public Controller() {
+    }
+
     public Controller(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void publish(String data) {
-        kafkaTemplate.send("pByS", data);
+        kafkaTemplate.send("productBySaleFromSales", data);
     }
 }
