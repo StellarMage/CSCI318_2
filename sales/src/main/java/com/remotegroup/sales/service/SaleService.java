@@ -39,4 +39,6 @@ public interface SaleService {
 	public abstract BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException;
 
 	public abstract Product getProductInfo(Long id);
+
+	public abstract void sendSale() throws JsonProcessingException;
 }

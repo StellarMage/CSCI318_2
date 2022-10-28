@@ -16,7 +16,7 @@ public class Sale {
     public Long itemId;
     public String itemName;
     public Integer quantity;
-    public String DataTime;
+    public String dataTime;
     public double productPrice;
 
     public Sale () {}
@@ -25,7 +25,7 @@ public class Sale {
         itemId = p;
         itemName = pn;
         quantity = q;
-        DataTime = dt;
+        dataTime = dt;
         productPrice = pP;
 
         BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
@@ -48,7 +48,7 @@ public class Sale {
     }
 
     public String getDataTime(){
-        return DataTime;
+        return dataTime;
     }
 
     public double getProductPrice(){
@@ -72,7 +72,7 @@ public class Sale {
     }
 
     public void setDataTime(String newDataTime){
-        this.DataTime = newDataTime;
+        this.dataTime = newDataTime;
     }
 
     public void setProductPrice(double newProductPrice){
@@ -90,7 +90,7 @@ public class Sale {
         && Objects.equals(this.itemId, sale.itemId)
         && Objects.equals(this.itemName, sale.itemName)
         && Objects.equals(this.quantity, sale.quantity)
-        && Objects.equals(this.DataTime, sale.DataTime)
+        && Objects.equals(this.dataTime, sale.dataTime)
         && Objects.equals(this.productPrice, sale.productPrice);
     }
 
@@ -105,7 +105,7 @@ public class Sale {
         + ", product id='" + this.itemId + '\'' 
         + ", ProductName='" + this.itemName + '\''
         + ", quantity='" + this.quantity + '\''
-        + ", DataTime='" + this.DataTime + '\''
+        + ", dataTime='" + this.dataTime + '\''
         + ", ProductPrice='" + this.productPrice + '\''
         + '}';
     }

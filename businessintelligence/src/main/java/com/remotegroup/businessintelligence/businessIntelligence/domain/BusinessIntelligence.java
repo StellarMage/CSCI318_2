@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import com.remotegroup.businessintelligence.sharedomain.Sale;
+import com.remotegroup.businessintelligence.shareddomain.Sale;
 
 @Entity
 public class BusinessIntelligence {

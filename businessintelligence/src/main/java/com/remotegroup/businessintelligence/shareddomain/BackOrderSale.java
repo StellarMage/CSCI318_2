@@ -1,4 +1,4 @@
-package com.remotegroup.businessintelligence.sharedomain;
+package com.remotegroup.businessintelligence.shareddomain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class BackOrderSale extends Sale {
     	this.itemId = p;
     	this.itemName = pn;
     	this.quantity = q;
-    	this.DataTime = dt;
+    	this.dataTime = dt;
 		phoneNumber = ph;
 
 		BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));

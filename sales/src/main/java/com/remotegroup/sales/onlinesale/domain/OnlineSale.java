@@ -24,7 +24,7 @@ public class OnlineSale extends Sale {
     	this.itemId = p;
     	this.itemName = pn;
     	this.quantity = q;
-    	this.DataTime = dt;
+    	this.dataTime = dt;
         this.productPrice = pP;
         customerName = c;
         address = n;

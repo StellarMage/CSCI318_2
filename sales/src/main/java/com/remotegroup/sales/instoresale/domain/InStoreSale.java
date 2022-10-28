@@ -24,7 +24,7 @@ public class InStoreSale extends Sale {
     	this.itemId = p;
     	this.itemName = pn;
     	this.quantity = q;
-    	this.DataTime = dt;
+    	this.dataTime = dt;
         this.productPrice = pP;
         storeId = i;
         receiptNo = n;

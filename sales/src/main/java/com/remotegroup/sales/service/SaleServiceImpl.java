@@ -2,6 +2,7 @@ package com.remotegroup.sales.service;
 
 import com.remotegroup.sales.sale.domain.*;
 import com.remotegroup.sales.sale.persistence.*;
+import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 import com.remotegroup.sales.shareddomain.Product;
 import com.remotegroup.sales.instoresale.domain.*;
 import com.remotegroup.sales.instoresale.persistence.*;
@@ -240,5 +241,15 @@ public class SaleServiceImpl implements SaleService{
 			throw new SaleNotFoundException(id);
 		}
 		
+	}
+
+	@Override
+	public void sendSale() throws JsonProcessingException {
+		int i = 2;
+		long id = Long.valueOf(i);
+		log.info("Sale " + getSale(id));
+      	String jsonString = mapper.writeValueAsString(getSale(id));
+		log.info("JSON " + jsonString);
+		controller.businessIntelligence(jsonString);
 	}
 }
