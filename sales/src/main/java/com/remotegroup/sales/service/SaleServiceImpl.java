@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,21 +26,23 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class SaleServiceImpl implements SaleService{
 
-	private final SaleRepository saleRepository;
-	private final InStoreSaleRepository inStoreSaleRepository;
-	private final OnlineSaleRepository onlineSaleRepository;
-	private final BackOrderSaleRepository backOrderSaleRepository;
+	@Autowired private final SaleRepository saleRepository;
+	@Autowired private final InStoreSaleRepository inStoreSaleRepository;
+	@Autowired private final OnlineSaleRepository onlineSaleRepository;
+	@Autowired private final BackOrderSaleRepository backOrderSaleRepository;
 	private final RestTemplate restTemplate;
-	Controller controller = new Controller();
-	KafkaListeners kafkaListeners = new KafkaListeners();
-	private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class);
+	@Autowired private final  Controller controller;
+	@Autowired private final  KafkaListeners kafkaListeners;
+	private static final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
 	
-	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder){
+	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, Controller controller, KafkaListeners kafkaListeners){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
 		this.onlineSaleRepository = o;
 		this.backOrderSaleRepository = b;
 		this.restTemplate = restTemplateBuilder.build();
+		this.controller = controller;
+		this.kafkaListeners = kafkaListeners;
 	}
 	
 	@Override
@@ -225,7 +228,8 @@ public class SaleServiceImpl implements SaleService{
 			log.info("Get Sale");
 			Long itemId = chosenSale.getItemId();
 			log.info("Get itemId");
-			controller.publish(Long.toString(itemId));
+			String payload = Long.toString(itemId);
+			controller.publish(payload);
 			log.info("Published");
 			return kafkaListeners.getListener();
 		//}catch(Exception e) {

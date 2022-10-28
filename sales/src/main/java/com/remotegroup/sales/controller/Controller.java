@@ -1,6 +1,8 @@
 package com.remotegroup.sales.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v11/messages")
 public class Controller {
     
+    @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
     public Controller() {
