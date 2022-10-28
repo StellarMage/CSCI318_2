@@ -10,7 +10,7 @@ import com.remotegroup.businessintelligence.businessIntelligence.domain.Business
 
 @Entity
 public class InStoreSale extends Sale {
-    private @Id @GeneratedValue Long id;
+    //private @Id @GeneratedValue Long id;
     Long storeId;
     String receiptNo;
 

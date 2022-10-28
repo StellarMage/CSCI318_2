@@ -8,7 +8,7 @@ import com.remotegroup.businessintelligence.businessIntelligence.domain.Business
 
 @Entity
 public class BackOrderSale extends Sale {
-	private @Id @GeneratedValue Long id;
+	//private @Id @GeneratedValue Long id;
 	String phoneNumber;
 	
 	BackOrderSale(){
