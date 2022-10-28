@@ -1,6 +1,4 @@
-package com.remotegroup.businessintelligence;
-
-import com.remotegroup.sharedomain.Sale;
+package com.remotegroup.inventory.shareddomain;
 
 import java.util.Objects;
 

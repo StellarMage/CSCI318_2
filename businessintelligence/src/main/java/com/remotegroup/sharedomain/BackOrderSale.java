@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.remotegroup.businessintelligence.BusinessIntelligence;
+
 @Entity
 public class BackOrderSale extends Sale {
 	private @Id @GeneratedValue Long id;
@@ -22,6 +24,8 @@ public class BackOrderSale extends Sale {
     	this.quantity = q;
     	this.DataTime = dt;
 		phoneNumber = ph;
+
+		BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
 	}
 	
 	public String getPhoneNumber() {

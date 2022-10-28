@@ -1,6 +1,7 @@
 package com.remotegroup.sales.onlinesale.domain;
 
 import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 
 import java.util.Objects;
 
@@ -27,6 +28,8 @@ public class OnlineSale extends Sale {
         this.productPrice = pP;
         customerName = c;
         address = n;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public String getCustomerName(){

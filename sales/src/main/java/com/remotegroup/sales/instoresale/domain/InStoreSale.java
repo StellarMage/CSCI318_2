@@ -1,6 +1,7 @@
 package com.remotegroup.sales.instoresale.domain;
 
 import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 
 import java.util.Objects;
 
@@ -27,6 +28,8 @@ public class InStoreSale extends Sale {
         this.productPrice = pP;
         storeId = i;
         receiptNo = n;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public Long getStoreId(){
