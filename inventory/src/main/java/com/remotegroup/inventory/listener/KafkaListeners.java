@@ -25,9 +25,11 @@ public class KafkaListeners {
     @SendTo ("productBySaleFromInventory")
     @KafkaListener(topics = "productBySaleFromSales", groupId = "productBySaleFromSales", containerFactory = "factory")
     String listener(String data) throws JsonProcessingException{
-        log.info("Message Received");
+        log.info("Product Info by Sale Request Received");
         Long data2 = Long.parseLong(data);
         String jsonString = mapper.writeValueAsString(productRepository.findById(data2).get());
+        log.info("Converting Product Info to JSON String");
+        log.info("JSON String Sent");
 		return jsonString;
     }
 }
