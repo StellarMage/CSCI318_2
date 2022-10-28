@@ -65,10 +65,10 @@ public class ProductController {
 		return inventoryService.checkInventory(itemId);
 	}
 	
-	@PostMapping("/product/request")
+	/*@PostMapping("/product/request")
 	boolean makeProcurementRequest(@RequestBody BackOrderSale b) {
-		//inventoryService.procurementRequest(b); fix
+		inventoryService.procurementRequest(b);
 		return true;
-	}
+	}*/
 	
 }
