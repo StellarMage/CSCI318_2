@@ -9,8 +9,8 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     
     @Bean
-    public NewTopic remotegroupTopic() {
-        return TopicBuilder.name("remotegroup")
+    public NewTopic businessIntelligence() {
+        return TopicBuilder.name("businessIntelligence")
                 .build();
 
     }

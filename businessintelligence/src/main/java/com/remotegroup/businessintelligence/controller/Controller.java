@@ -1,4 +1,4 @@
-package com.remotegroup.sales.controller;
+package com.remotegroup.businessintelligence.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

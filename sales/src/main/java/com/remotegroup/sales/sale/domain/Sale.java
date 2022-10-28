@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 
 @Entity
@@ -20,7 +21,7 @@ public class Sale {
 
     public Sale () {}
 
-    public Sale(Long p, String pn, Integer q, String dt, double pP){
+    public Sale(Long p, String pn, Integer q, String dt, double pP) throws JsonProcessingException{
         itemId = p;
         itemName = pn;
         quantity = q;

@@ -1,12 +1,12 @@
-package com.remotegroup.businessintelligence;
-
-import com.remotegroup.sharedomain.Sale;
+package com.remotegroup.businessintelligence.businessIntelligence.domain;
 
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.remotegroup.businessintelligence.sharedomain.Sale;
 
 @Entity
 public class BusinessIntelligence {

@@ -1,4 +1,4 @@
-package com.remotegroup.businessintelligence;
+package com.remotegroup.businessintelligence.exceptions;
 
 public class BusinessIntelligenceNotFoundException extends RuntimeException {
 	public BusinessIntelligenceNotFoundException(Long id){

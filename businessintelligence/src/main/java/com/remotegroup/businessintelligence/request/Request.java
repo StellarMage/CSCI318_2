@@ -1,4 +1,4 @@
-package com.remotegroup.sales.request;
+package com.remotegroup.businessintelligence.request;
 
 //Emulating Java 14 record
 public class Request {

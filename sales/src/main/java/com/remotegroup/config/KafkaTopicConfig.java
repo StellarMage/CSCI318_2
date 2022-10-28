@@ -28,4 +28,11 @@ public class KafkaTopicConfig {
                 .build();
 
     }
+
+    @Bean
+    public NewTopic businessIntelligence() {
+        return TopicBuilder.name("businessIntelligence")
+                .build();
+
+    }
 }

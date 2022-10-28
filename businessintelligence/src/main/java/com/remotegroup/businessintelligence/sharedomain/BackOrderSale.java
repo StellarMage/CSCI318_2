@@ -1,10 +1,10 @@
-package com.remotegroup.sharedomain;
+package com.remotegroup.businessintelligence.sharedomain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import com.remotegroup.businessintelligence.BusinessIntelligence;
+import com.remotegroup.businessintelligence.businessIntelligence.domain.BusinessIntelligence;
 
 @Entity
 public class BackOrderSale extends Sale {

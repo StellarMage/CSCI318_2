@@ -29,4 +29,8 @@ public class Controller {
     public void procure(String data) {
         kafkaTemplate.send("procurement", data);
     }
+
+    public void businessIntelligence(String data) {
+        kafkaTemplate.send("businessIntelligence", data);
+    }
 }

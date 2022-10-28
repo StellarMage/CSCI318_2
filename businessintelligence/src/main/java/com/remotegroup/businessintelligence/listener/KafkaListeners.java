@@ -9,27 +9,25 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.remotegroup.businessintelligence.businessIntelligence.domain.BusinessIntelligence;
+import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
 
 @Component
 public class KafkaListeners {
 
-    private Product dataReceived;
+    private BusinessIntelligence dataReceived;
     private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class);
     private ObjectMapper mapper = new ObjectMapper();
+    private BusinessIntelligenceRepository biRepository;
 
     public KafkaListeners(){
     }
     
-    @KafkaListener(topics = "productBySaleFromInventory", groupId = "productBySaleFromInventory")
+    @KafkaListener(topics = "businessIntelligence", groupId = "businessIntelligence")
     void listener(String data) throws JsonMappingException, JsonProcessingException{
         log.info("JSON String Received");
-        Product dataReceived = mapper.readValue(data, Product.class);
-        log.info("Converting JSON String to Product Info");
-		this.dataReceived = dataReceived;
-        log.info("Product Info Received");
-    }
-
-    public Product getListener(){
-        return dataReceived;
+        BusinessIntelligence dataReceived = mapper.readValue(data, BusinessIntelligence.class);
+        log.info("Converting JSON String to Business Intelligence");
+        log.info("Receiving: " + biRepository.save(dataReceived));
     }
 }
