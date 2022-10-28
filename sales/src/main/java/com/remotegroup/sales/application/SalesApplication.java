@@ -40,15 +40,6 @@ public class SalesApplication {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void loadDatabase() throws JsonProcessingException {
-		/*int i = 2;
-		long id = i;
-		log.info("Sale " + saleServiceImpl.getSale(id));
-      	BusinessIntelligence bI = new BusinessIntelligence(saleServiceImpl.getSale(id));
-		log.info("BI " + bI);
-      	String jsonString = mapper.writeValueAsString(bI);
-		log.info("JSON " + jsonString);*/
-		//controller.businessIntelligence(jsonString);
-
-		saleService.sendSale();
+		saleService.initSaleBI();
 	}
 }

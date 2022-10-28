@@ -14,14 +14,14 @@ public interface SaleService {
 	
 	//expose Sale endpoints
 	public abstract List<Sale> getSales();
-	public abstract Sale createSale(Sale s);
+	public abstract Sale createSale(Sale s) throws JsonProcessingException;
 	public abstract Sale updateSale(Sale s, Long id);
 	public abstract Sale getSale(Long id);
 	public abstract void deleteSale(Long id);
 	public abstract boolean requestCheckInventory(Long itemId);
 	
 	public abstract List<InStoreSale> getInStoreSales();
-	public abstract InStoreSale createSale(InStoreSale s);
+	public abstract InStoreSale createSale(InStoreSale s) throws JsonProcessingException;
 	public abstract InStoreSale updateSale(InStoreSale s, Long id);
 	public abstract InStoreSale getInStoreSale(Long id);
 	public abstract void deleteInStoreSale(Long id);
@@ -40,5 +40,7 @@ public interface SaleService {
 
 	public abstract Product getProductInfo(Long id);
 
-	public abstract void sendSale() throws JsonProcessingException;
+	public abstract void initSaleBI() throws JsonProcessingException;
+	public abstract void sendSale(Sale s) throws JsonProcessingException;
+	public abstract void sendUpdateSale(Sale s) throws JsonProcessingException;
 }

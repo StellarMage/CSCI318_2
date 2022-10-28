@@ -23,13 +23,33 @@ public class KafkaListeners {
     public KafkaListeners(){
     }
     
-    @KafkaListener(topics = "businessIntelligence", groupId = "businessIntelligence")
-    void listener(String data) throws JsonMappingException, JsonProcessingException{
+    @KafkaListener(topics = "bIInit", groupId = "bIInit")
+    void bIInitListener(String data) throws JsonMappingException, JsonProcessingException{
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);
         BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
         log.info("Converting StB: " + dataConverted);
         log.info("Receiving: " + biRepository.save(dataConverted));
+    }
+
+    @KafkaListener(topics = "bISendSale", groupId = "bISendSale")
+    void bISendSaleListener(String data) throws JsonMappingException, JsonProcessingException{
+        log.info("JSON String Received");
+        Sale dataReceived = mapper.readValue(data, Sale.class);
+        log.info("Converting JtS: " + dataReceived);
+        BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
+        log.info("Converting StB: " + dataConverted);
+        log.info("Receiving: " + biRepository.save(dataConverted));
+    }
+
+    @KafkaListener(topics = "bISendUpdateSale", groupId = "bISendUpdateSale")
+    void bISendUpdateSaleListener(String data) throws JsonMappingException, JsonProcessingException{
+        log.info("JSON String Received");
+        Sale dataReceived = mapper.readValue(data, Sale.class);
+        log.info("Converting JtS: " + dataReceived);
+        BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
+        log.info("Converting StB: " + dataConverted);
+        //Add Update Code
     }
 }

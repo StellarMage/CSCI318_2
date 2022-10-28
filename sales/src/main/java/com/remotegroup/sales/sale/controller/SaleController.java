@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -33,7 +34,7 @@ public class SaleController {
 	//use case: create sale
 	// CHECK INVENTORY
 	@PostMapping("/sale")
-	Sale newSale(@RequestBody Sale sale) {
+	Sale newSale(@RequestBody Sale sale) throws JsonProcessingException {
 		if(salesService.requestCheckInventory(sale.getItemId())) {
 			return salesService.createSale(sale);	
 		}else {

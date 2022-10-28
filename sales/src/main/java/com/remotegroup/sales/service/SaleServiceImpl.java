@@ -56,7 +56,8 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public Sale createSale(Sale s) {
+	public Sale createSale(Sale s) throws JsonProcessingException {
+		sendSale(s);
 		return saleRepository.save(s);
 	}
 
@@ -68,6 +69,11 @@ public class SaleServiceImpl implements SaleService{
 		            Sale.setItemName(s.getItemName());
 		            Sale.setQuantity(s.getQuantity());
 		            Sale.setDataTime(s.getDataTime());
+					try {
+						sendUpdateSale(Sale);
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+					}
 		        return saleRepository.save(Sale);
 		      })
 		      	.orElseGet(() -> {
@@ -244,12 +250,26 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public void sendSale() throws JsonProcessingException {
+	public void initSaleBI() throws JsonProcessingException {
 		int i = 2;
 		long id = Long.valueOf(i);
 		log.info("Sale " + getSale(id));
       	String jsonString = mapper.writeValueAsString(getSale(id));
 		log.info("JSON " + jsonString);
-		controller.businessIntelligence(jsonString);
+		controller.bIInit(jsonString);
+	}
+
+	@Override
+	public void sendSale(Sale s) throws JsonProcessingException {
+      	String jsonString = mapper.writeValueAsString(s);
+		log.info("JSON " + jsonString);
+		controller.bISendSale(jsonString);
+	}
+
+	@Override
+	public void sendUpdateSale(Sale s) throws JsonProcessingException {
+      	String jsonString = mapper.writeValueAsString(s);
+		log.info("JSON " + jsonString);
+		controller.bISendUpdateSale(jsonString);
 	}
 }

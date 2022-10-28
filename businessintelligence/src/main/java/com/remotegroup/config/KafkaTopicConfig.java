@@ -9,8 +9,22 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     
     @Bean
-    public NewTopic businessIntelligence() {
-        return TopicBuilder.name("businessIntelligence")
+    public NewTopic bIInit() {
+        return TopicBuilder.name("bIInit")
+                .build();
+
+    }
+
+    @Bean
+    public NewTopic bISendSale() {
+        return TopicBuilder.name("bISendSale")
+                .build();
+
+    }
+
+    @Bean
+    public NewTopic bISendUpdateSale() {
+        return TopicBuilder.name("bISendUpdateSale")
                 .build();
 
     }

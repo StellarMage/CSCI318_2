@@ -30,7 +30,15 @@ public class Controller {
         kafkaTemplate.send("procurement", data);
     }
 
-    public void businessIntelligence(String data) {
-        kafkaTemplate.send("businessIntelligence", data);
+    public void bIInit(String data) {
+        kafkaTemplate.send("bIInit", data);
+    }
+
+    public void bISendSale(String data) {
+        kafkaTemplate.send("bISendSale", data);
+    }
+
+    public void bISendUpdateSale(String data) {
+        kafkaTemplate.send("bISendUpdateSale", data);
     }
 }
