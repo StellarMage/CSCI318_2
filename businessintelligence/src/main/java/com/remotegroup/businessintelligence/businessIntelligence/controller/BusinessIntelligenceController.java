@@ -21,6 +21,7 @@ import com.remotegroup.businessintelligence.exceptions.BusinessIntelligenceNotFo
 public class BusinessIntelligenceController {
 	
 	@Autowired
+	static
 	BusinessIntelligenceRepository businessIntelligenceRepository;
 
 	//See all past BusinessIntelligence
@@ -38,6 +39,7 @@ public class BusinessIntelligenceController {
 
 	//Edit a BusinessIntelligence
 	@PutMapping("/business/{id}")
+	public static
 	BusinessIntelligence replaceBusinessIntelligence(@RequestBody BusinessIntelligence newBusinessIntelligence, @PathVariable Long id) {
 		return businessIntelligenceRepository.findById(id)
 		      	.map(BusinessIntelligence -> {

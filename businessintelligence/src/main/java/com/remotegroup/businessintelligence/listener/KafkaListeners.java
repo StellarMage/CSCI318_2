@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.remotegroup.businessintelligence.businessIntelligence.controller.BusinessIntelligenceController;
 import com.remotegroup.businessintelligence.businessIntelligence.domain.BusinessIntelligence;
 import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
 import com.remotegroup.businessintelligence.shareddomain.Sale;
@@ -51,5 +52,9 @@ public class KafkaListeners {
         BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
         log.info("Converting StB: " + dataConverted);
         //Add Update Code
+        log.info("Receiving: ");
+        BusinessIntelligence bI = dataConverted;
+        BusinessIntelligenceController.replaceBusinessIntelligence(bI, bI.getId());
+        
     }
 }
