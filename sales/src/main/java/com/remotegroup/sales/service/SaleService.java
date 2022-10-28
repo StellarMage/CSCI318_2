@@ -3,6 +3,7 @@ package com.remotegroup.sales.service;
 import com.remotegroup.sales.sale.domain.*;
 import com.remotegroup.sales.instoresale.domain.*;
 import com.remotegroup.sales.onlinesale.domain.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.remotegroup.sales.backordersale.domain.*;
 import com.remotegroup.sales.exceptions.*;
 import com.remotegroup.sales.shareddomain.*;
@@ -33,7 +34,7 @@ public interface SaleService {
 	public abstract void deleteOnlineSale(Long id);
 	
 	public abstract List<BackOrderSale> getBackOrderSales();
-	public abstract BackOrderSale createBackOrderSale(BackOrderSale s);
+	public abstract BackOrderSale createBackOrderSale(BackOrderSale s) throws JsonProcessingException;
 	public abstract void deleteBackOrderSale(Long id);
 	public abstract BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException;
 

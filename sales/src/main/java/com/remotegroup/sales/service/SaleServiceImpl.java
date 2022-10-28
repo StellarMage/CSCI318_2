@@ -23,6 +23,9 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Service
 public class SaleServiceImpl implements SaleService{
 
@@ -34,6 +37,7 @@ public class SaleServiceImpl implements SaleService{
 	@Autowired private final  Controller controller;
 	@Autowired private final  KafkaListeners kafkaListeners;
 	private static final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
+	private ObjectMapper mapper = new ObjectMapper();
 	
 	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, Controller controller, KafkaListeners kafkaListeners){
 		this.saleRepository = saleRepository;
@@ -91,7 +95,7 @@ public class SaleServiceImpl implements SaleService{
 	// Communicate with Inventory Service via REST
 	@Override
 	public boolean requestCheckInventory(Long itemId){
-		String url = "http://localhost:8080/product/check/"+itemId;
+		String url = "http://localhost:8081/product/check/"+itemId;
 		return this.restTemplate.getForObject(url, boolean.class);
 	}
 
@@ -199,7 +203,10 @@ public class SaleServiceImpl implements SaleService{
 	}
 
 	@Override
-	public BackOrderSale createBackOrderSale(BackOrderSale s) {
+	public BackOrderSale createBackOrderSale(BackOrderSale s) throws JsonProcessingException {
+		String jsonString = mapper.writeValueAsString(s);
+		controller.procure(jsonString);
+		log.info("Procurement Request Sent");
 		return backOrderSaleRepository.save(s);
 	}
 
@@ -222,19 +229,16 @@ public class SaleServiceImpl implements SaleService{
 	
 	@Override
 	public Product getProductInfo(Long id) {
-		//try {
-			log.info("Start");
+		try {
 			Sale chosenSale = getSale(id);
-			log.info("Get Sale");
 			Long itemId = chosenSale.getItemId();
-			log.info("Get itemId");
 			String payload = Long.toString(itemId);
 			controller.publish(payload);
-			log.info("Published");
+			log.info("Sale ID Sent to Inventory");
 			return kafkaListeners.getListener();
-		//}catch(Exception e) {
-			//throw new SaleNotFoundException(id);
-		//}
+		}catch(Exception e) {
+			throw new SaleNotFoundException(id);
+		}
 		
 	}
 }

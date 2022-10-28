@@ -135,7 +135,7 @@ public class InventoryServiceImpl implements InventoryService{
 	
 	@Override
 	public Long getPartSupplier(Long id) {
-		Part chosenPart = partRepository.findById(id).orElseThrow(RuntimeException::new);
+		Part chosenPart = getPart(id);
 		return chosenPart.getSupplierId();
 	}
 

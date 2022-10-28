@@ -1,4 +1,4 @@
-package com.remotegroup.sales.controller;
+package com.remotegroup.procurement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -20,10 +20,6 @@ public class Controller {
 
     public Controller(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
-    }
-
-    public void publish(String data) {
-        kafkaTemplate.send("productBySaleFromSales", data);
     }
 
     public void procure(String data) {

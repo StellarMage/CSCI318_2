@@ -21,4 +21,11 @@ public class KafkaTopicConfig {
                 .build();
 
     }
+
+    @Bean
+    public NewTopic procurement() {
+        return TopicBuilder.name("procurement")
+                .build();
+
+    }
 }
