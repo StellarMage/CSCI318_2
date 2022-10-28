@@ -11,7 +11,7 @@ import javax.persistence.Id;
 
 @Entity
 public class OnlineSale extends Sale {
-    private @Id @GeneratedValue Long id;
+    //protected @Id @GeneratedValue Long id;
     String customerName;
     String address;
 

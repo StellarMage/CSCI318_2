@@ -9,7 +9,8 @@ import javax.persistence.Id;
 
 @Entity
 public class BackOrderSale extends Sale {
-	private @Id @GeneratedValue Long id;
+	
+	//protected @Id @GeneratedValue Long id;
 	String phoneNumber;
 	
 	BackOrderSale(){
