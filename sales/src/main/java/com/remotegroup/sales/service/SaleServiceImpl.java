@@ -16,6 +16,8 @@ import com.remotegroup.sales.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +32,7 @@ public class SaleServiceImpl implements SaleService{
 	private final RestTemplate restTemplate;
 	Controller controller = new Controller();
 	KafkaListeners kafkaListeners = new KafkaListeners();
+	private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class);
 	
 	SaleServiceImpl(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder){
 		this.saleRepository = saleRepository;
@@ -216,12 +219,18 @@ public class SaleServiceImpl implements SaleService{
 	
 	@Override
 	public Product getProductInfo(Long id) {
-		try {
-			controller.publish(Long.toString(id));
+		//try {
+			log.info("Start");
+			Sale chosenSale = getSale(id);
+			log.info("Get Sale");
+			Long itemId = chosenSale.getItemId();
+			log.info("Get itemId");
+			controller.publish(Long.toString(itemId));
+			log.info("Published");
 			return kafkaListeners.getListener();
-		}catch(Exception e) {
-			throw new SaleNotFoundException(id);
-		}
+		//}catch(Exception e) {
+			//throw new SaleNotFoundException(id);
+		//}
 		
 	}
 }

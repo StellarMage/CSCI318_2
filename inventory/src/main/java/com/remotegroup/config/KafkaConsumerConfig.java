@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,20 +23,15 @@ public class KafkaConsumerConfig {
     
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
-    private KafkaProducerConfig kafkaProducerConfig;
     
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    KafkaConsumerConfig(KafkaProducerConfig kafkaProducerConfig){
-        this.kafkaProducerConfig = kafkaProducerConfig;
-    }
-
     public Map<String, Object> consumerConfig() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;
     }
 
@@ -53,16 +48,7 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory =
             new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory((consumerFactory()));
-        //factory.setReplyTemplate(kafkaProducerConfig.kafkaTemplate());
         factory.setReplyTemplate(kafkaTemplate);
         return factory;
     }
-
-    /*@Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory((consumerFactory()));
-        factory.setReplyTemplate(kafkaProducerConfig.kafkaTemplate());
-        return factory;
-    }*/
 }
