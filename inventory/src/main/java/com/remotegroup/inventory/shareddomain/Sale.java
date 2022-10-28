@@ -24,6 +24,8 @@ public class Sale {
         quantity = q;
         DataTime = dt;
         productPrice = pP;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
     public Long getId(){
         return this.id;

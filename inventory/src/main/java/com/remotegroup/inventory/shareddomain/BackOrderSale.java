@@ -22,6 +22,8 @@ public class BackOrderSale extends Sale {
     	this.quantity = q;
     	this.DataTime = dt;
 		phoneNumber = ph;
+
+		BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
 	}
 	
 	public String getPhoneNumber() {

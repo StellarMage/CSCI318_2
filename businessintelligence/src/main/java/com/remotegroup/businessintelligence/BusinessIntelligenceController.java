@@ -38,6 +38,7 @@ public class BusinessIntelligenceController {
 	BusinessIntelligence replaceBusinessIntelligence(@RequestBody BusinessIntelligence newBusinessIntelligence, @PathVariable Long id) {
 		return businessIntelligenceRepository.findById(id)
 		      	.map(BusinessIntelligence -> {
+					BusinessIntelligence.setName(newBusinessIntelligence.getName());
 					BusinessIntelligence.setQuantity(newBusinessIntelligence.getQuantity());
 		            BusinessIntelligence.setPrice(newBusinessIntelligence.getPrice());
 		        return businessIntelligenceRepository.save(BusinessIntelligence);

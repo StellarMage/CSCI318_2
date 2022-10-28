@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.remotegroup.businessintelligence.BusinessIntelligence;
+
 @Entity
 public class InStoreSale extends Sale {
     private @Id @GeneratedValue Long id;
@@ -25,6 +27,8 @@ public class InStoreSale extends Sale {
         this.productPrice = pP;
         storeId = i;
         receiptNo = n;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public Long getStoreId(){

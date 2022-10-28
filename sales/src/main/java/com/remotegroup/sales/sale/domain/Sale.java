@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.remotegroup.sales.shareddomain.BusinessIntelligence;
+
 @Entity
 public class Sale {
 
@@ -24,7 +26,10 @@ public class Sale {
         quantity = q;
         DataTime = dt;
         productPrice = pP;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
+
     public Long getId(){
         return this.id;
     }

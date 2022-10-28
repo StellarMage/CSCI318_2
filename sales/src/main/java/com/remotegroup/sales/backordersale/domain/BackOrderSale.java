@@ -1,6 +1,7 @@
 package com.remotegroup.sales.backordersale.domain;
 
 import com.remotegroup.sales.sale.domain.*;
+import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,8 @@ public class BackOrderSale extends Sale {
     	this.quantity = q;
     	this.DataTime = dt;
 		phoneNumber = ph;
+
+		BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
 	}
 	
 	public String getPhoneNumber() {

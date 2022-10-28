@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.remotegroup.businessintelligence.BusinessIntelligence;
+
 @Entity
 public class OnlineSale extends Sale {
     private @Id @GeneratedValue Long id;
@@ -25,6 +27,8 @@ public class OnlineSale extends Sale {
         this.productPrice = pP;
         customerName = c;
         address = n;
+
+        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public String getCustomerName(){
