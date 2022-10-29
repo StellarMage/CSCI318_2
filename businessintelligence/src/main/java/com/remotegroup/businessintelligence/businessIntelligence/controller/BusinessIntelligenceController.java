@@ -2,7 +2,6 @@ package com.remotegroup.businessintelligence.businessIntelligence.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +19,12 @@ import com.remotegroup.businessintelligence.exceptions.BusinessIntelligenceNotFo
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class BusinessIntelligenceController {
 	
-	@Autowired
-	static
-	BusinessIntelligenceRepository businessIntelligenceRepository;
+	//static
+	private static BusinessIntelligenceRepository businessIntelligenceRepository;
+
+	BusinessIntelligenceController(BusinessIntelligenceRepository businessIntelligenceRepository) {
+		BusinessIntelligenceController.businessIntelligenceRepository = businessIntelligenceRepository;
+	}
 
 	//See all past BusinessIntelligence
 	@GetMapping("/businesses")
@@ -39,7 +41,8 @@ public class BusinessIntelligenceController {
 
 	//Edit a BusinessIntelligence
 	@PutMapping("/business/{id}")
-	public static
+    public static
+	//public static
 	BusinessIntelligence replaceBusinessIntelligence(@RequestBody BusinessIntelligence newBusinessIntelligence, @PathVariable Long id) {
 		return businessIntelligenceRepository.findById(id)
 		      	.map(BusinessIntelligence -> {
