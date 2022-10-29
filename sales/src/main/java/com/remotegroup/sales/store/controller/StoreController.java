@@ -5,7 +5,6 @@ import com.remotegroup.sales.store.domain.*;
 import com.remotegroup.sales.exceptions.*;
 
 import java.util.List;
-import java.util.function.Function;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

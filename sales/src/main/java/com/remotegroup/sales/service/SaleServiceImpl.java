@@ -2,7 +2,6 @@ package com.remotegroup.sales.service;
 
 import com.remotegroup.sales.sale.domain.*;
 import com.remotegroup.sales.sale.persistence.*;
-import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 import com.remotegroup.sales.shareddomain.Product;
 import com.remotegroup.sales.instoresale.domain.*;
 import com.remotegroup.sales.instoresale.persistence.*;
