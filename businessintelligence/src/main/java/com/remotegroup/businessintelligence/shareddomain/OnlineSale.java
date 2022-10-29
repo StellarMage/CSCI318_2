@@ -27,8 +27,6 @@ public class OnlineSale extends Sale {
         this.productPrice = pP;
         customerName = c;
         address = n;
-
-        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public String getCustomerName(){

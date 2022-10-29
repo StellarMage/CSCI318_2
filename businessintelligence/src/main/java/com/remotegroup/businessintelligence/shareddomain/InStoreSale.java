@@ -27,8 +27,6 @@ public class InStoreSale extends Sale {
         this.productPrice = pP;
         storeId = i;
         receiptNo = n;
-
-        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
 
     public Long getStoreId(){

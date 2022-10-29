@@ -10,7 +10,7 @@ import com.remotegroup.businessintelligence.shareddomain.Sale;
 
 @Entity
 public class BusinessIntelligence {
-    private @Id @GeneratedValue Long id;
+    @Id Long saleId;
     String productName;
     int quantity;
     double price;
@@ -18,7 +18,8 @@ public class BusinessIntelligence {
 
     BusinessIntelligence () {}
 
-    public BusinessIntelligence(String n, int q, double p){
+    public BusinessIntelligence(Long i, String n, int q, double p){
+        saleId = i;
         productName = n;
         quantity = q;
         price = p;
@@ -26,14 +27,16 @@ public class BusinessIntelligence {
     }
 
     public BusinessIntelligence(Sale s){
+        saleId = s.getId();
         productName = s.getItemName();
         quantity = s.getQuantity();
         price = s.getProductPrice();
         total = quantity * price;
     }
 
+    
     public Long getId(){
-        return this.id;
+        return this.saleId;
     }
 
     public String getName(){
@@ -53,7 +56,7 @@ public class BusinessIntelligence {
     }
     
     public void setId(Long id) {
-        this.id = id;
+        this.saleId = id;
     }
 
     public void setName(String n){
@@ -76,7 +79,7 @@ public class BusinessIntelligence {
         if (!(o instanceof BusinessIntelligence))
             return false;
             BusinessIntelligence businessIntelligence = (BusinessIntelligence) o;
-        return Objects.equals(this.id, businessIntelligence.id) 
+        return Objects.equals(this.saleId, businessIntelligence.saleId) 
         && Objects.equals(this.productName, businessIntelligence.productName)
         && Objects.equals(this.quantity, businessIntelligence.quantity)
         && Objects.equals(this.price, businessIntelligence.price)
@@ -85,12 +88,12 @@ public class BusinessIntelligence {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.productName, this.quantity, this.price, this.total);
+        return Objects.hash(this.saleId, this.productName, this.quantity, this.price, this.total);
     }
 
     @Override
     public String toString() {
-        return "businessIntelligence{" + "id=" + this.id + '\''
+        return "businessIntelligence{" + "id=" + this.saleId + '\''
         + ", productName='" + this.productName + '\'' 
         + ", quantity='" + this.quantity + '\'' 
         + ", price='" + this.price + '\''

@@ -34,6 +34,7 @@ public class BusinessIntelligenceController {
 	
 	//Create a BusinessIntelligence
 	@PostMapping("/business")
+	public static
 	BusinessIntelligence newBusinessIntelligence(@RequestBody BusinessIntelligence businessIntelligence) {
 		return businessIntelligenceRepository.save(businessIntelligence);
 	}

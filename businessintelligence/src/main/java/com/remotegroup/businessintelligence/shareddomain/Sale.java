@@ -30,8 +30,6 @@ public class Sale {
         productPrice = pP;
 
         id = count.incrementAndGet();
-
-        BusinessIntelligence bI = (new BusinessIntelligence(pn, q, pP));
     }
     public Long getId(){
         return this.id;
