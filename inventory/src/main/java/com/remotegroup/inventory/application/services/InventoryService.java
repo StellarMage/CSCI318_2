@@ -9,13 +9,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import com.remotegroup.inventory.domain.model.aggregates.Part;
+import com.remotegroup.inventory.domain.model.aggregates.PartId;
 import com.remotegroup.inventory.domain.model.aggregates.Product;
+import com.remotegroup.inventory.domain.model.aggregates.ProductId;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
+import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
 import com.remotegroup.inventory.exceptions.PartNotFoundByProductException;
 import com.remotegroup.inventory.exceptions.PartNotFoundException;
 import com.remotegroup.inventory.exceptions.ProductNotFoundException;
@@ -27,13 +32,14 @@ import com.remotegroup.inventory.interfaces.rest.controllers.PartModelAssembler;
 public class InventoryService implements IInventoryService{
 
 	@Autowired private final ProductRepository prRepo;
+	@Autowired private final PartModelAssembler prAssembler;
 	@Autowired private final PartRepository paRepo;
-	@Autowired private final PartModelAssembler partAssembler;
+	@Autowired private final PartModelAssembler paAssembler;
 	
 	InventoryService(ProductRepository prRepo, PartRepository paRepo){
 		this.paRepo = paRepo;
 		this.prRepo = prRepo;
-		this.partAssembler = partAssembler;
+		this.paAssembler = paAssembler;
 	}
 	
 	@Override
@@ -43,25 +49,32 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public Product createProduct(CreateProductCommand createProductCommand) {
-		String supplierIdStr = UUID.randomUUID().toString().toUpperCase();
-		createProductCommand.setProductId(supplierIdStr);
+		String productIdStr = UUID.randomUUID().toString().toUpperCase();
+		createProductCommand.setProductId(productIdStr);
 
 		return prRepo.save(new Product(createProductCommand));
 	}
 
 	@Override
-	public Product updateProduct(Product p, Long id) {
-		return prRepo.findById(id)
-		      	.map(Product -> {
-					Product.setName(p.getName());
-					Product.setPrice(p.getPrice());
-		            Product.setComment(p.getComment());
-		        return prRepo.save(Product);
-		      })
-		      	.orElseGet(() -> {
-		        	p.setId(id);
-		        	return prRepo.save(p);
-		      });
+	public Product updateProduct(Product p, ProductId id) {
+		
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("productId", match->match.exact());
+		
+		Product pExample = new Product();
+		pExample.setProductId(id);
+		Example<Product> example = Example.of(pExample, matcher);
+		
+		List<Product> returnProducts =  prRepo.findAll(example);
+		
+		Product product = returnProducts.get(0);
+		
+		product.setName(p.getName());
+		product.setPrice(p.getPrice());
+		product.setComment(p.getComment());
+		product.setComprisingParts(p.getComprisingParts());
+		product.setStockQuantity(p.getStockQuantity());
+		return prRepo.save(product);
 	}
 
 	@Override
@@ -109,25 +122,31 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public Part createPart(CreatePartCommand createPartCommand) {
-		String supplierIdStr = UUID.randomUUID().toString().toUpperCase();
-		createPartCommand.setPartId(supplierIdStr);
+		String partIdStr = UUID.randomUUID().toString().toUpperCase();
+		createPartCommand.setPartId(partIdStr);
 
 		return paRepo.save(new Part(createPartCommand));
 	}
 
 	@Override
-	public Part updatePart(Part p, Long id) {
-		return paRepo.findById(id)
-		      	.map(Part -> {
-					Part.setSupplierId(p.getSupplierId());
-		            Part.setName(p.getName());
-		            Part.setDescription(p.getDescription());
-		        return paRepo.save(Part);
-		      })
-		      	.orElseGet(() -> {
-		        	p.setId(id);
-		        	return paRepo.save(p);
-		      });
+	public Part updatePart(Part p, PartId id) {
+		
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("partId", match->match.exact());
+		
+		Part sExample = new Part();
+		sExample.setPartId(id);
+		Example<Part> example = Example.of(sExample, matcher);
+		
+		List<Part> returnParts =  paRepo.findAll(example);
+		
+		Part part = returnParts.get(0);
+		
+		part.setSupplierId(p.getSupplierId());
+		part.setName(p.getName());
+		part.setDescription(p.getDescription());
+		part.setStockQuantity(p.getStockQuantity());
+		return paRepo.save(part);
 	}
 
 	@Override
@@ -148,7 +167,7 @@ public class InventoryService implements IInventoryService{
 	}
 	
 	@Override
-	public Long getPartSupplier(Long id) {
+	public SupplierId getPartSupplier(Long id) {
 		Part chosenPart = getPart(id);
 		return chosenPart.getSupplierId();
 	}

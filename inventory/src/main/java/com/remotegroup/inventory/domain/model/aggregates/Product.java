@@ -13,15 +13,15 @@ import com.remotegroup.inventory.domain.model.valueobjects.Name;
 import com.remotegroup.inventory.domain.model.valueobjects.Price;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.valueobjects.Comment;
-import com.remotegroup.inventory.domain.model.valueobjects.CompromisingParts;
+import com.remotegroup.inventory.domain.model.valueobjects.ComprisingParts;
 import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
 
 @Entity
 public class Product extends AbstractAggregateRoot<Product>{
     private @Id @GeneratedValue Long id;
+    
     @Embedded
     private ProductId productId;
-
     @Embedded
     private Name name;
     @Embedded
@@ -29,67 +29,59 @@ public class Product extends AbstractAggregateRoot<Product>{
     @Embedded
     private Comment comment;
     @Embedded
-    private CompromisingParts[][] comprisingParts; // [][0] = part_id, [][1] = parts_needed  NOTE: MUST be >= 1 Part with number >= 1
+    private ComprisingParts comprisingParts; // [][0] = part_id, [][1] = parts_needed  NOTE: MUST be >= 1 Part with number >= 1
     @Embedded
     private StockQuantity stockQuantity;
     
-    Product () {}
+    public Product () {}
 
     public Product(CreateProductCommand command) {
 		this.productId = new ProductId(command.getProductId());
 		this.name = new Name(command.getName());
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
-        this.comprisingParts = new CompromisingParts(command.getCompromisingParts());
+        this.comprisingParts = new ComprisingParts(command.getComprisingParts());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
 	}
 
     public Long getId(){
         return this.id;
     }
-
+    public ProductId getProductId(){
+        return this.productId;
+    }
+    public ProductId setProductId(ProductId productId){
+        return this.productId;
+    }
     public Name getName(){
-        return name;
+        return this.name;
     }
-
+    public Name setName(Name name){
+        return this.name;
+    }
     public Price getPrice(){
-        return price;
+        return this.price;
     }
-
+    public Price setPrice(Price price){
+        return this.price;
+    }
     public Comment getComment(){
-        return comment;
+        return this.comment;
     }
-    
-    public Long[][] getComprisingParts() {
-    	return this.comprisingParts;
+    public Comment setComment(Comment comment){
+        return this.comment;
     }
-    
-    public StockQuantity getStockQuantity() {
-    	return this.stockQuantity;
+    public ComprisingParts getComprisingParts(){
+        return this.comprisingParts;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public ComprisingParts setComprisingParts(ComprisingParts comprisingParts){
+        return this.comprisingParts;
     }
-
-    public void setName(Name newName){
-        this.name = newName;
+    public StockQuantity getStockQuantity(){
+        return this.stockQuantity;
     }
-
-    public void setPrice(Price newPrice){
-        this.price = newPrice;
-    }
-
-    public void setComment(Comment newComment){
-        this.comment = newComment;
-    }
-    
-    public void setComprisingParts(Long[][] cp) {
-    	this.comprisingParts = cp.clone();
-    }
-    
-    public void setStockQuantity(StockQuantity s) {
-    	this.stockQuantity = s;
+    public StockQuantity setStockQuantity(StockQuantity stockQuantity){
+        return this.stockQuantity;
     }
 
     @Override
@@ -99,19 +91,22 @@ public class Product extends AbstractAggregateRoot<Product>{
         if (!(o instanceof Product))
             return false;
             Product product = (Product) o;
-        return Objects.equals(this.name, product.name)
+        return Objects.equals(this.productId, product.productId)
+        && Objects.equals(this.name, product.name)
         && Objects.equals(this.price, product.price) 
-        && Objects.equals(this.comment, product.comment);
+        && Objects.equals(this.comment, product.comment)
+        && Objects.equals(this.comprisingParts, product.comprisingParts)
+        && Objects.equals(this.stockQuantity, product.stockQuantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.price, this.comment);
+        return Objects.hash(this.productId, this.name, this.price, this.comment);
     }
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + this.id + '\''
+        return "Product{" + "productId=" + this.productId + '\''
         + ", name='" + this.name + '\''
          + ", price='" + String.valueOf(this.price) + '\''
          + ", comment='" + this.comment + '\'' 

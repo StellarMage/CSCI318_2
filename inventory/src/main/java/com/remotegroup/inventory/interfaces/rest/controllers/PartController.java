@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
+import com.remotegroup.inventory.domain.model.aggregates.PartId;
+import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
+import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -28,20 +31,20 @@ public class PartController {
 
 	//use case: get all parts.
 	@GetMapping("/parts")
-	CollectionModel<EntityModel<Part>> all() {
+	List<Part> all() {
 		return inventoryService.getParts();
 	}
 	
 	//use case: create part
 	@PostMapping("/part")
-	Part newPart(@RequestBody Part part) {
-		return inventoryService.createPart(part);
+	Part newPart(@RequestBody CreatePartCommand c) {
+		return inventoryService.createPart(c);
 	}
 	
 
 	//use case: update part
 	@PutMapping("/part/{id}")
-	Part replacePart(@RequestBody Part newPart, @PathVariable Long id) {
+	Part replacePart(@RequestBody Part newPart, @PathVariable PartId id) {
 		return inventoryService.updatePart(newPart, id);
 	}
 	
@@ -53,13 +56,13 @@ public class PartController {
 	
 	//use case: get part by id
 	@GetMapping("/part/{id}")
-	EntityModel<Part> one(@PathVariable Long id) {
+	Part one(@PathVariable Long id) {
 		return inventoryService.getPart(id);
 	}
 
 	//use case: look up supplier by part
 	@GetMapping("/part/supplier/{id}")
-	Long getPartSupplier(@PathVariable Long id) {
+	SupplierId getPartSupplier(@PathVariable Long id) {
 		return inventoryService.getPartSupplier(id);
 	}
 

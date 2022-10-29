@@ -3,6 +3,8 @@ package com.remotegroup.inventory.interfaces.rest.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.Product;
+import com.remotegroup.inventory.domain.model.aggregates.ProductId;
+import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
 
 @RestController
@@ -31,13 +35,13 @@ public class ProductController {
 	
 	//use case: create product
 	@PostMapping("/product")
-	Product newProduct(@RequestBody Product product) {
-		return inventoryService.createProduct(product);
+	Product newProduct(@RequestBody CreateProductCommand c) {
+		return inventoryService.createProduct(c);
 	}
 	
 	//use case: update product
 	@PutMapping("/product/{id}")
-	Product replaceProduct(@RequestBody Product newProduct, @PathVariable Long id) {
+	Product replaceProduct(@RequestBody Product newProduct, @PathVariable ProductId id) {
 		return inventoryService.updateProduct(newProduct, id);
 	}
 	
@@ -49,7 +53,7 @@ public class ProductController {
 	
 	//use case: get product by id
 	@GetMapping("/product/{id}")
-	Product getProductById(@PathVariable Long id) {
+	Product one(@PathVariable Long id) {
 		return inventoryService.getProduct(id);
 	}
 
