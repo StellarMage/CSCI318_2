@@ -53,8 +53,6 @@ public class KafkaListeners {
         log.info("Converting StB: " + dataConverted);
         //Add Update Code
         log.info("Receiving: ");
-        BusinessIntelligence bI = dataConverted;
-        BusinessIntelligenceController.replaceBusinessIntelligence(bI, bI.getId());
-        
+        BusinessIntelligenceController.replaceBusinessIntelligence(dataConverted, dataConverted.getId());
     }
 }
