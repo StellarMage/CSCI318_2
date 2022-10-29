@@ -73,12 +73,12 @@ public class BusinessIntelligence {
             return true;
         if (!(o instanceof BusinessIntelligence))
             return false;
-            BusinessIntelligence businessIntillgence = (BusinessIntelligence) o;
-        return Objects.equals(this.id, businessIntillgence.id) 
-        && Objects.equals(this.productName, businessIntillgence.productName)
-        && Objects.equals(this.quantity, businessIntillgence.quantity)
-        && Objects.equals(this.price, businessIntillgence.price)
-        && Objects.equals(this.total, businessIntillgence.total);
+            BusinessIntelligence businessIntelligence = (BusinessIntelligence) o;
+        return Objects.equals(this.id, businessIntelligence.id) 
+        && Objects.equals(this.productName, businessIntelligence.productName)
+        && Objects.equals(this.quantity, businessIntelligence.quantity)
+        && Objects.equals(this.price, businessIntelligence.price)
+        && Objects.equals(this.total, businessIntelligence.total);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class BusinessIntelligence {
 
     @Override
     public String toString() {
-        return "BusinessIntillgence{" + "id=" + this.id + '\''
+        return "businessIntelligence{" + "id=" + this.id + '\''
         + ", productName='" + this.productName + '\'' 
         + ", quantity='" + this.quantity + '\'' 
         + ", price='" + this.price + '\''
