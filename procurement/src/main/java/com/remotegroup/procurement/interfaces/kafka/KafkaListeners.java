@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remotegroup.shareddomain.BackOrderSale;
+import com.remotegroup.shareddomain.model.aggregates.BackOrderSale;
 
 @Component
 public class KafkaListeners {
@@ -20,7 +20,7 @@ public class KafkaListeners {
     public KafkaListeners(){
     }
     
-    @KafkaListener(topics = "procurement", groupId = "procurement")
+    @KafkaListener(topics = "procRequestItP", groupId = "procRequestItP")
     void listener(String data) throws JsonMappingException, JsonProcessingException{
         log.info("JSON String Received");
         BackOrderSale dataReceived = mapper.readValue(data, BackOrderSale.class);

@@ -22,7 +22,7 @@ public class KafkaController {
     }
 
     public void procure(String data) {
-        kafkaTemplate.send("procurement", data);
+        kafkaTemplate.send("procRequestStI", data);
     }
 
     public void bIInit(String data) {
