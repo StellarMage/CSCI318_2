@@ -16,9 +16,8 @@ import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
-import com.remotegroup.sales.domain.model.valueobjects.ItemId;
 import com.remotegroup.sales.exceptions.BackOrderSaleNotFoundException;
-import com.remotegroup.sales.shareddomain.Product;
+import com.remotegroup.sales.shareddomain.Product; 
 
 public interface ISaleService {
 	

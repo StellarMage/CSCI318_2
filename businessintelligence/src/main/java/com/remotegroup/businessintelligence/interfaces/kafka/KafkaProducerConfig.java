@@ -1,4 +1,4 @@
-package com.remotegroup.config;
+package com.remotegroup.businessintelligence.interfaces.kafka;
 
 import java.util.HashMap;
 import java.util.Map;

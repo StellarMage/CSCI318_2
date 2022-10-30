@@ -1,8 +1,10 @@
-package com.remotegroup.businessintelligence.businessIntelligence.controller;
+package com.remotegroup.businessintelligence.interfaces.rest;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
+import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligenceId;
+import com.remotegroup.businessintelligence.domain.model.commands.UpdateBusinessIntelligenceCommand;
 import com.remotegroup.businessintelligence.exceptions.BusinessIntelligenceNotFoundException;
+import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessIntelligenceRepository;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -40,18 +44,24 @@ public class BusinessIntelligenceController {
 	//Edit a BusinessIntelligence
 	@PutMapping("/business/{id}")
 	public static
-	BusinessIntelligence replaceBusinessIntelligence(@RequestBody BusinessIntelligence newBusinessIntelligence, @PathVariable Long id) {
-		return businessIntelligenceRepository.findById(id)
-		      	.map(BusinessIntelligence -> {
-					BusinessIntelligence.setName(newBusinessIntelligence.getName());
-					BusinessIntelligence.setQuantity(newBusinessIntelligence.getQuantity());
-		            BusinessIntelligence.setPrice(newBusinessIntelligence.getPrice());
-		        return businessIntelligenceRepository.save(BusinessIntelligence);
-		      })
-		      	.orElseGet(() -> {
-		        	newBusinessIntelligence.setId(id);
-		        	return businessIntelligenceRepository.save(newBusinessIntelligence);
-		      });
+	BusinessIntelligence replaceBusinessIntelligence(UpdateBusinessIntelligenceCommand updateBusinessIntelligenceCommand) {
+		
+		//find the businessIntelligence by businessIntelligenceId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("businessIntelligenceId", match->match.exact());
+		BusinessIntelligence bIExample = new BusinessIntelligence();
+		bIExample.setBusinessIntelligenceId(new BusinessIntelligenceId(updateBusinessIntelligenceCommand.getBusinessIntelligenceId()));
+		Example<BusinessIntelligence> example = Example.of(bIExample, matcher);
+		
+		//store businessIntelligence in object
+		List<BusinessIntelligence> returnBusinessIntelligences =  businessIntelligenceRepository.findAll(example);
+		BusinessIntelligence businessIntelligence = returnBusinessIntelligences.get(0);
+		
+		//update businessIntelligence
+		businessIntelligence.updateBusinessIntelligence(updateBusinessIntelligenceCommand);
+		
+		//save to repository
+		return businessIntelligenceRepository.save(businessIntelligence);
 	}
 	
 	//Delete a BusinessIntelligence

@@ -16,8 +16,6 @@ public class InStoreSale extends Sale {
     private @Id @GeneratedValue Long id;
 
     @Embedded
-    private InStoreSaleId inStoreSaleId;
-    @Embedded
     private StoreId storeId;
     @Embedded
     private ReceiptNo receiptNo;
@@ -27,14 +25,12 @@ public class InStoreSale extends Sale {
     }
 
     public InStoreSale(CreateInStoreSaleCommand command){
-        this.inStoreSaleId = new InStoreSaleId(command.getInStoreSaleId());
         this.saleId = new SaleId(command.getSaleId());
         this.storeId = new StoreId(command.getStoreId());
         this.receiptNo = new ReceiptNo(command.getReceiptNo());
     }
 
     public InStoreSale updateInStoreSale(UpdateInStoreSaleCommand command) {
-        this.inStoreSaleId = new InStoreSaleId(command.getInStoreSaleId());
         this.saleId = new SaleId(command.getSaleId());
         this.storeId = new StoreId(command.getStoreId());
         this.receiptNo = new ReceiptNo(command.getReceiptNo());
@@ -45,20 +41,12 @@ public class InStoreSale extends Sale {
         return this.id;
     }
 
-    public InStoreSaleId getInStoreSaleId(){
-        return this.inStoreSaleId;
-    }
-
     public StoreId getStoreId(){
         return this.storeId;
     }
 
     public ReceiptNo getReceiptNo(){
         return this.receiptNo;
-    }
-
-    public void setInStoreSaleId(InStoreSaleId id) {
-        this.inStoreSaleId = id;
     }
 
     public void setStoreId(StoreId id) {
@@ -76,20 +64,18 @@ public class InStoreSale extends Sale {
         if (!(o instanceof InStoreSale))
             return false;
             InStoreSale InStoreSale = (InStoreSale) o;
-        return Objects.equals(this.inStoreSaleId, InStoreSale.inStoreSaleId) 
-        && Objects.equals(this.storeId, InStoreSale.storeId)
+        return Objects.equals(this.storeId, InStoreSale.storeId)
         && Objects.equals(this.receiptNo, InStoreSale.receiptNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.inStoreSaleId, this.storeId, this.receiptNo);
+        return Objects.hash(this.storeId, this.receiptNo);
     }
 
     @Override
     public String toString() {
-        return "InStoreSale{" + "inStoreSaleId=" + this.inStoreSaleId + '\''
-        + ", store id='" + this.storeId + '\'' 
+        return super.toString() +"InStoreSale { store id='" + this.storeId + '\'' 
         + ", receipt='" + this.receiptNo + '\''
          + '}';
     }

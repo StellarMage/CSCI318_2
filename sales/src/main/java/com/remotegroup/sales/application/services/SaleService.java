@@ -1,6 +1,5 @@
 package com.remotegroup.sales.application.services;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -329,7 +328,6 @@ public class SaleService implements ISaleService{
 		try {
 			Sale chosenSale = getSale(id);
 			ItemId itemId = chosenSale.getItemId();
-
 			String jsonString = mapper.writeValueAsString(itemId);
 			controller.publish(jsonString);
 			log.info("ItemId Sent to Inventory");
@@ -342,10 +340,8 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public void initSaleBI() throws JsonProcessingException {
-		int i = 2;
-		long id = Long.valueOf(i);
-		log.info("Sale " + getSale(id));
-      	String jsonString = mapper.writeValueAsString(getSale(id));
+		log.info("Sale " + getSale(new SaleId("2")));
+      	String jsonString = mapper.writeValueAsString(getSale(new SaleId("2")));
 		log.info("JSON " + jsonString);
 		controller.bIInit(jsonString);
 	}

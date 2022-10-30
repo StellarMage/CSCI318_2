@@ -5,13 +5,13 @@ public class CreateSaleCommand {
 	private String saleId;
 	private String itemId;
 	private String itemName;
-	private String quantity;
+	private Integer quantity;
 	private String dataTime;
-	private String productPrice;
+	private Double productPrice;
 
 	public CreateSaleCommand() {}
 	
-	public CreateSaleCommand(String itemId, String itemName, String quantity, String dataTime, String productPrice) {
+	public CreateSaleCommand(String itemId, String itemName, Integer quantity, String dataTime, Double productPrice) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.quantity = quantity;
@@ -31,7 +31,7 @@ public class CreateSaleCommand {
 		return itemName;
 	}
 
-	public String getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
@@ -39,7 +39,7 @@ public class CreateSaleCommand {
 		return dataTime;
 	}
 
-	public String getProductPrice() {
+	public Double getProductPrice() {
 		return productPrice;
 	}
 
@@ -55,7 +55,7 @@ public class CreateSaleCommand {
 		this.itemName = itemName;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
@@ -63,7 +63,7 @@ public class CreateSaleCommand {
 		this.dataTime = dataTime;
 	}
 
-	public void setProductPrice(String productPrice) {
+	public void setProductPrice(Double productPrice) {
 		this.productPrice = productPrice;
 	}
 	

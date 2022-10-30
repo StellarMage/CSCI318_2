@@ -1,4 +1,4 @@
-package com.remotegroup.config;
+package com.remotegroup.businessintelligence.interfaces.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

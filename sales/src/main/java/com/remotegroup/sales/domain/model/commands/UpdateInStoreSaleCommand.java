@@ -2,8 +2,6 @@ package com.remotegroup.sales.domain.model.commands;
 
 public class UpdateInStoreSaleCommand extends UpdateSaleCommand {
 	
-	private String inStoreSaleId;
-	private String saleId;
 	private String storeId;
 	private String receiptNo;
 	
@@ -13,13 +11,6 @@ public class UpdateInStoreSaleCommand extends UpdateSaleCommand {
 		this.receiptNo = receiptNo;
 	}
 
-	public String getInStoreSaleId() {
-		return inStoreSaleId;
-	}
-
-	public String getSaleId() {
-		return saleId;
-	}
 
 	public String getStoreId() {
 		return storeId;
