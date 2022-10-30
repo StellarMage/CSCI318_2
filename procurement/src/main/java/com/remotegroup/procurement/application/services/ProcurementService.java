@@ -3,6 +3,7 @@ package com.remotegroup.procurement.application.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,8 +25,6 @@ import com.remotegroup.procurement.domain.model.commands.CreateSupplierCommand;
 import com.remotegroup.procurement.domain.model.commands.UpdateContactCommand;
 import com.remotegroup.procurement.domain.model.commands.UpdateSupplierCommand;
 import com.remotegroup.procurement.domain.model.services.IProcurementService;
-import com.remotegroup.procurement.exceptions.ContactNotFoundException;
-import com.remotegroup.procurement.exceptions.SupplierNotFoundException;
 import com.remotegroup.procurement.infrastructure.persistence.ContactRepository;
 import com.remotegroup.procurement.infrastructure.persistence.SupplierRepository;
 import com.remotegroup.procurement.interfaces.rest.controllers.ContactController;
@@ -62,6 +61,16 @@ public class ProcurementService implements IProcurementService{
 	@Override
 	public List<Supplier> getSuppliers() {
 		  return sRepo.findAll();
+	}
+	
+	@Override
+	public List<SupplierId> getSupplierIds(){
+		List<SupplierId> ids = new ArrayList<SupplierId>();
+		List<Supplier> suppliers = getSuppliers();
+		for(int i=0;i<suppliers.size();i++) {
+			ids.add(suppliers.get(i).getSupplierId());
+		}
+		return ids;
 	}
 
 	@Override

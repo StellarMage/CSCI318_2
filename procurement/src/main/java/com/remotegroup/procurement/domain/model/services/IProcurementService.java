@@ -33,6 +33,7 @@ public interface IProcurementService {
 	
 	public abstract CollectionModel<EntityModel<Contact>> getContacts();
 	public abstract EntityModel<Contact> getContact(ContactId id);
+	List<SupplierId> getSupplierIds();
 
 	//public abstract void procurementListener(String data);
 }

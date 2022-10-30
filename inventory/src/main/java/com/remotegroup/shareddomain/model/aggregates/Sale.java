@@ -40,18 +40,18 @@ public class Sale extends AbstractAggregateRoot<Sale>{
         this.saleId = new SaleId(command.getSaleId());
         this.itemId = new ItemId(command.getItemId());
         this.itemName = new ItemName(command.getItemName());
-        this.quantity = new Quantity(command.getQuantity());
+        this.quantity = new Quantity(Integer.parseInt(command.getQuantity()));
         this.dataTime = new DataTime(command.getDataTime());
-        this.productPrice = new ProductPrice(command.getProductPrice());
+        this.productPrice = new ProductPrice(Double.parseDouble(command.getProductPrice()));
     }
 
     public Sale updateSale(UpdateSaleCommand command) {
         this.saleId = new SaleId(command.getSaleId());
         this.itemId = new ItemId(command.getItemId());
         this.itemName = new ItemName(command.getItemName());
-        this.quantity = new Quantity(command.getQuantity());
+        this.quantity = new Quantity(Integer.parseInt(command.getQuantity()));
         this.dataTime = new DataTime(command.getDataTime());
-        this.productPrice = new ProductPrice(command.getProductPrice());
+        this.productPrice = new ProductPrice(Double.parseDouble(command.getProductPrice()));
         return this;
     }
 

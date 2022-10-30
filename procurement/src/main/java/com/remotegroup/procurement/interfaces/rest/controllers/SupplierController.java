@@ -31,6 +31,11 @@ public class SupplierController {
 		return procurementService.getSuppliers();
 	}
 	
+	@GetMapping("/suppliers/ids")
+	List<SupplierId> getSupplierIds(){
+		return procurementService.getSupplierIds();
+	}
+	
 	//use case: create supplier
 	@PostMapping("/supplier")
 	Supplier createSupplier(@RequestBody CreateSupplierCommand c) {
