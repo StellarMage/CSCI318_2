@@ -9,8 +9,8 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
     
     @Bean
-    public NewTopic procurement() {
-        return TopicBuilder.name("procurement")
+    public NewTopic procRequestItP() {
+        return TopicBuilder.name("procRequestItP")
                 .build();
 
     }

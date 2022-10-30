@@ -21,4 +21,11 @@ public class KafkaTopicConfig {
                 .build();
 
     }
+
+    @Bean
+    public NewTopic procRequestItP() {
+        return TopicBuilder.name("procRequestItP")
+                .build();
+
+    }
 }

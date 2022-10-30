@@ -24,7 +24,7 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic procurement() {
-        return TopicBuilder.name("procurement")
+        return TopicBuilder.name("procRequestStI")
                 .build();
 
     }
