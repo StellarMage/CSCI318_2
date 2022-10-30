@@ -44,7 +44,6 @@ public class Supplier extends AbstractAggregateRoot<Supplier> {
 		this.companyName = new CompanyName(command.getCompanyName());
 		this.base = new Base(command.getBase());
 		return this;
-		
 	}
 	
 	public CompanyName getCompanyName() {
