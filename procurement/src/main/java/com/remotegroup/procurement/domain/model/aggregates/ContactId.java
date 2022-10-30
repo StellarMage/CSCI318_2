@@ -5,8 +5,6 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
-import com.remotegroup.procurement.domain.model.valueobjects.Email;
-
 //aggregate id 
 @Embeddable
 public class ContactId implements Serializable{

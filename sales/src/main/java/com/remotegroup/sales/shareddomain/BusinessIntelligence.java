@@ -1,12 +1,12 @@
 package com.remotegroup.sales.shareddomain;
 
-import com.remotegroup.sales.sale.domain.Sale;
-
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.remotegroup.sales.domain.model.aggregates.Sale;
 
 @Entity
 public class BusinessIntelligence {

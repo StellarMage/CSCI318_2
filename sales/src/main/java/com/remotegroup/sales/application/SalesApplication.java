@@ -11,11 +11,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remotegroup.sales.controller.Controller;
-import com.remotegroup.sales.sale.domain.Sale;
-import com.remotegroup.sales.sale.persistence.SaleRepository;
-import com.remotegroup.sales.service.SaleService;
-import com.remotegroup.sales.service.SaleServiceImpl;
+import com.remotegroup.sales.application.services.SaleService;
+import com.remotegroup.sales.domain.model.aggregates.Sale;
+import com.remotegroup.sales.domain.model.services.ISaleService;
+import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
+import com.remotegroup.sales.interfaces.kafka.KafkaController;
 import com.remotegroup.sales.shareddomain.BusinessIntelligence;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -32,7 +32,7 @@ public class SalesApplication {
   	private Controller controller;
 	private SaleRepository saleRepository;
 	private SaleServiceImpl saleServiceImpl;*/
-	@Autowired SaleService saleService;
+	@Autowired ISaleService saleService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalesApplication.class, args);
