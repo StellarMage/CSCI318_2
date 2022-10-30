@@ -6,10 +6,10 @@ public class CreateProductCommand {
     private String name;
     private String price;
     private String comment;
-    private String comprisingParts;
-    private String stockQuantity;
+    private String[][] comprisingParts; // [ [partId, amount], ... ]
+    private int stockQuantity;
 
-    public CreateProductCommand(String name, String price, String comment, String comprisingParts, String stockQuantity) {
+    public CreateProductCommand(String name, String price, String comment, String[][] comprisingParts, int stockQuantity) {
 		this.name = name;
 		this.price = price;
         this.comment = comment;
@@ -41,16 +41,16 @@ public class CreateProductCommand {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-    public String getComprisingParts() {
+    public String[][] getComprisingParts() {
 		return comprisingParts;
 	}
-	public void setComprisingParts(String comprisingParts) {
+	public void setComprisingParts(String[][] comprisingParts) {
 		this.comprisingParts = comprisingParts;
 	}
-    public String getStockQuantity() {
+    public int getStockQuantity() {
 		return stockQuantity;
 	}
-	public void setStockQuantity(String stockQuantity) {
+	public void setStockQuantity(int stockQuantity) {
 		this.stockQuantity = stockQuantity;
     }
 }

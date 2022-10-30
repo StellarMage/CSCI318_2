@@ -13,7 +13,6 @@ import com.remotegroup.inventory.domain.model.valueobjects.Name;
 import com.remotegroup.inventory.domain.model.valueobjects.Price;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.valueobjects.Comment;
-import com.remotegroup.inventory.domain.model.valueobjects.ComprisingParts;
 import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
 
 @Entity
@@ -29,7 +28,7 @@ public class Product extends AbstractAggregateRoot<Product>{
     @Embedded
     private Comment comment;
     @Embedded
-    private ComprisingParts comprisingParts; // [][0] = part_id, [][1] = parts_needed  NOTE: MUST be >= 1 Part with number >= 1
+    private ComprisingPart[] comprisingParts; 
     @Embedded
     private StockQuantity stockQuantity;
     
@@ -40,9 +39,13 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.name = new Name(command.getName());
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
-        this.comprisingParts = new ComprisingParts(command.getComprisingParts());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-	}
+        
+        String[][] partsStr = command.getComprisingParts();
+        for(int i = 0; i < partsStr.length; i++) {
+        	comprisingParts[i] = new ComprisingPart(new PartId(partsStr[i][0]), Long.parseLong(partsStr[i][1]));
+        }
+    }
 
     public Long getId(){
         return this.id;
@@ -71,10 +74,10 @@ public class Product extends AbstractAggregateRoot<Product>{
     public Comment setComment(Comment comment){
         return this.comment;
     }
-    public ComprisingParts getComprisingParts(){
+    public ComprisingPart[] getComprisingParts(){
         return this.comprisingParts;
     }
-    public ComprisingParts setComprisingParts(ComprisingParts comprisingParts){
+    public ComprisingPart[] setComprisingParts(ComprisingPart[] comprisingParts){
         return this.comprisingParts;
     }
     public StockQuantity getStockQuantity(){

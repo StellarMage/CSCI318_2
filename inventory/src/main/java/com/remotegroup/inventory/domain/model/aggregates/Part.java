@@ -75,7 +75,7 @@ public class Part extends AbstractAggregateRoot<Part>{
     }
 
     @Override
-    public boolean equals(Part o) {
+    public boolean equals(Object o) {
         if (this == o)
             return true;
         if (!(o instanceof Part))
@@ -84,12 +84,13 @@ public class Part extends AbstractAggregateRoot<Part>{
         return Objects.equals(this.partId, part.partId) 
         && Objects.equals(this.supplierId, part.supplierId)
         && Objects.equals(this.name, part.name)
-        && Objects.equals(this.description, part.description);
+        && Objects.equals(this.description, part.description)
+        && Objects.equals(this.stockQuantity, part.stockQuantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.partId, this.supplierId, this.name, this.description);
+        return Objects.hash(this.partId, this.supplierId, this.name, this.description, this.stockQuantity);
     }
 
     @Override

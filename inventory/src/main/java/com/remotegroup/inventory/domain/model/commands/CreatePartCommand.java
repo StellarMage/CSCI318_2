@@ -6,9 +6,9 @@ public class CreatePartCommand {
     private String supplierId;
     private String name;
     private String description;
-    private String stockQuantity;
+    private int stockQuantity;
     
-    public CreatePartCommand(String supplierId, String name, String description, String stockQuantity) {
+    public CreatePartCommand(String supplierId, String name, String description, int stockQuantity) {
 		this.supplierId = supplierId;
 		this.name = name;
         this.description = description;
@@ -39,10 +39,10 @@ public class CreatePartCommand {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    public String getStockQuantity() {
+    public int getStockQuantity() {
 		return stockQuantity;
 	}
-	public void setStockQuantity(String stockQuantity) {
+	public void setStockQuantity(int stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
 }

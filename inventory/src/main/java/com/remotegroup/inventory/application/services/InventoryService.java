@@ -1,18 +1,15 @@
 package com.remotegroup.inventory.application.services;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import com.remotegroup.inventory.domain.model.aggregates.ComprisingPart;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.PartId;
 import com.remotegroup.inventory.domain.model.aggregates.Product;
@@ -26,20 +23,18 @@ import com.remotegroup.inventory.exceptions.PartNotFoundException;
 import com.remotegroup.inventory.exceptions.ProductNotFoundException;
 import com.remotegroup.inventory.infrastructure.persistence.PartRepository;
 import com.remotegroup.inventory.infrastructure.persistence.ProductRepository;
-import com.remotegroup.inventory.interfaces.rest.controllers.PartModelAssembler;
 
 @Service
 public class InventoryService implements IInventoryService{
 
 	@Autowired private final ProductRepository prRepo;
-	@Autowired private final PartModelAssembler prAssembler;
+	//@Autowired private final PartModelAssembler prAssembler;
 	@Autowired private final PartRepository paRepo;
-	@Autowired private final PartModelAssembler paAssembler;
+	//@Autowired private final PartModelAssembler paAssembler;
 	
 	InventoryService(ProductRepository prRepo, PartRepository paRepo){
 		this.paRepo = paRepo;
 		this.prRepo = prRepo;
-		this.paAssembler = paAssembler;
 	}
 	
 	@Override
@@ -176,16 +171,16 @@ public class InventoryService implements IInventoryService{
 	public boolean checkInventory(Long itemId) {
 		try {
 			Product p = getProduct(itemId);
-			if(p.getStockQuantity() > 0) {
+			if(p.getStockQuantity().get() > 0) {
 				return true;
 			}else {
 				//check for all parts
-				Long[][] parts = p.getComprisingParts();
+				ComprisingPart[] parts = p.getComprisingParts();
 				for(int c=0; c<parts.length;c++) {
-					Long partId = parts[c][0];
-					Long quantity = parts[c][1];
+					PartId partId = parts[c].getPart();
+					Long quantity = parts[c].getQuantity();
 					Part part = getPart(partId);
-					if(part.getStockQuantity() < quantity) {
+					if(part.getStockQuantity().get() < quantity) {
 						return false;
 					}
 				}

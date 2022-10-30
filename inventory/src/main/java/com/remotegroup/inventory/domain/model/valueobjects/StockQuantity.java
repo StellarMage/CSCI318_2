@@ -8,20 +8,20 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class StockQuantity implements Serializable{
 
-	private String stockQuantity;
+	private int stockQuantity;
 	
 	StockQuantity(){}
 	
-	public StockQuantity(String id) {this.stockQuantity = id;}
+	public StockQuantity(int id) {this.stockQuantity = id;}
 	
-	public String toString() {return this.stockQuantity;}
+	public int get() {return this.stockQuantity;}
 	
 	@Override
 	public boolean equals(Object o) {
 		if(this == o) return true;
 		if(o== null || this.getClass() != o.getClass()) return false;
 		StockQuantity e = (StockQuantity) o;
-		return stockQuantity.equals(e.stockQuantity);
+		return stockQuantity == e.stockQuantity;
 	}
 	
 	@Override
