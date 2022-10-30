@@ -8,13 +8,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ProductPrice implements Serializable{
 
-	private String productPrice;
+	private Double productPrice;
 	
 	public ProductPrice() {}
 	
-	public ProductPrice(String productPrice) {this.productPrice = productPrice;}
+	public ProductPrice(Double productPrice) {this.productPrice = productPrice;}
 	
-	public String toString() {return this.productPrice;}
+	public Double toDouble() {return this.productPrice;}
 	
 	@Override
 	public boolean equals(Object o) {
