@@ -7,6 +7,7 @@ import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
 import com.remotegroup.sales.domain.model.aggregates.Sale;
 import com.remotegroup.sales.domain.model.aggregates.SaleId;
 import com.remotegroup.sales.domain.model.commands.*;
+import com.remotegroup.sales.domain.model.valueobjects.ItemId;
 import com.remotegroup.sales.exceptions.*;
 import com.remotegroup.sales.shareddomain.*;
 
@@ -40,7 +41,7 @@ public interface ISaleService {
 	public abstract void deleteBackOrderSale(Long id);
 	public abstract BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException;
 
-	public abstract Product getProductInfo(Long id);
+	public abstract Product getProductInfo(SaleId id);
 
 	public abstract void initSaleBI() throws JsonProcessingException;
 	public abstract void sendSale(Sale s) throws JsonProcessingException;

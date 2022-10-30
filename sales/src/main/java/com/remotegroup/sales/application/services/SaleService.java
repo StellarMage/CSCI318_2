@@ -10,6 +10,7 @@ import com.remotegroup.sales.domain.model.aggregates.Sale;
 import com.remotegroup.sales.domain.model.aggregates.SaleId;
 import com.remotegroup.sales.domain.model.commands.*;
 import com.remotegroup.sales.domain.model.services.ISaleService;
+import com.remotegroup.sales.domain.model.valueobjects.ItemId;
 import com.remotegroup.sales.exceptions.*;
 import com.remotegroup.sales.infrastructure.persistence.BackOrderSaleRepository;
 import com.remotegroup.sales.infrastructure.persistence.InStoreSaleRepository;
@@ -249,13 +250,13 @@ public class SaleService implements ISaleService{
 	}
 	
 	@Override
-	public Product getProductInfo(Long id) {
+	public Product getProductInfo(SaleId id) {
 		try {
 			Sale chosenSale = getSale(id);
-			Long itemId = chosenSale.getItemId();
-			String payload = Long.toString(itemId);
-			controller.publish(payload);
-			log.info("Sale ID Sent to Inventory");
+			ItemId itemId = chosenSale.getItemId();
+			String jsonString = mapper.writeValueAsString(itemId);
+			controller.publish(jsonString);
+			log.info("ItemId Sent to Inventory");
 			return kafkaListeners.getListener();
 		}catch(Exception e) {
 			throw new SaleNotFoundException(id);
