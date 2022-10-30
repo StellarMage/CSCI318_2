@@ -20,7 +20,7 @@ public class KafkaListeners {
     public KafkaListeners(){
     }
     
-    @KafkaListener(topics = "procurement", groupId = "procurement")
+    @KafkaListener(topics = "procRequestItP", groupId = "procRequestItP")
     void listener(String data) throws JsonMappingException, JsonProcessingException{
         log.info("JSON String Received");
         BackOrderSale dataReceived = mapper.readValue(data, BackOrderSale.class);

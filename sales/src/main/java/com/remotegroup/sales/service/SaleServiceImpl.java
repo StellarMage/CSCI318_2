@@ -212,8 +212,8 @@ public class SaleServiceImpl implements SaleService{
 	@Override
 	public BackOrderSale createBackOrderSale(BackOrderSale s) throws JsonProcessingException {
 		String jsonString = mapper.writeValueAsString(s);
-		controller.procure(jsonString);
-		log.info("Procurement Request Sent");
+		controller.procRequestStI(jsonString);
+		log.info("Procurement Request Sent to Inventory");
 		return backOrderSaleRepository.save(s);
 	}
 

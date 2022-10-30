@@ -25,8 +25,8 @@ public class Controller {
         kafkaTemplate.send("productBySaleFromSales", data);
     }
 
-    public void procure(String data) {
-        kafkaTemplate.send("procurement", data);
+    public void procRequestStI(String data) {
+        kafkaTemplate.send("procRequestStI", data);
     }
 
     public void bIInit(String data) {
