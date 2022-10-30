@@ -17,7 +17,7 @@ class ContactModelAssembler implements RepresentationModelAssembler<Contact, Ent
   public EntityModel<Contact> toModel(Contact contact) {
 
     return EntityModel.of(contact,
-        linkTo(methodOn(ContactController.class).one(contact.getId())).withSelfRel(),
+        linkTo(methodOn(ContactController.class).one(contact.getContactId().toString())).withSelfRel(),
         linkTo(methodOn(ContactController.class).all()).withRel("contacts"));
   }
 }

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.remotegroup.procurement.domain.model.commands.CreateContactCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateContactCommand;
 import com.remotegroup.procurement.domain.model.valueobjects.Email;
 import com.remotegroup.procurement.domain.model.valueobjects.Name;
 import com.remotegroup.procurement.domain.model.valueobjects.Phone;
@@ -19,7 +21,6 @@ public class Contact extends AbstractAggregateRoot<Contact>{
     private @Id @GeneratedValue Long id;
     @Embedded
     private ContactId contactId;
-    
     
     @Embedded
     private SupplierId supplierId;
@@ -32,22 +33,83 @@ public class Contact extends AbstractAggregateRoot<Contact>{
     @Embedded
     private Position position;
 
-    Contact () {}
+    public Contact () {}
 
-    public Contact(String i, String n, String p, String e, String po){
-        supplierId = i;
-        name = n;
-        phone = p;
-        email = e;
-        position = po;
+    public Contact(CreateContactCommand command){
+        this.contactId = new ContactId(command.getContactId());
+        this.supplierId = new SupplierId(command.getSupplierId());
+        this.name = new Name(command.getName());
+        this.phone = new Phone(command.getPhone());
+        this.email = new Email(command.getEmail());
+        this.position = new Position(command.getPosition());
     }
+    
+    public Contact updateContact(UpdateContactCommand command) {
+        this.contactId = new ContactId(command.getContactId());
+        this.supplierId = new SupplierId(command.getSupplierId());
+        this.name = new Name(command.getName());
+        this.phone = new Phone(command.getPhone());
+        this.email = new Email(command.getEmail());
+        this.position = new Position(command.getPosition());
+        return this;
+    }
+    
     public Long getId(){
         return this.id;
     }
+    
+    
 
 
+    public ContactId getContactId() {
+		return contactId;
+	}
 
-    @Override
+	public SupplierId getSupplierId() {
+		return supplierId;
+	}
+
+	public Name getName() {
+		return name;
+	}
+
+	public Phone getPhone() {
+		return phone;
+	}
+
+	public Email getEmail() {
+		return email;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setSupplierId(SupplierId supplierId) {
+		this.supplierId = supplierId;
+	}
+
+	public void setName(Name name) {
+		this.name = name;
+	}
+
+	public void setPhone(Phone phone) {
+		this.phone = phone;
+	}
+
+	public void setEmail(Email email) {
+		this.email = email;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
@@ -64,7 +126,7 @@ public class Contact extends AbstractAggregateRoot<Contact>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.supplierId, this.name, this.phone, this.email, this.position);
+        return Objects.hash(this.id, this.contactId, this.supplierId, this.name, this.phone, this.email, this.position);
     }
 
     @Override
@@ -77,4 +139,9 @@ public class Contact extends AbstractAggregateRoot<Contact>{
          + ", position='" + this.position + '\'' 
          + '}';
     }
+
+	public void setContactId(ContactId contactId2) {
+		this.contactId = contactId2;
+		
+	}
 }

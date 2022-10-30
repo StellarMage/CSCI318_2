@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import com.remotegroup.procurement.domain.model.commands.CreateSupplierCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateSupplierCommand;
 import com.remotegroup.procurement.domain.model.valueobjects.Base;
 import com.remotegroup.procurement.domain.model.valueobjects.CompanyName;
 
@@ -38,7 +39,11 @@ public class Supplier extends AbstractAggregateRoot<Supplier> {
 		this.base = new Base(command.getBase());
 	}
 	
-	public Supplier updateSupplier(updateSupplierCommand command) {
+	public Supplier updateSupplier(UpdateSupplierCommand command) {
+		this.supplierId = new SupplierId(command.getSupplierId());
+		this.companyName = new CompanyName(command.getCompanyName());
+		this.base = new Base(command.getBase());
+		return this;
 		
 	}
 	

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.remotegroup.procurement.domain.model.aggregates.Contact;
+import com.remotegroup.procurement.domain.model.aggregates.ContactId;
+import com.remotegroup.procurement.domain.model.commands.CreateContactCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateContactCommand;
 import com.remotegroup.procurement.domain.model.services.IProcurementService;
 
 @RestController
@@ -31,27 +34,27 @@ public class ContactController {
 	
 	//use case: create contact
 	@PostMapping("/contact")
-	Contact newContact(@RequestBody Contact newContact) {
-		return procurementService.createContact(newContact);
+	Contact newContact(@RequestBody CreateContactCommand command) {
+		return procurementService.createContact(command);
 	}
 	
 	//use case: update contact
-	@PutMapping("/contact/{id}")
-	Contact replaceContact(@RequestBody Contact newContact, @PathVariable Long id) {
-		return procurementService.updateContact(newContact, id);
+	@PutMapping("/contact")
+	Contact replaceContact(@RequestBody UpdateContactCommand command) {
+		return procurementService.updateContact(command);
 	}
 	
 	
 	//use case: delete contact
 	@DeleteMapping("/contact/{id}")
-	void deleteContact(@PathVariable Long id) {
-		procurementService.deleteContact(id);
+	void deleteContact(@PathVariable String id) {
+		procurementService.deleteContact(new ContactId(id));
 	}
 	
 	//use case: get contact by id
 
 	@GetMapping("/contact/{id}")
-	EntityModel<Contact> one(@PathVariable Long id) {
-		return procurementService.getContact(id);
+	EntityModel<Contact> one(@PathVariable String id) {
+		return procurementService.getContact(new ContactId(id));
 	}
 }

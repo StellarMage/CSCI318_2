@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.remotegroup.procurement.domain.model.aggregates.Supplier;
 import com.remotegroup.procurement.domain.model.aggregates.SupplierId;
 import com.remotegroup.procurement.domain.model.commands.CreateSupplierCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateSupplierCommand;
 import com.remotegroup.procurement.domain.model.services.IProcurementService;
 
 @RestController
@@ -37,21 +38,21 @@ public class SupplierController {
 	}
 	
 	//use case: update supplier
-	@PutMapping("/supplier/{id}")
-	Supplier updateSupplier(@RequestBody Supplier newSupplier, @PathVariable SupplierId id) {
-		return procurementService.updateSupplier(newSupplier, id);
+	@PutMapping("/supplier")
+	Supplier updateSupplier(@RequestBody UpdateSupplierCommand c) {
+		return procurementService.updateSupplier(c);
 	}
 	
 	//use case: delete supplier
 	@DeleteMapping("/supplier/{id}")
-	void deleteSupplier(@PathVariable Long id) {
-		procurementService.deleteSupplier(id);
+	void deleteSupplier(@PathVariable String id) {
+		procurementService.deleteSupplier(new SupplierId(id));
 	}
 	
 	//use case: get supplier by id
 	@GetMapping("/supplier/{id}")
-	Supplier getSupplier(@PathVariable Long id) {
-		return procurementService.getSupplier(id);
+	Supplier getSupplier(@PathVariable String id) {
+		return procurementService.getSupplier(new SupplierId(id));
 	}
 	
 }

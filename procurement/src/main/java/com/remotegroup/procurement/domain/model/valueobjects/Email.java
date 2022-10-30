@@ -12,8 +12,12 @@ public class Email implements Serializable {
 	
 	Email(){}
 	
-	public Email(String email) throws Exception {
-		this.email = validate(email);
+	public Email(String email) {
+		try {
+			this.email = validate(email);
+		} catch (Exception e) {
+			return;
+		}
 	}
 	
 	public String toString() {return this.email;}

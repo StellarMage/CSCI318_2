@@ -16,9 +16,13 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
 import com.remotegroup.procurement.domain.model.aggregates.Contact;
+import com.remotegroup.procurement.domain.model.aggregates.ContactId;
 import com.remotegroup.procurement.domain.model.aggregates.Supplier;
 import com.remotegroup.procurement.domain.model.aggregates.SupplierId;
+import com.remotegroup.procurement.domain.model.commands.CreateContactCommand;
 import com.remotegroup.procurement.domain.model.commands.CreateSupplierCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateContactCommand;
+import com.remotegroup.procurement.domain.model.commands.UpdateSupplierCommand;
 import com.remotegroup.procurement.domain.model.services.IProcurementService;
 import com.remotegroup.procurement.exceptions.ContactNotFoundException;
 import com.remotegroup.procurement.exceptions.SupplierNotFoundException;
@@ -40,8 +44,19 @@ public class ProcurementService implements IProcurementService{
 	}
 	
 	@Override
-	public void deleteSupplier(Long id) {
-		sRepo.deleteById(id);
+	public void deleteSupplier(SupplierId id) {
+		//find the supplier by supplierId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("supplierId", match->match.exact());
+		Supplier sExample = new Supplier();
+		sExample.setSupplierId(id);
+		Example<Supplier> example = Example.of(sExample, matcher);
+		
+		//store supplier in object
+		List<Supplier> returnSuppliers =  sRepo.findAll(example);
+		Supplier supplier = returnSuppliers.get(0);
+		
+		sRepo.delete(supplier);
 	}
 
 	@Override
@@ -58,51 +73,55 @@ public class ProcurementService implements IProcurementService{
 	}
 
 	@Override
-	public Supplier updateSupplier(Supplier s, SupplierId id) {
+	public Supplier updateSupplier(UpdateSupplierCommand updateSupplierCommand) {
 		
+		//find the supplier by supplierId
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("supplierId", match->match.exact());
-		
 		Supplier sExample = new Supplier();
-		sExample.setSupplierId(id);
+		sExample.setSupplierId(new SupplierId(updateSupplierCommand.getSupplierId()));
 		Example<Supplier> example = Example.of(sExample, matcher);
 		
+		//store supplier in object
 		List<Supplier> returnSuppliers =  sRepo.findAll(example);
-		
 		Supplier supplier = returnSuppliers.get(0);
 		
-		supplier.setCompanyName(s.getCompanyName());
-		supplier.setBase(s.getBase());
-		return sRepo.save(supplier);
+		//update supplier
+		supplier.updateSupplier(updateSupplierCommand);
 		
-		/*
-		      	.map(Supplier -> {
-					Supplier.setCompanyName(s.getCompanyName().toString());
-					Supplier.setBase(s.getBase().toString());
-		        return sRepo.save(Supplier);
-		      })
-		      	.orElseGet(() -> {
-		        	s.setSupplierId(s.getSupplierId());
-		        	return sRepo.save(s);
-		      });*/
-	}
+		//save to repository
+		return sRepo.save(supplier);
+		}
 
 	@Override
-	public Supplier getSupplier(Long id) {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return sRepo.findById(id).get();
+	public Supplier getSupplier(SupplierId id) {
+			//find the supplier by supplierId
+			ExampleMatcher matcher = ExampleMatcher.matching()
+					.withMatcher("supplierId", match->match.exact());
+			Supplier sExample = new Supplier();
+			sExample.setSupplierId(id);
+			Example<Supplier> example = Example.of(sExample, matcher);
 			
-		}catch(Exception e) {
-			throw new SupplierNotFoundException(id);
-		}
+			//store supplier in object
+			List<Supplier> returnSuppliers =  sRepo.findAll(example);
+			Supplier supplier = returnSuppliers.get(0);
+			return supplier;
+			
 	}
 
 	// -------------- Contact 
 	
 	@Override
-	public void deleteContact(Long id) {
-		cRepo.deleteById(id);
+	public void deleteContact(ContactId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("contactId", match->match.exact());
+		Contact sExample = new Contact();
+		sExample.setContactId(id);
+		Example<Contact> example = Example.of(sExample, matcher);
+		
+		List<Contact> returnContacts =  cRepo.findAll(example);
+		Contact contact = returnContacts.get(0);
+		cRepo.delete(contact);
 		
 	}
 
@@ -117,32 +136,38 @@ public class ProcurementService implements IProcurementService{
 	}
 
 	@Override
-	public Contact createContact(Contact c) {
-		return cRepo.save(c);
+	public Contact createContact(CreateContactCommand command) {
+		String contactIdStr = UUID.randomUUID().toString().toUpperCase();
+		command.setContactId(contactIdStr);
+		return cRepo.save(new Contact(command));
 	}
 
 	@Override
-	public Contact updateContact(Contact c, Long id) {
-		return cRepo.findById(id)
-		      	.map(Contact -> {
-					Contact.setSupplierId(c.getSupplierId());
-					Contact.setName(c.getName());
-					Contact.setPhone(c.getPhone());
-					Contact.setEmail(c.getEmail());
-					Contact.setPosition(c.getPosition());
-		        return cRepo.save(Contact);
-		      })
-		      	.orElseGet(() -> {
-		        	c.setId(id);
-		        	return cRepo.save(c);
-		      });
+	public Contact updateContact(UpdateContactCommand command) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("contactId", match->match.exact());
+		Contact sExample = new Contact();
+		sExample.setContactId(new ContactId(command.getContactId()));
+		Example<Contact> example = Example.of(sExample, matcher);
+		
+		List<Contact> returnContacts =  cRepo.findAll(example);
+		Contact contact = returnContacts.get(0);
+		
+		contact.updateContact(command);
+		
+		return cRepo.save(contact);
 	}
 
 	@Override
-	public EntityModel<Contact> getContact(Long id) {
-		Contact contact = cRepo.findById(id) //
-				.orElseThrow(() -> new ContactNotFoundException(id));
-
+	public EntityModel<Contact> getContact(ContactId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("contactId", match->match.exact());
+		Contact sExample = new Contact();
+		sExample.setContactId(id);
+		Example<Contact> example = Example.of(sExample, matcher);
+		
+		List<Contact> returnContacts =  cRepo.findAll(example);
+		Contact contact = returnContacts.get(0);
 			return cAssembler.toModel(contact);
 	}
 
