@@ -6,10 +6,10 @@ public class UpdateProductCommand {
     private String name;
     private String price;
     private String comment;
-    private String comprisingParts;
-    private String stockQuantity;
+    private String[][] comprisingParts;
+    private int stockQuantity;
 
-    public UpdateProductCommand(String name, String price, String comment, String comprisingParts, String stockQuantity) {
+    public UpdateProductCommand(String name, String price, String comment, String[][] comprisingParts, int stockQuantity) {
 		this.name = name;
 		this.price = price;
         this.comment = comment;
@@ -29,10 +29,10 @@ public class UpdateProductCommand {
 	public String getComment() {
 		return comment;
 	}
-    public String getComprisingParts() {
+    public String[][] getComprisingParts() {
 		return comprisingParts;
 	}
-    public String getStockQuantity() {
+    public int getStockQuantity() {
 		return stockQuantity;
 	}
 }

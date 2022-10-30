@@ -16,11 +16,10 @@ import com.remotegroup.inventory.domain.model.aggregates.Product;
 import com.remotegroup.inventory.domain.model.aggregates.ProductId;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
+import com.remotegroup.inventory.domain.model.commands.UpdatePartCommand;
+import com.remotegroup.inventory.domain.model.commands.UpdateProductCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
 import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
-import com.remotegroup.inventory.exceptions.PartNotFoundByProductException;
-import com.remotegroup.inventory.exceptions.PartNotFoundException;
-import com.remotegroup.inventory.exceptions.ProductNotFoundException;
 import com.remotegroup.inventory.infrastructure.persistence.PartRepository;
 import com.remotegroup.inventory.infrastructure.persistence.ProductRepository;
 
@@ -51,8 +50,24 @@ public class InventoryService implements IInventoryService{
 	}
 
 	@Override
-	public Product updateProduct(Product p, ProductId id) {
+	public Product updateProduct(UpdateProductCommand command) {
 		
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("productId", match->match.exact());
+		
+		Product pExample = new Product();
+		pExample.setProductId(new ProductId(command.getProductId()));
+		Example<Product> example = Example.of(pExample, matcher);
+		
+		List<Product> returnProducts =  prRepo.findAll(example);
+		
+		Product product = returnProducts.get(0);
+		product.updateProduct(command);
+		return prRepo.save(product);
+	}
+
+	@Override
+	public void deleteProduct(ProductId id) {
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("productId", match->match.exact());
 		
@@ -63,48 +78,38 @@ public class InventoryService implements IInventoryService{
 		List<Product> returnProducts =  prRepo.findAll(example);
 		
 		Product product = returnProducts.get(0);
-		
-		product.setName(p.getName());
-		product.setPrice(p.getPrice());
-		product.setComment(p.getComment());
-		product.setComprisingParts(p.getComprisingParts());
-		product.setStockQuantity(p.getStockQuantity());
-		return prRepo.save(product);
-	}
-
-	@Override
-	public void deleteProduct(Long id) {
-		prRepo.deleteById(id);
+		prRepo.delete(product);
 		
 	}
 
 	@Override
-	public Product getProduct(Long id) {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return prRepo.findById(id).get();
-			
-		}catch(Exception e) {
-			throw new ProductNotFoundException(id);
-		}
+	public Product getProduct(ProductId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("productId", match->match.exact());
+		
+		Product pExample = new Product();
+		pExample.setProductId(id);
+		Example<Product> example = Example.of(pExample, matcher);
+		
+		List<Product> returnProducts =  prRepo.findAll(example);
+		
+		Product product = returnProducts.get(0);
+		return product;
 	}
 
 	@Override
-	public List<Part> getPartByProduct(Long id){
-		try {
-			Product p = getProduct(id);
+	public List<Part> getPartByProduct(ProductId id){
+		Product p = getProduct(id);
 
-			Long[][] parts = p.getComprisingParts();
+		ComprisingPart[] parts = p.getComprisingParts();
 
-			List<Part> pList = new ArrayList<Part>();
-			for(int c=0; c<parts.length; c++) {
-				Long partId = parts[c][0];
-				pList.add(getPart(partId));
-			}
-			return pList;
-		}catch(Exception e) {
-			throw new PartNotFoundByProductException(id);
+		List<Part> pList = new ArrayList<Part>();
+		for(int c=0; c<parts.length; c++) {
+			PartId partId = parts[c].getPart();
+			pList.add(getPart(partId));
 		}
+		return pList;
+		
 	}
 
 	
@@ -124,8 +129,25 @@ public class InventoryService implements IInventoryService{
 	}
 
 	@Override
-	public Part updatePart(Part p, PartId id) {
+	public Part updatePart(UpdatePartCommand command) {
 		
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("partId", match->match.exact());
+		
+		Part sExample = new Part();
+		sExample.setPartId(new PartId(command.getPartId()));
+		Example<Part> example = Example.of(sExample, matcher);
+		
+		List<Part> returnParts =  paRepo.findAll(example);
+		
+		Part part = returnParts.get(0);
+		
+		part.updatePart(command);
+		return paRepo.save(part);
+	}
+
+	@Override
+	public void deletePart(PartId id) {
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("partId", match->match.exact());
 		
@@ -137,38 +159,33 @@ public class InventoryService implements IInventoryService{
 		
 		Part part = returnParts.get(0);
 		
-		part.setSupplierId(p.getSupplierId());
-		part.setName(p.getName());
-		part.setDescription(p.getDescription());
-		part.setStockQuantity(p.getStockQuantity());
-		return paRepo.save(part);
-	}
-
-	@Override
-	public void deletePart(Long id) {
-		paRepo.deleteById(id);
+		paRepo.delete(part);
 		
 	}
 
 	@Override
-	public Part getPart(Long id) {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return paRepo.findById(id).get();
-			
-		}catch(Exception e) {
-			throw new PartNotFoundException(id);
-		}
+	public Part getPart(PartId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("partId", match->match.exact());
+		
+		Part sExample = new Part();
+		sExample.setPartId(id);
+		Example<Part> example = Example.of(sExample, matcher);
+		
+		List<Part> returnParts =  paRepo.findAll(example);
+		
+		Part part = returnParts.get(0);
+		return part;
 	}
 	
 	@Override
-	public SupplierId getPartSupplier(Long id) {
+	public SupplierId getPartSupplier(PartId id) {
 		Part chosenPart = getPart(id);
 		return chosenPart.getSupplierId();
 	}
 
 	@Override
-	public boolean checkInventory(Long itemId) {
+	public boolean checkInventory(ProductId itemId) {
 		try {
 			Product p = getProduct(itemId);
 			if(p.getStockQuantity().get() > 0) {

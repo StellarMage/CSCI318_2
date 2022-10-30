@@ -6,9 +6,9 @@ public class UpdatePartCommand {
     private String supplierId;
     private String name;
     private String description;
-    private String stockQuantity;
+    private int stockQuantity;
     
-    public UpdatePartCommand(String supplierId, String name, String description, String stockQuantity) {
+    public UpdatePartCommand(String supplierId, String name, String description, int stockQuantity) {
 		this.supplierId = supplierId;
 		this.name = name;
         this.description = description;
@@ -27,7 +27,7 @@ public class UpdatePartCommand {
 	public String getDescription() {
 		return description;
 	}
-    public String getStockQuantity() {
+    public int getStockQuantity() {
 		return stockQuantity;
 	}
 }

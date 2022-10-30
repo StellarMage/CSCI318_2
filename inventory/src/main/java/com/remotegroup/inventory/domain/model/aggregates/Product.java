@@ -1,5 +1,7 @@
 package com.remotegroup.inventory.domain.model.aggregates;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.persistence.Embedded;
@@ -9,10 +11,11 @@ import javax.persistence.Id;
 
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
+import com.remotegroup.inventory.domain.model.commands.UpdateProductCommand;
+import com.remotegroup.inventory.domain.model.valueobjects.Comment;
 import com.remotegroup.inventory.domain.model.valueobjects.Name;
 import com.remotegroup.inventory.domain.model.valueobjects.Price;
-import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
-import com.remotegroup.inventory.domain.model.valueobjects.Comment;
 import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
 
 @Entity
@@ -40,13 +43,26 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        
-        String[][] partsStr = command.getComprisingParts();
-        for(int i = 0; i < partsStr.length; i++) {
-        	comprisingParts[i] = new ComprisingPart(new PartId(partsStr[i][0]), Long.parseLong(partsStr[i][1]));
+        populateComprisingParts(command.getComprisingParts());
+
+    }
+    
+    public Product updateProduct(UpdateProductCommand command) {
+		this.name = new Name(command.getName());
+		this.price = new Price(command.getPrice());
+        this.comment = new Comment(command.getComment());
+        this.stockQuantity = new StockQuantity(command.getStockQuantity());
+        populateComprisingParts(command.getComprisingParts());
+		return this;
+    }
+    
+    private void populateComprisingParts(String[][] c) {
+        Arrays.fill(comprisingParts, null); //clear array
+    	for(int i = 0; i < c.length; i++) {
+        	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
         }
     }
-
+    
     public Long getId(){
         return this.id;
     }

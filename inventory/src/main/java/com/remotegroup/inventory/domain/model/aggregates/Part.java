@@ -9,11 +9,12 @@ import javax.persistence.Id;
 
 import org.springframework.data.domain.AbstractAggregateRoot;
 
-import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
-import com.remotegroup.inventory.domain.model.valueobjects.Name;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
+import com.remotegroup.inventory.domain.model.commands.UpdatePartCommand;
 import com.remotegroup.inventory.domain.model.valueobjects.Description;
+import com.remotegroup.inventory.domain.model.valueobjects.Name;
 import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
+import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
 
 @Entity
 public class Part extends AbstractAggregateRoot<Part>{
@@ -39,6 +40,14 @@ public class Part extends AbstractAggregateRoot<Part>{
 		this.description = new Description(command.getDescription());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
 	}
+    
+    public Part updatePart(UpdatePartCommand command) {
+		this.supplierId = new SupplierId(command.getSupplierId());
+		this.name = new Name(command.getName());
+		this.description = new Description(command.getDescription());
+        this.stockQuantity = new StockQuantity(command.getStockQuantity());
+        return this;
+    }
     
     public Long getId(){
         return this.id;
