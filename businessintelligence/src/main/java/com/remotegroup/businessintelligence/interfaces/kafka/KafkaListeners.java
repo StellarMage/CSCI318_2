@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
+import com.remotegroup.businessintelligence.domain.model.commands.CreateSaleBusinessIntelligenceCommand;
 import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessIntelligenceRepository;
 import com.remotegroup.businessintelligence.interfaces.rest.BusinessIntelligenceController;
 import com.remotegroup.shareddomain.model.aggregates.Sale;
@@ -29,7 +30,8 @@ public class KafkaListeners {
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);
-        BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
+        CreateSaleBusinessIntelligenceCommand c = new CreateSaleBusinessIntelligenceCommand(dataReceived);
+        BusinessIntelligence dataConverted = new BusinessIntelligence(c);
         log.info("Converting StB: " + dataConverted);
         log.info("Receiving: " + biRepository.save(dataConverted));
     }
@@ -39,22 +41,25 @@ public class KafkaListeners {
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);
-        BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
+        CreateSaleBusinessIntelligenceCommand c = new CreateSaleBusinessIntelligenceCommand(dataReceived);
+        BusinessIntelligence dataConverted = new BusinessIntelligence(c);
         log.info("Converting StB: " + dataConverted);
         log.info("Receiving: " + biRepository.save(dataConverted));
     }
 
+    /*  As sale is no longer updated neither is BI
     @KafkaListener(topics = "bISendUpdateSale", groupId = "bISendUpdateSale")
     void bISendUpdateSaleListener(String data) throws JsonMappingException, JsonProcessingException{
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);
-        BusinessIntelligence dataConverted = new BusinessIntelligence(dataReceived);
+        CreateSaleBusinessIntelligenceCommand c = new CreateSaleBusinessIntelligenceCommand(dataReceived);
+        BusinessIntelligence dataConverted = new BusinessIntelligence(c);
         log.info("Converting StB: " + dataConverted);
         //Add Update Code
         log.info("Receiving: ");
         BusinessIntelligence bI = dataConverted;
         BusinessIntelligenceController.replaceBusinessIntelligence(bI, bI.getId());
         
-    }
+    }*/
 }
