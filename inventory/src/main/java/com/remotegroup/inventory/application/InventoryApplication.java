@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @ComponentScan({"com.remotegroup"})
-@EntityScan({"com.remotegroup.inventory.part.domain", "com.remotegroup.inventory.product.domain"})
-@EnableJpaRepositories({"com.remotegroup.inventory.part.persistence", "com.remotegroup.inventory.product.persistence"})
+@EntityScan({"com.remotegroup.inventory.domain.model.aggregates"})
+@EnableJpaRepositories({"com.remotegroup.inventory.infrastructure.persistence"})
 public class InventoryApplication {
 
 	public static void main(String[] args) {
