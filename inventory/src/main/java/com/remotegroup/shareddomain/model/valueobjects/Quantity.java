@@ -6,15 +6,15 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Quantity implements Serializable{
+public class Quantity implements Serializable {
 
-	private String quantity;
+	private Integer quantity;
 	
-	public Quantity() {}
+	Quantity(){}
 	
-	public Quantity(String quantity) {this.quantity = quantity;}
+	public Quantity(Integer id) {this.quantity = id;}
 	
-	public String toString() {return this.quantity;}
+	public Integer toInteger() {return this.quantity;}
 	
 	@Override
 	public boolean equals(Object o) {
