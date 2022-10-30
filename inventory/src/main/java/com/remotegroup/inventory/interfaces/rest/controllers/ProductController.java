@@ -3,8 +3,6 @@ package com.remotegroup.inventory.interfaces.rest.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +16,7 @@ import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.Product;
 import com.remotegroup.inventory.domain.model.aggregates.ProductId;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
+import com.remotegroup.inventory.domain.model.commands.UpdateProductCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
 
 @RestController
@@ -41,31 +40,31 @@ public class ProductController {
 	
 	//use case: update product
 	@PutMapping("/product/{id}")
-	Product replaceProduct(@RequestBody Product newProduct, @PathVariable ProductId id) {
-		return inventoryService.updateProduct(newProduct, id);
+	Product replaceProduct(@RequestBody UpdateProductCommand c) {
+		return inventoryService.updateProduct(c);
 	}
 	
 	//use case: delete product
 	@DeleteMapping("/product/{id}")
-	void deleteProduct(@PathVariable Long id) {
-		inventoryService.deleteProduct(id);
+	void deleteProduct(@PathVariable String id) {
+		inventoryService.deleteProduct(new ProductId(id));
 	}
 	
 	//use case: get product by id
 	@GetMapping("/product/{id}")
-	Product one(@PathVariable Long id) {
-		return inventoryService.getProduct(id);
+	Product one(@PathVariable String id) {
+		return inventoryService.getProduct(new ProductId(id));
 	}
 
 	//use case: Look up all parts by product
 	@GetMapping("/product/parts/{id}")
-	List<Part> getPartByProduct(@PathVariable Long id){
-		return inventoryService.getPartByProduct(id);
+	List<Part> getPartByProduct(@PathVariable String id){
+		return inventoryService.getPartByProduct(new ProductId(id));
 	}
 	
 	@GetMapping("/product/check/{itemId}")
-	boolean checkInventory(@PathVariable Long itemId) {
-		return inventoryService.checkInventory(itemId);
+	boolean checkInventory(@PathVariable String itemId) {
+		return inventoryService.checkInventory(new ProductId(itemId));
 	}
 	
 	/*@PostMapping("/product/request")

@@ -15,7 +15,7 @@ public class PartModelAssembler implements RepresentationModelAssembler<Part, En
     public EntityModel<Part> toModel(Part part) {
 
         return EntityModel.of(part,
-            linkTo(methodOn(PartController.class).one(part.getId())).withSelfRel(),
+            linkTo(methodOn(PartController.class).one(part.getPartId().toString())).withSelfRel(),
             linkTo(methodOn(PartController.class).all()).withRel("parts"));
   }
 }
