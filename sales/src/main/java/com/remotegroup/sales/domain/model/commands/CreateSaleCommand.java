@@ -2,12 +2,12 @@ package com.remotegroup.sales.domain.model.commands;
 
 public class CreateSaleCommand {
 
-	private String saleId;
-	private String itemId;
-	private String itemName;
-	private String quantity;
-	private String dataTime;
-	private String productPrice;
+	protected String saleId;
+	protected String itemId;
+	protected String itemName;
+	protected String quantity;
+	protected String dataTime;
+	protected String productPrice;
 
 	public CreateSaleCommand() {}
 	

@@ -1,9 +1,5 @@
 package com.remotegroup.sales.interfaces.rest;
 
-import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
-import com.remotegroup.sales.domain.model.commands.CreateInStoreSaleCommand;
-import com.remotegroup.sales.domain.model.services.ISaleService;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
+import com.remotegroup.sales.domain.model.aggregates.SaleId;
+import com.remotegroup.sales.domain.model.aggregates.StoreId;
+import com.remotegroup.sales.domain.model.commands.CreateInStoreSaleCommand;
+import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
+import com.remotegroup.sales.domain.model.services.ISaleService;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -33,9 +35,9 @@ public class InStoreSaleController {
 	
 	//use case: create InStoreSale
 	@PostMapping("/InStoreSale")
-	InStoreSale newInStoreSale(@RequestBody CreateInStoreSaleCommand inStoreSale) throws JsonProcessingException {
-		if(saleService.requestCheckInventory(inStoreSale.getItemId())) {
-			return saleService.createSale(inStoreSale);
+	InStoreSale newInStoreSale(@RequestBody CreateInStoreSaleCommand c) throws JsonProcessingException {
+		if(saleService.requestCheckInventory(c.getItemId())) {
+			return saleService.createSale(c);
 		}else {
 			return null;
 		}
@@ -45,27 +47,27 @@ public class InStoreSaleController {
 	
 
 	//use case: update InStoreSale
-	@PutMapping("/InStoreSale/{id}")
-	InStoreSale replaceInStoreSale(@RequestBody InStoreSale newInStoreSale, @PathVariable Long id) {
-		return saleService.updateSale(newInStoreSale, id);
+	@PutMapping("/InStoreSale")
+	InStoreSale replaceInStoreSale(@RequestBody UpdateInStoreSaleCommand c) {
+		return saleService.updateSale(c);
 	}
 	
 	//use case: delete InStoreSale
 	@DeleteMapping("/InStoreSale/{id}")
-	void deleteInStoreSale(@PathVariable Long id) {
-		saleService.deleteInStoreSale(id);
+	void deleteInStoreSale(@PathVariable String id) {
+		saleService.deleteInStoreSale(new SaleId(id));
 	}
 	
 	//use case: get InStoreSale by id
 	@GetMapping("/InStoreSale/{id}")
-	InStoreSale getInStoreSaleById(@PathVariable Long id) {
-		return saleService.getInStoreSale(id);
+	InStoreSale getInStoreSaleById(@PathVariable String id) {
+		return saleService.getInStoreSale(new SaleId(id));
 	}
 	
 	//use case: get InStoreSale by Store
 	@GetMapping("/InStoreSales/{storeId}")
-	List<InStoreSale> getSalesByStore(@PathVariable Long storeId){
-		return saleService.lookupSalesByStore(storeId);
+	List<InStoreSale> getSalesByStore(@PathVariable String storeId){
+		return saleService.lookupSalesByStore(new StoreId(storeId));
 	}
 	
 }

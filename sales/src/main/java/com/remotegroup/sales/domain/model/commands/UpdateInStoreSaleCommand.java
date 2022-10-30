@@ -1,15 +1,14 @@
 package com.remotegroup.sales.domain.model.commands;
 
-public class UpdateInStoreSaleCommand {
+public class UpdateInStoreSaleCommand extends UpdateSaleCommand {
 	
 	private String inStoreSaleId;
 	private String saleId;
 	private String storeId;
 	private String receiptNo;
 	
-	public UpdateInStoreSaleCommand(String inStoreSaleId, String saleId, String storeId, String receiptNo) {
-		this.inStoreSaleId = inStoreSaleId;
-		this.saleId = saleId;
+	public UpdateInStoreSaleCommand(String saleId, String itemId, String itemName, String quantity, String dataTime, String productPrice, String storeId, String receiptNo) {
+		super(saleId, itemId, itemName, quantity, dataTime, productPrice);
 		this.storeId = storeId;
 		this.receiptNo = receiptNo;
 	}

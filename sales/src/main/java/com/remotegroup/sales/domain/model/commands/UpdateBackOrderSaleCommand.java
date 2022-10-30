@@ -1,24 +1,15 @@
 package com.remotegroup.sales.domain.model.commands;
 
-public class UpdateBackOrderSaleCommand {
+public class UpdateBackOrderSaleCommand extends UpdateSaleCommand {
 	
-	private String backOrderSaleId;
-	private String saleId;
 	private String phoneNumber;
 	
-	public UpdateBackOrderSaleCommand(String backOrderSaleId, String saleId, String phoneNumber) {
-		this.backOrderSaleId = backOrderSaleId;
-		this.saleId = saleId;
+	public UpdateBackOrderSaleCommand(String saleId, String itemId, String itemName, String quantity, String dataTime, String productPrice, String phoneNumber) {
+		super(saleId, itemId, itemName, quantity, dataTime, productPrice);
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getBackOrderSaleId() {
-		return backOrderSaleId;
-	}
 
-	public String getSaleId() {
-		return saleId;
-	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;

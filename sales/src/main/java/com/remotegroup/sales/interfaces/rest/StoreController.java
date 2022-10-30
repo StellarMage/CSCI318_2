@@ -37,20 +37,11 @@ public class StoreController {
 		return repository.save(store);
 	}
 	
-	//use case: update store
+	/*//use case: update store
 	@PutMapping("/store/{id}")
-	Store replaceStore(@RequestBody Store newStore, @PathVariable Long id) {
-		return repository.findById(id)
-      	.map(Store -> {
-			Store.setAddress(newStore.getAddress());
-			Store.setManager(newStore.getManager());
-        return repository.save(Store);
-      })
-      	.orElseGet(() -> {
-        	newStore.setId(id);
-        	return repository.save(newStore);
-      });
-	}
+	Store replaceStore(@RequestBody Store newStore, @PathVariable String id) {
+		
+	}*/
 	
 	//use case: delete store
 	@DeleteMapping("/store/{id}")

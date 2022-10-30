@@ -16,6 +16,7 @@ import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
+import com.remotegroup.sales.domain.model.valueobjects.ItemId;
 import com.remotegroup.sales.exceptions.BackOrderSaleNotFoundException;
 import com.remotegroup.sales.shareddomain.Product;
 
@@ -27,7 +28,7 @@ public interface ISaleService {
 	public abstract Sale updateSale(UpdateSaleCommand s);
 	public abstract Sale getSale(SaleId id);
 	public abstract void deleteSale(SaleId id);
-	public abstract boolean requestCheckInventory(Long itemId);
+	public abstract boolean requestCheckInventory(String itemId);
 	
 	public abstract List<InStoreSale> getInStoreSales();
 	public abstract InStoreSale createSale(CreateInStoreSaleCommand s) throws JsonProcessingException;

@@ -130,7 +130,7 @@ public class SaleService implements ISaleService{
 	}
 	
 	@Override
-    public boolean requestCheckInventory(Long itemId){
+    public boolean requestCheckInventory(String itemId){
         String url = "http://localhost:8081/product/check/"+itemId;
         return this.restTemplate.getForObject(url, boolean.class);
     }
@@ -363,4 +363,6 @@ public class SaleService implements ISaleService{
 		log.info("JSON " + jsonString);
 		controller.bISendUpdateSale(jsonString);
 	}
+	
+	//
 }

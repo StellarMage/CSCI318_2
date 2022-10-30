@@ -1,9 +1,5 @@
 package com.remotegroup.sales.interfaces.rest;
 
-import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
-import com.remotegroup.sales.domain.model.commands.CreateOnlineSaleCommand;
-import com.remotegroup.sales.domain.model.services.ISaleService;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
+import com.remotegroup.sales.domain.model.aggregates.SaleId;
+import com.remotegroup.sales.domain.model.commands.CreateOnlineSaleCommand;
+import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
+import com.remotegroup.sales.domain.model.services.ISaleService;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
@@ -32,9 +33,9 @@ public class OnlineSaleController {
 	
 	//use case: create OnlineSale
 	@PostMapping("/OnlineSale")
-	OnlineSale newOnlineSale(@RequestBody CreateOnlineSaleCommand OnlineSale) {
-		if(saleService.requestCheckInventory(OnlineSale.getItemId())) {
-			return saleService.createSale(OnlineSale);
+	OnlineSale newOnlineSale(@RequestBody CreateOnlineSaleCommand c) {
+		if(saleService.requestCheckInventory(c.getItemId())) {
+			return saleService.createSale(c);
 		}else {
 			return null;
 		}
@@ -43,20 +44,20 @@ public class OnlineSaleController {
 
 	//use case: update OnlineSale
 	@PutMapping("/OnlineSale/{id}")
-	OnlineSale replaceOnlineSale(@RequestBody OnlineSale newOnlineSale, @PathVariable Long id) {
-		return saleService.updateSale(newOnlineSale, id);
+	OnlineSale replaceOnlineSale(@RequestBody UpdateOnlineSaleCommand c) {
+		return saleService.updateSale(c);
 	}
 	
 	//use case: delete OnlineSale
 	@DeleteMapping("/OnlineSale/{id}")
-	void deleteOnlineSale(@PathVariable Long id) {
-		saleService.deleteOnlineSale(id);
+	void deleteOnlineSale(@PathVariable String id) {
+		saleService.deleteOnlineSale(new SaleId(id));
 	}
 	
 	//use case: get OnlineSale by id
 	@GetMapping("/OnlineSale/{id}")
-	OnlineSale getOnlineSaleById(@PathVariable Long id) {
-		return saleService.getOnlineSale(id);
+	OnlineSale getOnlineSaleById(@PathVariable String id) {
+		return saleService.getOnlineSale(new SaleId(id));
 	}
 	
 }
