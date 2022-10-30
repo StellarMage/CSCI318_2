@@ -340,10 +340,11 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public void initSaleBI() throws JsonProcessingException {
+		/*
 		log.info("Sale " + getSale(new SaleId("2")));
       	String jsonString = mapper.writeValueAsString(getSale(new SaleId("2")));
 		log.info("JSON " + jsonString);
-		controller.bIInit(jsonString);
+		controller.bIInit(jsonString);*/
 	}
 
 	@Override
