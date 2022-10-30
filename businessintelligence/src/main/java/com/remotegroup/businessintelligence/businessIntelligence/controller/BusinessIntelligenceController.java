@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.remotegroup.businessintelligence.businessIntelligence.domain.BusinessIntelligence;
 import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
+import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
 import com.remotegroup.businessintelligence.exceptions.BusinessIntelligenceNotFoundException;
 
 @RestController
