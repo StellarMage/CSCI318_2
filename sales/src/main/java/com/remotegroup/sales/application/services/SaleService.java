@@ -1,25 +1,5 @@
 package com.remotegroup.sales.application.services;
 
-<<<<<<< HEAD
-=======
-import com.remotegroup.sales.shareddomain.Product;
-import com.remotegroup.sales.interfaces.kafka.KafkaController;
-import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
-import com.remotegroup.sales.domain.model.aggregates.BackOrderSale;
-import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
-import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
-import com.remotegroup.sales.domain.model.aggregates.Sale;
-import com.remotegroup.sales.domain.model.aggregates.SaleId;
-import com.remotegroup.sales.domain.model.commands.*;
-import com.remotegroup.sales.domain.model.services.ISaleService;
-import com.remotegroup.sales.domain.model.valueobjects.ItemId;
-import com.remotegroup.sales.exceptions.*;
-import com.remotegroup.sales.infrastructure.persistence.BackOrderSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.InStoreSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.OnlineSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
-
->>>>>>> 7a650829a2a283a420d74b56f45cb54cbb24cb9a
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -348,15 +328,9 @@ public class SaleService implements ISaleService{
 		try {
 			Sale chosenSale = getSale(id);
 			ItemId itemId = chosenSale.getItemId();
-<<<<<<< HEAD
-			String payload = itemId.toString();
-			controller.publish(payload);
-			log.info("Sale ID Sent to Inventory"); // you mean item id?
-=======
 			String jsonString = mapper.writeValueAsString(itemId);
 			controller.publish(jsonString);
 			log.info("ItemId Sent to Inventory");
->>>>>>> 7a650829a2a283a420d74b56f45cb54cbb24cb9a
 			return kafkaListeners.getListener();
 		}catch(Exception e) {
 			throw new SaleNotFoundException(id);
@@ -366,10 +340,8 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public void initSaleBI() throws JsonProcessingException {
-		int i = 2;
-		long id = Long.valueOf(i);
-		log.info("Sale " + getSale(id));
-      	String jsonString = mapper.writeValueAsString(getSale(id));
+		log.info("Sale " + getSale(new SaleId("2")));
+      	String jsonString = mapper.writeValueAsString(getSale(new SaleId("2")));
 		log.info("JSON " + jsonString);
 		controller.bIInit(jsonString);
 	}

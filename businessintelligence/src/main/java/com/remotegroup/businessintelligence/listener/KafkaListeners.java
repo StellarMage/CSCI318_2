@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.remotegroup.businessintelligence.businessIntelligence.controller.BusinessIntelligenceController;
 import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
-import com.remotegroup.businessintelligence.shareddomain.Sale;
+import com.remotegroup.shareddomain.Sale;
 
 @Component
 public class KafkaListeners {
