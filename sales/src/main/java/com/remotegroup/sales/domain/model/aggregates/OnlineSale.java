@@ -23,7 +23,7 @@ public class OnlineSale extends Sale {
     @Embedded
     Address address;
 
-    OnlineSale () {
+    public OnlineSale () {
     	super();
     }
 

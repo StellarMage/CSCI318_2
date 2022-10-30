@@ -1,21 +1,5 @@
 package com.remotegroup.sales.application.services;
 
-import com.remotegroup.sales.shareddomain.Product;
-import com.remotegroup.sales.interfaces.kafka.KafkaController;
-import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
-import com.remotegroup.sales.domain.model.aggregates.BackOrderSale;
-import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
-import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
-import com.remotegroup.sales.domain.model.aggregates.Sale;
-import com.remotegroup.sales.domain.model.aggregates.SaleId;
-import com.remotegroup.sales.domain.model.commands.*;
-import com.remotegroup.sales.domain.model.services.ISaleService;
-import com.remotegroup.sales.exceptions.*;
-import com.remotegroup.sales.infrastructure.persistence.BackOrderSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.InStoreSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.OnlineSaleRepository;
-import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +15,30 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.remotegroup.sales.domain.model.aggregates.BackOrderSale;
+import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
+import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
+import com.remotegroup.sales.domain.model.aggregates.Sale;
+import com.remotegroup.sales.domain.model.aggregates.SaleId;
+import com.remotegroup.sales.domain.model.aggregates.StoreId;
+import com.remotegroup.sales.domain.model.commands.CreateBackOrderSaleCommand;
+import com.remotegroup.sales.domain.model.commands.CreateInStoreSaleCommand;
+import com.remotegroup.sales.domain.model.commands.CreateOnlineSaleCommand;
+import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
+import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
+import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
+import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
+import com.remotegroup.sales.domain.model.services.ISaleService;
+import com.remotegroup.sales.domain.model.valueobjects.ItemId;
+import com.remotegroup.sales.exceptions.BackOrderSaleNotFoundException;
+import com.remotegroup.sales.exceptions.SaleNotFoundException;
+import com.remotegroup.sales.infrastructure.persistence.BackOrderSaleRepository;
+import com.remotegroup.sales.infrastructure.persistence.InStoreSaleRepository;
+import com.remotegroup.sales.infrastructure.persistence.OnlineSaleRepository;
+import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
+import com.remotegroup.sales.interfaces.kafka.KafkaController;
+import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
+import com.remotegroup.sales.shareddomain.Product;
 
 @Service
 public class SaleService implements ISaleService{
@@ -119,6 +127,14 @@ public class SaleService implements ISaleService{
 		
 		saleRepository.delete(sale);
 	}
+	
+	@Override
+    public boolean requestCheckInventory(Long itemId){
+        String url = "http://localhost:8081/product/check/"+itemId;
+        return this.restTemplate.getForObject(url, boolean.class);
+    }
+	
+	//INSTORE
 
 	@Override
 	public List<InStoreSale> getInStoreSales() {
@@ -126,97 +142,135 @@ public class SaleService implements ISaleService{
 	}
 
 	@Override
-	public InStoreSale createSale(InStoreSale s) {
-		return inStoreSaleRepository.save(s);	
+	public InStoreSale createSale(CreateInStoreSaleCommand s) {
+		String saleIdStr = UUID.randomUUID().toString().toUpperCase();
+		s.setSaleId(saleIdStr);
+		
+		return inStoreSaleRepository.save(new InStoreSale(s));	
 	}
 
 	@Override
-	public InStoreSale updateSale(InStoreSale s, Long id) {
-		return inStoreSaleRepository.findById(id)
-		      	.map(InStoreSale -> {
-		      		InStoreSale.setItemId(s.getItemId());
-		      		InStoreSale.setItemName(s.getItemName());
-		      		InStoreSale.setQuantity(s.getQuantity());
-		      		InStoreSale.setDataTime(s.getDataTime());
-					InStoreSale.setStoreId(s.getStoreId());
-		            InStoreSale.setReceipt(s.getReceiptNo());
-		        return inStoreSaleRepository.save(InStoreSale);
-		      })
-		      	.orElseGet(() -> {
-		        	s.setId(id);
-		        	return inStoreSaleRepository.save(s);
-		      });
+	public InStoreSale updateSale(UpdateInStoreSaleCommand s) {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		InStoreSale sExample = new InStoreSale();
+		sExample.setSaleId(new SaleId(s.getSaleId()));
+		Example<InStoreSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
+		InStoreSale sale = returnSales.get(0);
+		
+		return sale.updateInStoreSale(s);
 	}
 
 	@Override
-	public InStoreSale getInStoreSale(Long id) {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return inStoreSaleRepository.findById(id).get();
-			
-		}catch(Exception e) {
-			throw new InStoreSaleNotFoundException(id);
-		}
+	public InStoreSale getInStoreSale(SaleId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		InStoreSale sExample = new InStoreSale();
+		sExample.setSaleId(id);
+		Example<InStoreSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
+		InStoreSale sale = returnSales.get(0);
+		return sale;
 	}
 
 	@Override
-	public void deleteInStoreSale(Long id) {
-		inStoreSaleRepository.deleteById(id);
+	public void deleteInStoreSale(SaleId id) {
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		InStoreSale sExample = new InStoreSale();
+		sExample.setSaleId(id);
+		Example<InStoreSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
+		InStoreSale sale = returnSales.get(0);
+		
+		inStoreSaleRepository.delete(sale);
 		
 	}
 	
-	public List<InStoreSale> lookupSalesByStore(Long storeId) {
+	public List<InStoreSale> lookupSalesByStore(StoreId storeId) {
 		List<InStoreSale> sales = inStoreSaleRepository.findAll();
 		List<InStoreSale> matches = new ArrayList<InStoreSale>();
 		for(int s = 0; s<sales.size();s++) {
 			InStoreSale sale = sales.get(s);
-			if(sale.getStoreId() == storeId) {
+			if(sale.getStoreId().equals(storeId)) {
 				matches.add(sale);
 			}
 		}
 		return matches;
 	}
 
+	//ONLINE
+	
 	@Override
 	public List<OnlineSale> getOnlineSales() {
 		  return onlineSaleRepository.findAll();
 	}
 
 	@Override
-	public OnlineSale createSale(OnlineSale s) {
-		return onlineSaleRepository.save(s);
+	public OnlineSale createSale(CreateOnlineSaleCommand s) {
+		String saleIdStr = UUID.randomUUID().toString().toUpperCase();
+		s.setSaleId(saleIdStr);
+		
+		return onlineSaleRepository.save(new OnlineSale(s));	
 	}
 
 	@Override
-	public OnlineSale updateSale(OnlineSale s, Long id) {
-		return onlineSaleRepository.findById(id)
-		      	.map(OnlineSale -> {
-					OnlineSale.setCustomerName(s.getCustomerName());
-		            OnlineSale.setAddress(s.getAddress());
-		        return onlineSaleRepository.save(OnlineSale);
-		      })
-		      	.orElseGet(() -> {
-		        	s.setId(id);
-		        	return onlineSaleRepository.save(s);
-		      });
+	public OnlineSale updateSale(UpdateOnlineSaleCommand s) {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		OnlineSale sExample = new OnlineSale();
+		sExample.setSaleId(new SaleId(s.getSaleId()));
+		Example<OnlineSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
+		OnlineSale sale = returnSales.get(0);
+		return sale.updateOnlineSale(s);
+
 	}
 
 	@Override
-	public OnlineSale getOnlineSale(Long id) {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return onlineSaleRepository.findById(id).get();
-			
-		}catch(Exception e) {
-			throw new OnlineSaleNotFoundException(id);
-		}
+	public OnlineSale getOnlineSale(SaleId id) {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		OnlineSale sExample = new OnlineSale();
+		sExample.setSaleId(id);
+		Example<OnlineSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
+		OnlineSale sale = returnSales.get(0);
+		return sale;
 	}
 
 	@Override
-	public void deleteOnlineSale(Long id) {
-		onlineSaleRepository.deleteById(id);
+	public void deleteOnlineSale(SaleId id) {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		OnlineSale sExample = new OnlineSale();
+		sExample.setSaleId(id);
+		Example<OnlineSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
+		OnlineSale sale = returnSales.get(0);
+		onlineSaleRepository.delete(sale);
 		
 	}
+	
+	
+	//BACK ORDER
 
 	@Override
 	public List<BackOrderSale> getBackOrderSales() {
@@ -224,38 +278,59 @@ public class SaleService implements ISaleService{
 	}
 
 	@Override
-	public BackOrderSale createBackOrderSale(BackOrderSale s) throws JsonProcessingException {
-		String jsonString = mapper.writeValueAsString(s);
+	public BackOrderSale createBackOrderSale(CreateBackOrderSaleCommand s) throws JsonProcessingException {
+		String saleIdStr = UUID.randomUUID().toString().toUpperCase();
+		s.setSaleId(saleIdStr);
+		
+		BackOrderSale sale = new BackOrderSale(s);
+		
+		String jsonString = mapper.writeValueAsString(sale);
 		controller.procure(jsonString);
 		log.info("Procurement Request Sent");
-		return backOrderSaleRepository.save(s);
+		
+		
+		return backOrderSaleRepository.save(sale);
 	}
 
 	@Override
-	public void deleteBackOrderSale(Long id) {
-		backOrderSaleRepository.deleteById(id);
+	public void deleteBackOrderSale(SaleId id) {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		BackOrderSale sExample = new BackOrderSale();
+		sExample.setSaleId(id);
+		Example<BackOrderSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<BackOrderSale> returnSales =  backOrderSaleRepository.findAll(example);
+		BackOrderSale sale = returnSales.get(0);
+		backOrderSaleRepository.delete(sale);
 		
 	}
 
 	@Override
-	public BackOrderSale getBackOrderSale(Long id) throws BackOrderSaleNotFoundException {
-		try {
-			//return repository.getReferenceById(id); This function lazy loads and causes errors, so changed to below
-			return backOrderSaleRepository.findById(id).get();
-			
-		}catch(Exception e) {
-			throw new BackOrderSaleNotFoundException(id);
-		}
+	public BackOrderSale getBackOrderSale(SaleId id) throws BackOrderSaleNotFoundException {
+		//find the sale by saleId
+		ExampleMatcher matcher = ExampleMatcher.matching()
+				.withMatcher("saleId", match->match.exact());
+		BackOrderSale sExample = new BackOrderSale();
+		sExample.setSaleId(id);
+		Example<BackOrderSale> example = Example.of(sExample, matcher);
+		
+		//store sale in object
+		List<BackOrderSale> returnSales =  backOrderSaleRepository.findAll(example);
+		BackOrderSale sale = returnSales.get(0);
+		return sale;
 	}
 	
 	@Override
-	public Product getProductInfo(Long id) {
+	public Product getProductInfo(SaleId id) {
 		try {
 			Sale chosenSale = getSale(id);
-			Long itemId = chosenSale.getItemId();
-			String payload = Long.toString(itemId);
+			ItemId itemId = chosenSale.getItemId();
+			String payload = itemId.toString();
 			controller.publish(payload);
-			log.info("Sale ID Sent to Inventory");
+			log.info("Sale ID Sent to Inventory"); // you mean item id?
 			return kafkaListeners.getListener();
 		}catch(Exception e) {
 			throw new SaleNotFoundException(id);

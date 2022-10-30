@@ -19,7 +19,7 @@ public class BackOrderSale extends Sale {
 	@Embedded
 	PhoneNumber phoneNumber;
 	
-	BackOrderSale(){
+	public BackOrderSale(){
 		super();
 	}
 

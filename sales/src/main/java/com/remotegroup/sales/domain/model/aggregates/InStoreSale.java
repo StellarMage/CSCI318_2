@@ -22,7 +22,7 @@ public class InStoreSale extends Sale {
     @Embedded
     private ReceiptNo receiptNo;
 
-    InStoreSale () {
+    public InStoreSale () {
     	super();
     }
 
