@@ -5,26 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remotegroup.sales.application.services.SaleService;
-import com.remotegroup.sales.domain.model.aggregates.Sale;
 import com.remotegroup.sales.domain.model.services.ISaleService;
-import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
-import com.remotegroup.sales.interfaces.kafka.KafkaController;
-import com.remotegroup.sales.shareddomain.BusinessIntelligence;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 @SpringBootApplication
 @ComponentScan({"com.remotegroup"})
-@EntityScan({"com.remotegroup.sales.sale.domain", "com.remotegroup.sales.backordersale.domain", "com.remotegroup.sales.instoresale.domain", "com.remotegroup.sales.onlinesale.domain", "com.remotegroup.sales.store.domain"})
-@EnableJpaRepositories({"com.remotegroup.sales.sale.persistence", "com.remotegroup.sales.backordersale.persistence", "com.remotegroup.sales.instoresale.persistence", "com.remotegroup.sales.onlinesale.persistence", "com.remotegroup.sales.store.persistence"})
+@EntityScan({"com.remotegroup.sales.domain.model.aggregates"})
+@EnableJpaRepositories({"com.remotegroup.sales.infrastructure.persistence"})
 public class SalesApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(SalesApplication.class);
