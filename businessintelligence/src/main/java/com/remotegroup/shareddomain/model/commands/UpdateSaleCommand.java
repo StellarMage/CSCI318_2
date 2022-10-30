@@ -5,11 +5,11 @@ public class UpdateSaleCommand {
 	private String saleId;
 	private String itemId;
 	private String itemName;
-	private String quantity;
+	private Integer quantity;
 	private String dataTime;
-	private String productPrice;
+	private Double productPrice;
 	
-	public UpdateSaleCommand(String saleId, String itemId, String itemName, String quantity, String dataTime, String productPrice) {
+	public UpdateSaleCommand(String saleId, String itemId, String itemName, Integer quantity, String dataTime, Double productPrice) {
 		this.saleId = saleId;
 		this.itemId = itemId;
 		this.itemName = itemName;
@@ -30,7 +30,7 @@ public class UpdateSaleCommand {
 		return itemName;
 	}
 
-	public String getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
@@ -38,7 +38,7 @@ public class UpdateSaleCommand {
 		return dataTime;
 	}
 
-	public String getProductPrice() {
+	public Double getProductPrice() {
 		return productPrice;
 	}
 

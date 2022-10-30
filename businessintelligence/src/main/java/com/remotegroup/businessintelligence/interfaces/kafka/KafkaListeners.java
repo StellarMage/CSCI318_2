@@ -1,4 +1,4 @@
-package com.remotegroup.businessintelligence.listener;
+package com.remotegroup.businessintelligence.interfaces.kafka;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remotegroup.businessintelligence.businessIntelligence.controller.BusinessIntelligenceController;
-import com.remotegroup.businessintelligence.businessIntelligence.persistence.BusinessIntelligenceRepository;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
-import com.remotegroup.shareddomain.Sale;
+import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessIntelligenceRepository;
+import com.remotegroup.businessintelligence.interfaces.rest.BusinessIntelligenceController;
+import com.remotegroup.shareddomain.model.aggregates.Sale;
 
 @Component
 public class KafkaListeners {

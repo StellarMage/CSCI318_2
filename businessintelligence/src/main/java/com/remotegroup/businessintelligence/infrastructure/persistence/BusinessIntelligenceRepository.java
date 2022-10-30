@@ -1,4 +1,4 @@
-package com.remotegroup.businessintelligence.businessIntelligence.persistence;
+package com.remotegroup.businessintelligence.infrastructure.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

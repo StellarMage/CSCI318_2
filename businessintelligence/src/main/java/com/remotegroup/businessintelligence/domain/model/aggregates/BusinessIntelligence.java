@@ -32,7 +32,7 @@ public class BusinessIntelligence extends AbstractAggregateRoot<BusinessIntellig
     @Embedded
     private Total total;
 
-    BusinessIntelligence () {}
+    public  BusinessIntelligence () {}
 
     public BusinessIntelligence(CreateNewBusinessIntelligenceCommand command) {
 		this.businessIntelligenceId = new BusinessIntelligenceId(command.getBusinessIntelligenceId());
