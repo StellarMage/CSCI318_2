@@ -34,7 +34,7 @@ public class KafkaListeners {
     }
 
     @SendTo ("procRequestItP")
-    @KafkaListener(topics = "procRequestStI", groupId = "procRequestStI")
+    @KafkaListener(topics = "procRequestStI", groupId = "procRequestStI", containerFactory = "factory")
     String pRItPListener(String data) throws JsonProcessingException{
         log.info("JSON String Received");
 		System.out.println("Event: " + data);
