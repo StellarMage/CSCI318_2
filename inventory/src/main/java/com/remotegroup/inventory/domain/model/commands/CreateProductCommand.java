@@ -1,5 +1,8 @@
 package com.remotegroup.inventory.domain.model.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CreateProductCommand {
     
     private String productId;
@@ -8,6 +11,7 @@ public class CreateProductCommand {
     private String comment;
     private String[][] comprisingParts; // [ [partId, amount], ... ]
     private int stockQuantity;
+	private static final Logger log = LoggerFactory.getLogger(CreateProductCommand.class);
 
     public CreateProductCommand(String name, String price, String comment, String[][] comprisingParts, int stockQuantity) {
 		this.name = name;

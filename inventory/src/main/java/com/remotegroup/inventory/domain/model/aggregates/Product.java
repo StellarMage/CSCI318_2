@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
@@ -34,6 +36,8 @@ public class Product extends AbstractAggregateRoot<Product>{
     private ComprisingPart[] comprisingParts; 
     @Embedded
     private StockQuantity stockQuantity;
+
+    private static final Logger log = LoggerFactory.getLogger(Product.class);
     
     public Product () {}
 
@@ -60,6 +64,9 @@ public class Product extends AbstractAggregateRoot<Product>{
         comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
+            log.info("PartId: " + c[i][0]);
+            log.info("Long.parseLong: " + c[i][1]);
+            log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
         }
     }
     

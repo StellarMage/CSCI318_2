@@ -11,9 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.Product;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
@@ -36,6 +39,8 @@ class LoadDatabase {
 	  
 	  return args -> {
 			ObjectMapper mapper = new ObjectMapper();
+			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+			mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 		  	String url = "http://localhost:8082/suppliers/ids";
 			JsonNode supplierIds = restTemplate.getForObject(url, JsonNode.class);
 			log.info("Preloaded supplierIds:  " + supplierIds);
@@ -58,11 +63,20 @@ class LoadDatabase {
 			bikeParts[1][0] = part2.getPartId().toString();
 			bikeParts[1][1] = "2";
 			
+			log.info("Preloaded Part:  " + bikeParts[0][0]);
+			log.info("Preloaded Part:  " + bikeParts[0][1]);
+			log.info("Preloaded Part:  " + bikeParts[1][0]);
+			log.info("Preloaded Part:  " + bikeParts[1][1]);
+			log.info("Preloaded Part:  " + bikeParts);
+
 			CreateProductCommand com3 = new CreateProductCommand("Marin Road Bike", "$1499.00", "-", bikeParts, 8);
 			CreateProductCommand com4 = new CreateProductCommand("Touring Mountain Bike", "$2599.00", "-", bikeParts, 2);
 			CreateProductCommand com5 = new CreateProductCommand("Basic 1-Speed Bike", "$399.00", "-", bikeParts, 20);
-			
-			
+
+			log.info("Preloaded Product:  "+ com3);
+			log.info("Preloaded Product:  "+ com4);
+			log.info("Preloaded Product:  "+ com5);
+	
 			Product product1 = service.createProduct(com3);
 			Product product2 = service.createProduct(com4);
 			Product product3 = service.createProduct(com5);
