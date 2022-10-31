@@ -1,5 +1,6 @@
 package com.remotegroup.businessintelligence.application.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class BIService implements IBIService{
 		bIExample.setBusinessIntelligenceId(id);
 		Example<BusinessIntelligence> example = Example.of(bIExample, matcher);
 		
-		//store supplier in object
+		//store businessIntelligence in object
 		List<BusinessIntelligence> returnBusinessIntelligences =  bIRepo.findAll(example);
 		BusinessIntelligence BusinessIntelligence = returnBusinessIntelligences.get(0);
 		
@@ -91,7 +92,17 @@ public class BIService implements IBIService{
 	}
 
 	@Override
-	public List<BusinessIntelligence> all(){
+	public List<BusinessIntelligence> getBusinessIntelligences(){
 		return bIRepo.findAll();
+	}
+
+	@Override
+	public List<BusinessIntelligenceId> getBusinessIntelligenceIds(){
+		List<BusinessIntelligenceId> ids = new ArrayList<BusinessIntelligenceId>();
+		List<BusinessIntelligence> BusinessIntelligences = getBusinessIntelligences();
+		for(int i=0;i<BusinessIntelligences.size();i++) {
+			ids.add(BusinessIntelligences.get(i).getBusinessIntelligenceId());
+		}
+		return ids;
 	}
 }

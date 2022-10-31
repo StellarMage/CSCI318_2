@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligenceId;
 import com.remotegroup.businessintelligence.domain.model.commands.CreateNewBusinessIntelligenceCommand;
@@ -19,17 +20,16 @@ import com.remotegroup.businessintelligence.domain.model.commands.UpdateBusiness
 import com.remotegroup.businessintelligence.domain.model.services.IBIService;
 
 @RestController
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class BusinessIntelligenceController {
 	
 	@Autowired
 	IBIService biService;
 
-	BusinessIntelligenceController() {}
-
 	//See all past BusinessIntelligence
 	@GetMapping("/businesses")
-	List<BusinessIntelligence> all() {
-		return biService.all();
+	List<BusinessIntelligence> getBusinessIntelligences() {
+		return biService.getBusinessIntelligences();
 	}
 	
 	//Create a BusinessIntelligence
