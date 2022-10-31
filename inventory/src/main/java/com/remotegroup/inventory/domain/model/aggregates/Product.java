@@ -61,9 +61,10 @@ public class Product extends AbstractAggregateRoot<Product>{
     }
     
     private void populateComprisingParts(String[][] c) {
-        comprisingParts = new ComprisingPart[c.length];
+        ComprisingPart[] comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
+            log.info("c: " + Arrays.deepToString(c));
             log.info("PartId: " + c[i][0]);
             log.info("Long.parseLong: " + c[i][1]);
             log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
