@@ -30,6 +30,7 @@ public interface ISaleService {
 	public abstract Sale getSale(SaleId id);
 	public abstract void deleteSale(SaleId id);
 	public abstract boolean requestCheckInventory(String itemId);
+	List<SaleId> getSaleIds();
 	
 	public abstract List<InStoreSale> getInStoreSales();
 	public abstract InStoreSale createSale(CreateInStoreSaleCommand s) throws JsonProcessingException;

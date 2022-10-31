@@ -8,13 +8,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Quantity implements Serializable{
 
-	private Integer quantity;
+	private String quantity;
 	
 	public Quantity() {}
 	
-	public Quantity(Integer quantity) {this.quantity = quantity;}
+	public Quantity(String quantity) {this.quantity = quantity;}
 	
-	public Integer toInteger() {return this.quantity;}
+	public String toString() {return this.quantity;}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -22,6 +22,10 @@ public class Quantity implements Serializable{
 		if(o== null || this.getClass() != o.getClass()) return false;
 		Quantity e = (Quantity) o;
 		return quantity.equals(e.quantity);
+	}
+
+	public String getValue(){
+		return this.quantity;
 	}
 	
 	@Override

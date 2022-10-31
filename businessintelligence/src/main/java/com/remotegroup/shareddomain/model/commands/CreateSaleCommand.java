@@ -2,16 +2,16 @@ package com.remotegroup.shareddomain.model.commands;
 
 public class CreateSaleCommand {
 
-	private String saleId;
-	private String itemId;
-	private String itemName;
-	private Integer quantity;
-	private String dataTime;
-	private Double productPrice;
+	protected String saleId;
+	protected String itemId;
+	protected String itemName;
+	protected String quantity;
+	protected String dataTime;
+	protected String productPrice;
 
 	public CreateSaleCommand() {}
 	
-	public CreateSaleCommand(String itemId, String itemName, Integer quantity, String dataTime, Double productPrice) {
+	public CreateSaleCommand(String itemId, String itemName, String quantity, String dataTime, String productPrice) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.quantity = quantity;
@@ -31,7 +31,7 @@ public class CreateSaleCommand {
 		return itemName;
 	}
 
-	public Integer getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
@@ -39,7 +39,7 @@ public class CreateSaleCommand {
 		return dataTime;
 	}
 
-	public Double getProductPrice() {
+	public String getProductPrice() {
 		return productPrice;
 	}
 
@@ -55,7 +55,7 @@ public class CreateSaleCommand {
 		this.itemName = itemName;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 
@@ -63,7 +63,7 @@ public class CreateSaleCommand {
 		this.dataTime = dataTime;
 	}
 
-	public void setProductPrice(Double productPrice) {
+	public void setProductPrice(String productPrice) {
 		this.productPrice = productPrice;
 	}
 	

@@ -23,6 +23,10 @@ public class DataTime implements Serializable{
 		DataTime e = (DataTime) o;
 		return dataTime.equals(e.dataTime);
 	}
+
+	public String getValue(){
+		return this.dataTime;
+	}
 	
 	@Override
 	public int hashCode() {

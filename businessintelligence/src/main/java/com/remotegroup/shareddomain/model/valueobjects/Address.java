@@ -23,6 +23,10 @@ public class Address implements Serializable{
 		Address e = (Address) o;
 		return address.equals(e.address);
 	}
+
+	public String getValue(){
+		return this.address;
+	}
 	
 	@Override
 	public int hashCode() {

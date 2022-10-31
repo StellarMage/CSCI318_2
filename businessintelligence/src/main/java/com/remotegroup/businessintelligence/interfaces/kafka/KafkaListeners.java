@@ -6,9 +6,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
 import com.remotegroup.businessintelligence.domain.model.commands.CreateSaleBusinessIntelligenceCommand;
 import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessIntelligenceRepository;
@@ -27,6 +30,8 @@ public class KafkaListeners {
     
     @KafkaListener(topics = "bIInit", groupId = "bIInit")
     void bIInitListener(String data) throws JsonMappingException, JsonProcessingException{
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);
@@ -38,6 +43,8 @@ public class KafkaListeners {
 
     @KafkaListener(topics = "bISendSale", groupId = "bISendSale")
     void bISendSaleListener(String data) throws JsonMappingException, JsonProcessingException{
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
         log.info("JSON String Received");
         Sale dataReceived = mapper.readValue(data, Sale.class);
         log.info("Converting JtS: " + dataReceived);

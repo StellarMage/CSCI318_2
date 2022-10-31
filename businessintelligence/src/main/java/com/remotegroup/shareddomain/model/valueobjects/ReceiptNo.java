@@ -23,6 +23,10 @@ public class ReceiptNo implements Serializable{
 		ReceiptNo e = (ReceiptNo) o;
 		return receiptNo.equals(e.receiptNo);
 	}
+
+	public String getValue(){
+		return this.receiptNo;
+	}
 	
 	@Override
 	public int hashCode() {

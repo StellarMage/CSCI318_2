@@ -17,25 +17,21 @@ public class OnlineSale extends Sale {
     private @Id @GeneratedValue Long id;
 
     @Embedded
-    OnlineSaleId onlineSaleId;
-    @Embedded
     CustomerName customerName;
     @Embedded
     Address address;
 
-    OnlineSale () {
+    public OnlineSale () {
     	super();
     }
 
     public OnlineSale(CreateOnlineSaleCommand command){
-        this.onlineSaleId = new OnlineSaleId(command.getOnlineSaleId());
         this.saleId = new SaleId(command.getSaleId());
         this.customerName = new CustomerName(command.getCustomerName());
         this.address = new Address(command.getAddress());
     }
 
     public OnlineSale updateOnlineSale(UpdateOnlineSaleCommand command) {
-        this.onlineSaleId = new OnlineSaleId(command.getOnlineSaleId());
         this.saleId = new SaleId(command.getSaleId());
         this.customerName = new CustomerName(command.getCustomerName());
         this.address = new Address(command.getAddress());
@@ -46,9 +42,7 @@ public class OnlineSale extends Sale {
         return this.id;
     }
 
-    public OnlineSaleId getOnlineSaleId(){
-        return this.onlineSaleId;
-    }
+
 
     public CustomerName getCustomerName(){
         return this.customerName;
@@ -58,9 +52,6 @@ public class OnlineSale extends Sale {
         return this.address;
     }
 
-    public void setOnlineSaleId(OnlineSaleId newOnlineSaleId) {
-        this.onlineSaleId = newOnlineSaleId;
-    }
 
     public void setCustomerName(CustomerName newCustomerName) {
         this.customerName = newCustomerName;
@@ -77,21 +68,20 @@ public class OnlineSale extends Sale {
         if (!(o instanceof OnlineSale))
             return false;
             OnlineSale OnlineSale = (OnlineSale) o;
-        return Objects.equals(this.onlineSaleId, OnlineSale.onlineSaleId) 
-        && Objects.equals(this.customerName, OnlineSale.customerName)
+        return Objects.equals(this.customerName, OnlineSale.customerName)
         && Objects.equals(this.address, OnlineSale.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.onlineSaleId, this.customerName, this.address);
+        return Objects.hash(this.customerName, this.address);
     }
 
     @Override
     public String toString() {
-        return "OnlineSale{" + "onlineSaleId=" + this.onlineSaleId + '\''
-        + ", CustomerName id='" + this.customerName + '\'' 
-        + ", address='" + this.address + '\''
+        return super.toString() +"OnlineSale{"
+        + " CustomerName id='" + this.customerName.getValue() + '\'' 
+        + ", address='" + this.address.getValue() + '\''
          + '}';
     }
 }

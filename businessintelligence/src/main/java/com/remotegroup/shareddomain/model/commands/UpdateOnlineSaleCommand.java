@@ -1,26 +1,16 @@
 package com.remotegroup.shareddomain.model.commands;
 
-public class UpdateOnlineSaleCommand {
+public class UpdateOnlineSaleCommand extends UpdateSaleCommand{
 	
-	private String onlineSaleId;
-	private String saleId;
 	private String customerName;
 	private String address;
 	
-	public UpdateOnlineSaleCommand(String onlineSaleId, String saleId, String customerName, String address) {
-		this.onlineSaleId = onlineSaleId;
-		this.saleId = saleId;
+	public UpdateOnlineSaleCommand(String saleId, String itemId, String itemName, String quantity, String dataTime, String productPrice, String customerName, String address) {
+		super(saleId, itemId, itemName, quantity, dataTime, productPrice);
 		this.customerName = customerName;
 		this.address = address;
 	}
 
-	public String getOnlineSaleId() {
-		return onlineSaleId;
-	}
-
-	public String getSaleId() {
-		return saleId;
-	}
 
 	public String getCustomerName() {
 		return customerName;

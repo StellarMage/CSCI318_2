@@ -1,18 +1,25 @@
 package com.remotegroup.shareddomain.model.commands;
 
-public class CreateBackOrderSaleCommand {
+public class CreateBackOrderSaleCommand extends CreateSaleCommand{
 
-	private String backOrderSaleId;
-	private String saleId;
+
 	private String phoneNumber;
+
 	
-	public CreateBackOrderSaleCommand(String saleId, String phoneNumber) {
-		this.saleId = saleId;
+	public CreateBackOrderSaleCommand( String itemName, String quantity, String dataTime, String productPrice, String itemId, String phoneNumber) {
+		super(itemId, itemName, quantity, dataTime, productPrice);
 		this.phoneNumber = phoneNumber;
+		this.itemId = itemId;
+	}
+	
+	
+
+	public String getItemId() {
+		return itemId;
 	}
 
-	public String getBackOrderSaleId() {
-		return backOrderSaleId;
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
 	}
 
 	public String getSaleId() {
@@ -23,9 +30,6 @@ public class CreateBackOrderSaleCommand {
 		return phoneNumber;
 	}
 
-	public String setBackOrderSaleId() {
-		return backOrderSaleId;
-	}
 
 	public void setSaleId(String saleId) {
 		this.saleId = saleId;

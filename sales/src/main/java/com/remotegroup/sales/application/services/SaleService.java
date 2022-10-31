@@ -13,8 +13,13 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.sales.domain.model.aggregates.BackOrderSale;
 import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
 import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
@@ -338,6 +343,16 @@ public class SaleService implements ISaleService{
 		BackOrderSale sale = returnSales.get(0);
 		return sale;
 	}
+
+	@Override
+	public List<SaleId> getSaleIds(){
+		List<SaleId> ids = new ArrayList<SaleId>();
+		List<Sale> sales = getSales();
+		for(int i=0;i<sales.size();i++) {
+			ids.add(sales.get(i).getSaleId());
+		}
+		return ids;
+	}
 	
 	@Override
 	public Product getProductInfo(SaleId id) {
@@ -356,11 +371,21 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public void initSaleBI() throws JsonProcessingException {
-		/*
-		log.info("Sale " + getSale(new SaleId("2")));
-      	String jsonString = mapper.writeValueAsString(getSale(new SaleId("2")));
+		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+		String url = "http://localhost:8080/sales/ids";
+		JsonNode saleIds = restTemplate.getForObject(url, JsonNode.class);
+		log.info("Preloaded saleIds:  " + saleIds);
+		  
+		List<SaleId> ids = mapper.convertValue(saleIds, new TypeReference<List<SaleId>>() {});
+		log.info("Sale " + getSale(ids.get(0)));
+		log.info("Sale " + getSale(ids.get(1)));
+		String jsonString = mapper.writeValueAsString(getSale(ids.get(0)));
 		log.info("JSON " + jsonString);
-		controller.bIInit(jsonString);*/
+		controller.bIInit(jsonString);
+		String jsonString2 = mapper.writeValueAsString(getSale(ids.get(1)));
+		log.info("JSON " + jsonString2);
+		controller.bIInit(jsonString2);
 	}
 
 	@Override

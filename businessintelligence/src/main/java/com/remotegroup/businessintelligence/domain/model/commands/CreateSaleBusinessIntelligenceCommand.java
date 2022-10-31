@@ -12,8 +12,8 @@ public class CreateSaleBusinessIntelligenceCommand {
 	
 	public CreateSaleBusinessIntelligenceCommand(Sale s) {
 		this.productName = s.itemId.toString();
-		this.quantity = s.quantity.toInteger();
-		this.price = s.productPrice.toDouble();
+		this.quantity = Integer.parseInt(s.quantity.toString());
+		this.price = Double.parseDouble(s.productPrice.toString());
 		this.total = this.quantity * this.price;
 	}
 
@@ -45,13 +45,13 @@ public class CreateSaleBusinessIntelligenceCommand {
 		this.productName = productName;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setQuantity(String quantity) {
+		this.quantity = Integer.parseInt(quantity);
 		this.total = this.quantity * this.price;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPrice(String price) {
+		this.price = Double.parseDouble(price);
 		this.total = this.quantity * this.price;
 	}
 }

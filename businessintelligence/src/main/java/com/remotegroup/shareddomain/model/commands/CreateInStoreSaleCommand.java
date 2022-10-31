@@ -1,26 +1,17 @@
-
 package com.remotegroup.shareddomain.model.commands;
 
-public class CreateInStoreSaleCommand {
+public class CreateInStoreSaleCommand extends CreateSaleCommand {
 
-	private String inStoreSaleId;
-	private String saleId;
 	private String storeId;
 	private String receiptNo;
 	
-	public CreateInStoreSaleCommand(String saleId, String storeId, String receiptNo) {
-		this.saleId = saleId;
+	
+	public CreateInStoreSaleCommand(String itemId, String itemName, String quantity, String dataTime, String productPrice, String storeId, String receiptNo) {
+		super(itemId, itemName, quantity, dataTime, productPrice);
 		this.storeId = storeId;
 		this.receiptNo = receiptNo;
 	}
 
-	public String getInStoreSaleId() {
-		return inStoreSaleId;
-	}
-
-	public String getSaleId() {
-		return saleId;
-	}
 
 	public String getStoreId() {
 		return storeId;
@@ -30,13 +21,6 @@ public class CreateInStoreSaleCommand {
 		return receiptNo;
 	}
 
-	public String setInStoreSaleId() {
-		return inStoreSaleId;
-	}
-
-	public void setSaleId(String saleId) {
-		this.saleId = saleId;
-	}
 
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;

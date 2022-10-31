@@ -129,12 +129,12 @@ public class Sale extends AbstractAggregateRoot<Sale>{
 
     @Override
     public String toString() {
-        return "Sale{" + "saleId=" + this.saleId + '\''
-        + ", product id='" + this.itemId + '\'' 
-        + ", ProductName='" + this.itemName + '\''
-        + ", quantity='" + this.quantity + '\''
-        + ", dataTime='" + this.dataTime + '\''
-        + ", ProductPrice='" + this.productPrice + '\''
+        return "Sale{" + "saleId=" + this.saleId.getValue() + '\''
+        + ", product id='" + this.itemId.getValue() + '\'' 
+        + ", ProductName='" + this.itemName.getValue() + '\''
+        + ", quantity='" + this.quantity.getValue() + '\''
+        + ", dataTime='" + this.dataTime.getValue() + '\''
+        + ", ProductPrice='" + this.productPrice.getValue() + '\''
         + '}';
     }
 }

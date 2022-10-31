@@ -69,4 +69,9 @@ public class SaleController {
 	Product getProductInfo(@PathVariable String id) {
 		return salesService.getProductInfo(new SaleId(id));
 	}
+
+	@GetMapping("/sales/ids")
+	List<SaleId> getSaleIds(){
+		return salesService.getSaleIds();
+	}
 };

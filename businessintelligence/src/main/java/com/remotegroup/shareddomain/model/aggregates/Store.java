@@ -88,9 +88,9 @@ public class Store extends AbstractAggregateRoot<Store> {
 
     @Override
     public String toString() {
-        return "Store{" + "storeId=" + this.storeId + '\''
-         + ", address='" + this.address + '\''
-         + ", manager='" + this.manager + '\''
+        return "Store{" + "storeId=" + this.storeId.getValue() + '\''
+         + ", address='" + this.address.getValue() + '\''
+         + ", manager='" + this.manager.getValue() + '\''
          + '}';
     }
 }
