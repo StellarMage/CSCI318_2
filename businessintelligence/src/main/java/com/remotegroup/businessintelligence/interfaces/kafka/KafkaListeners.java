@@ -25,7 +25,8 @@ public class KafkaListeners {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaListeners.class);
     private ObjectMapper mapper = new ObjectMapper();
-    private BusinessIntelligenceRepository biRepository;
+    
+    @Autowired private BusinessIntelligenceRepository biRepository;
 
     @Autowired IBIService service;
 
