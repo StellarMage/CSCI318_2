@@ -24,6 +24,10 @@ public class Description implements Serializable{
 		return description.equals(e.description);
 	}
 	
+	public String getValue(){
+		return description;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(description);

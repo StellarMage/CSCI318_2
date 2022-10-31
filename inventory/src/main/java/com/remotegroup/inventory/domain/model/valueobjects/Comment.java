@@ -23,6 +23,10 @@ public class Comment implements Serializable{
 		Comment e = (Comment) o;
 		return comment.equals(e.comment);
 	}
+
+	public String getValue(){
+		return comment;
+	}
 	
 	@Override
 	public int hashCode() {

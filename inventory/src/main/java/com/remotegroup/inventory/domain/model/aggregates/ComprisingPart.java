@@ -50,4 +50,11 @@ public class ComprisingPart implements Serializable{
 	public int hashCode() {
 		return Objects.hash(part, quantity);
 	}
+
+	@Override
+	public String toString(){
+		return "ComprisingPart{" + "partId=" + this.part + '\''
+        + ", quantity ='" + this.quantity + '\'' 
+         + '}';
+	}
 }

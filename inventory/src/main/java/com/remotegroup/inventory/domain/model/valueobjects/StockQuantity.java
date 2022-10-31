@@ -23,6 +23,10 @@ public class StockQuantity implements Serializable{
 		StockQuantity e = (StockQuantity) o;
 		return stockQuantity == e.stockQuantity;
 	}
+
+	public int getValue(){
+		return stockQuantity;
+	}
 	
 	@Override
 	public int hashCode() {

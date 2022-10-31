@@ -133,10 +133,10 @@ public class Product extends AbstractAggregateRoot<Product>{
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + this.productId + '\''
-        + ", name='" + this.name + '\''
-         + ", price='" + String.valueOf(this.price) + '\''
-         + ", comment='" + this.comment + '\'' 
+        return "Product{" + "productId=" + this.productId.getValue() + '\''
+        + ", name='" + this.name.getValue() + '\''
+         + ", price='" + String.valueOf(this.price.getValue()) + '\''
+         + ", comment='" + this.comment.getValue() + '\'' 
          + '}';
     }
 }

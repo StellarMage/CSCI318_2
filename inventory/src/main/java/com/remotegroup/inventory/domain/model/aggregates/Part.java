@@ -104,10 +104,10 @@ public class Part extends AbstractAggregateRoot<Part>{
 
     @Override
     public String toString() {
-        return "Part{" + "partId=" + this.partId + '\''
-        + ", supplier id='" + this.supplierId + '\'' 
-        + ", name='" + this.name + '\''
-         + ", description='" + this.description + '\''
+        return "Part{" + "partId=" + this.partId.getValue() + '\''
+        + ", supplier id='" + this.supplierId.getValue() + '\'' 
+        + ", name='" + this.name.getValue() + '\''
+         + ", description='" + this.description.getValue() + '\''
          + '}';
     }
 }

@@ -24,6 +24,10 @@ public class ProductId {
 		return productId.equals(e.productId);
 	}
 	
+	public String getValue(){
+		return productId;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(productId);
