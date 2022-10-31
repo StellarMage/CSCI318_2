@@ -81,7 +81,17 @@ public class InventoryService implements IInventoryService{
 		prRepo.delete(product);
 		
 	}
-
+	
+	@Override
+	public List<String> getProductIds(){
+		List<String> ids = new ArrayList<String>();
+		List<Product> products = getProducts();
+		for(int i=0;i<products.size();i++) {
+			ids.add(products.get(i).getProductId().toString());
+		}
+		return ids;
+	}
+	
 	@Override
 	public Product getProduct(ProductId id) {
 		ExampleMatcher matcher = ExampleMatcher.matching()

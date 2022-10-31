@@ -29,23 +29,23 @@ class LoadDatabase {
     return args -> {
     	CreateSupplierCommand sC1 = new CreateSupplierCommand("Pear", "Wollongong");
       Supplier s1 = procurementService.createSupplier(sC1);
-      log.info("Preloading " + sRepository.save(s1));
+      log.info("Preloading " + s1);
 
       CreateContactCommand cC1 = new CreateContactCommand(s1.getSupplierId().toString(),"0408459354", "jim@email.com", "Jim Davis", "Executive");
       Contact c1 = procurementService.createContact(cC1);
-      log.info("Preloading " + cRepository.save(c1));
+      log.info("Preloading " + c1);
 
       CreateContactCommand cC2 = new CreateContactCommand(s1.getSupplierId().toString(),"0408657158", "susan@email.com", "Susan Moore", "Employee");
       Contact c2 = procurementService.createContact(cC2);
-      log.info("Preloading " + cRepository.save(c2));
+      log.info("Preloading " + c2);
 
       CreateSupplierCommand sC2 = new CreateSupplierCommand("Orange", "Melbourne");
       Supplier s2 = procurementService.createSupplier(sC2);
-      log.info("Preloading " + sRepository.save(s2));
+      log.info("Preloading " + s2);
 
       CreateContactCommand cC3 = new CreateContactCommand(s2.getSupplierId().toString(),"0408265758", "george@email.com", "George Brown", "Auditor");
       Contact c3 = procurementService.createContact(cC3);
-      log.info("Preloading " + cRepository.save(c3));
+      log.info("Preloading " + c3);
     };
   }
 }
