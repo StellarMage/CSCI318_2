@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
 import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
@@ -29,14 +32,16 @@ class LoadDatabase {
 	  RestTemplate restTemplate = restTemplateBuilder.build();
 	  
 	  return args -> {
-		  String url = "http://localhost:8082/suppliers/ids";
+			ObjectMapper mapper = new ObjectMapper();
+		  	String url = "http://localhost:8082/suppliers/ids";
 		  
-		  List<SupplierId> ids = restTemplate.getForObject(url, List.class);
-		  //assuming 2 suppliers
-		  CreatePartCommand com1 = new CreatePartCommand(ids.get(0).toString(),"Bike Frame", "The frame of a bike.", 657);
-		  CreatePartCommand com2 = new CreatePartCommand(ids.get(1).toString(), "Bike Wheel", "The wheel for a bike.", 1453);
-		  log.info("Preloaded Part:  " + service.createPart(com1));
-		  log.info("Preloaded Part:  " + service.createPart(com2));;
+		  	JsonNode ids = restTemplate.getForObject(url, JsonNode.class);
+			List<SupplierId> supplierId = mapper.convertValue(ids, new TypeReference<List<SupplierId>>() {});
+		  	//assuming 2 suppliers
+		  	CreatePartCommand com1 = new CreatePartCommand(supplierId.get(0).toString(),"Bike Frame", "The frame of a bike.", 657);
+		  	CreatePartCommand com2 = new CreatePartCommand(supplierId.get(1).toString(), "Bike Wheel", "The wheel for a bike.", 1453);
+		  	log.info("Preloaded Part:  " + service.createPart(com1));
+		  	log.info("Preloaded Part:  " + service.createPart(com2));;
 	  };
   }
 }
