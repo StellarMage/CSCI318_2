@@ -1,47 +1,40 @@
 package com.remotegroup.sales.interfaces.rest;
 
-import com.remotegroup.sales.domain.model.aggregates.Store;
-import com.remotegroup.sales.exceptions.*;
-import com.remotegroup.sales.infrastructure.persistence.StoreRepository;
-
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.remotegroup.sales.domain.model.aggregates.Store;
+import com.remotegroup.sales.domain.model.commands.CreateStoreCommand;
+import com.remotegroup.sales.domain.model.services.ISaleService;
 
 @RestController
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class StoreController {
 	
-	private final StoreRepository repository;
-	StoreController(StoreRepository repository){
-		this.repository = repository;
-	}
+	@Autowired
+	ISaleService saleService;
 	
+	/*
 	//use case: get all stores.
 	@GetMapping("/stores")
 	List<Store> all() {
 	  return repository.findAll();
-	}
+	}*/
 	
 	//use case: create store
 	@PostMapping("/store")
-	Store newStore(@RequestBody Store store) {
-		return repository.save(store);
+	Store newStore(@RequestBody CreateStoreCommand c) {
+		return saleService.createStore(c);
 	}
 	
 	/*//use case: update store
 	@PutMapping("/store/{id}")
 	Store replaceStore(@RequestBody Store newStore, @PathVariable String id) {
 		
-	}*/
+	}
 	
 	//use case: delete store
 	@DeleteMapping("/store/{id}")
@@ -59,6 +52,6 @@ public class StoreController {
 		}catch(Exception e) {
 			throw new StoreNotFoundException(id);
 		}
-	}
+	}*/
 	
 }

@@ -20,11 +20,13 @@ import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
 import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
 import com.remotegroup.sales.domain.model.aggregates.Sale;
 import com.remotegroup.sales.domain.model.aggregates.SaleId;
+import com.remotegroup.sales.domain.model.aggregates.Store;
 import com.remotegroup.sales.domain.model.aggregates.StoreId;
 import com.remotegroup.sales.domain.model.commands.CreateBackOrderSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
+import com.remotegroup.sales.domain.model.commands.CreateStoreCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
@@ -36,6 +38,7 @@ import com.remotegroup.sales.infrastructure.persistence.BackOrderSaleRepository;
 import com.remotegroup.sales.infrastructure.persistence.InStoreSaleRepository;
 import com.remotegroup.sales.infrastructure.persistence.OnlineSaleRepository;
 import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
+import com.remotegroup.sales.infrastructure.persistence.StoreRepository;
 import com.remotegroup.sales.interfaces.kafka.KafkaController;
 import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
 import com.remotegroup.sales.shareddomain.Product;
@@ -47,15 +50,17 @@ public class SaleService implements ISaleService{
 	@Autowired private final InStoreSaleRepository inStoreSaleRepository;
 	@Autowired private final OnlineSaleRepository onlineSaleRepository;
 	@Autowired private final BackOrderSaleRepository backOrderSaleRepository;
+	@Autowired private final StoreRepository storeRepository;
 	private final RestTemplate restTemplate;
 	@Autowired private final  KafkaController controller;
 	@Autowired private final  KafkaListeners kafkaListeners;
 	private static final Logger log = LoggerFactory.getLogger(SaleService.class);
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners){
+	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, StoreRepository st, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
+		this.storeRepository = st;
 		this.onlineSaleRepository = o;
 		this.backOrderSaleRepository = b;
 		this.restTemplate = restTemplateBuilder.build();
@@ -206,6 +211,17 @@ public class SaleService implements ISaleService{
 		}
 		return matches;
 	}
+	
+	//STORE
+	
+	@Override
+	public Store createStore(CreateStoreCommand c) {
+		String storeIdStr = UUID.randomUUID().toString().toUpperCase();
+		c.setStoreId(storeIdStr);
+		
+		return storeRepository.save(new Store(c));
+	}
+	
 
 	//ONLINE
 	

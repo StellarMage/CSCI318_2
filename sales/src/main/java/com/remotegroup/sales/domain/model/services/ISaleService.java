@@ -8,11 +8,13 @@ import com.remotegroup.sales.domain.model.aggregates.InStoreSale;
 import com.remotegroup.sales.domain.model.aggregates.OnlineSale;
 import com.remotegroup.sales.domain.model.aggregates.Sale;
 import com.remotegroup.sales.domain.model.aggregates.SaleId;
+import com.remotegroup.sales.domain.model.aggregates.Store;
 import com.remotegroup.sales.domain.model.aggregates.StoreId;
 import com.remotegroup.sales.domain.model.commands.CreateBackOrderSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
+import com.remotegroup.sales.domain.model.commands.CreateStoreCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateInStoreSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateOnlineSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
@@ -52,4 +54,6 @@ public interface ISaleService {
 	public abstract void initSaleBI() throws JsonProcessingException;
 	public abstract void sendSale(Sale s) throws JsonProcessingException;
 	public abstract void sendUpdateSale(Sale s) throws JsonProcessingException;
+	
+	public abstract Store createStore(CreateStoreCommand c);
 }
