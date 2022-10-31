@@ -31,14 +31,19 @@ public class BusinessIntelligenceController {
 	List<BusinessIntelligence> getBusinessIntelligences() {
 		return biService.getBusinessIntelligences();
 	}
+
+	@GetMapping("/business/ids")
+	List<BusinessIntelligenceId> getBusinessIntelligenceIds() {
+		return biService.getBusinessIntelligenceIds();
+	}
 	
 	//Create a BusinessIntelligence
-	@PostMapping("/business")
+	@PostMapping("/business/new")
 	BusinessIntelligence newBusinessIntelligence(@RequestBody CreateNewBusinessIntelligenceCommand bI) {
 		return biService.newBusinessIntelligence(bI);
 	}
 
-	@PostMapping("/business")
+	@PostMapping("/business/sale")
 	BusinessIntelligence newSaleBusinessIntelligence(@RequestBody CreateSaleBusinessIntelligenceCommand bI) {
 		return biService.newSaleBusinessIntelligence(bI);
 	}
