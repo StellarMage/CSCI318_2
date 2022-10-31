@@ -52,7 +52,11 @@ class LoadDatabase {
 			log.info("Preloaded Part:  " + part1);
 			log.info("Preloaded Part:  " + part2);
 			
-			String[][] bikeParts = {{part1.getPartId().toString(), "1"},{part2.getPartId().toString(), "2"}};
+			String[][] bikeParts = new String[2][2];
+			bikeParts[0][0] = part1.getPartId().toString();
+			bikeParts[0][1] = "1";
+			bikeParts[1][0] = part2.getPartId().toString();
+			bikeParts[1][1] = "2";
 			
 			CreateProductCommand com3 = new CreateProductCommand("Marin Road Bike", "$1499.00", "-", bikeParts, 8);
 			CreateProductCommand com4 = new CreateProductCommand("Touring Mountain Bike", "$2599.00", "-", bikeParts, 2);
