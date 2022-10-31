@@ -135,8 +135,10 @@ public class Product extends AbstractAggregateRoot<Product>{
     public String toString() {
         return "Product{" + "productId=" + this.productId.getValue() + '\''
         + ", name='" + this.name.getValue() + '\''
-         + ", price='" + String.valueOf(this.price.getValue()) + '\''
-         + ", comment='" + this.comment.getValue() + '\'' 
-         + '}';
+        + ", price='" + String.valueOf(this.price.getValue()) + '\''
+        + ", comment='" + this.comment.getValue() + '\'' 
+        + ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
+        + ", stockQuantity='" + this.stockQuantity.getValue() + '\''
+        + '}';
     }
 }
