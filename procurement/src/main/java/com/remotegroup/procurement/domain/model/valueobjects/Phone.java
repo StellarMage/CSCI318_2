@@ -23,6 +23,10 @@ public class Phone implements Serializable {
 		Phone e = (Phone) o;
 		return phone.equals(e.phone);
 	}
+
+	public String getValue(){
+		return this.phone;
+	}
 	
 	@Override
 	public int hashCode() {

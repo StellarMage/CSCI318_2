@@ -24,6 +24,10 @@ public class Base implements Serializable{
 		return base.equals(e.base);
 	}
 	
+	public String getValue(){
+		return this.base;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(base);

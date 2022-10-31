@@ -91,9 +91,9 @@ public class Supplier extends AbstractAggregateRoot<Supplier> {
 
     @Override
     public String toString() {
-        return "Supplier {" + "supplierId=" + this.supplierId + '\''
-         + ", name='" + this.companyName + '\''
-         + ", base='" + this.base + '\''
+        return "Supplier {" + "supplierId=" + this.supplierId.getValue() + '\''
+         + ", name='" + this.companyName.getValue() + '\''
+         + ", base='" + this.base.getValue() + '\''
          + '}';
     }
 }
