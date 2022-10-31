@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class BusinessIntelligenceId implements Serializable {
+public class BusinessIntelligenceId{
 
 	private String businessIntelligenceId;
 	

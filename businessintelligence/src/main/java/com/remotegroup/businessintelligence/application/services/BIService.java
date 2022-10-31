@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -21,6 +23,7 @@ import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessI
 public class BIService implements IBIService{
 
 	@Autowired private final BusinessIntelligenceRepository bIRepo;
+	private static final Logger log = LoggerFactory.getLogger(BIService.class);
 	BIService(BusinessIntelligenceRepository bIRepo){
 		this.bIRepo = bIRepo;
 	}
@@ -43,16 +46,16 @@ public class BIService implements IBIService{
 	@Override
 	public BusinessIntelligence newBusinessIntelligence(CreateNewBusinessIntelligenceCommand bI){
 		String businessIntelligenceIdStr = UUID.randomUUID().toString().toUpperCase();
+		log.info("UUID: " + businessIntelligenceIdStr);
 		bI.setBusinessIntelligenceId(businessIntelligenceIdStr);
-		
 		return bIRepo.save(new BusinessIntelligence(bI));
 	}
 
 	@Override
 	public BusinessIntelligence newSaleBusinessIntelligence(CreateSaleBusinessIntelligenceCommand bI){
 		String businessIntelligenceIdStr = UUID.randomUUID().toString().toUpperCase();
+		log.info("UUID: " + businessIntelligenceIdStr);
 		bI.setBusinessIntelligenceId(businessIntelligenceIdStr);
-		
 		return bIRepo.save(new BusinessIntelligence(bI));
 	}
 

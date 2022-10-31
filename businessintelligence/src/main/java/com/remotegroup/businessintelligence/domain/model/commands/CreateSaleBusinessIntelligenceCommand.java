@@ -11,7 +11,7 @@ public class CreateSaleBusinessIntelligenceCommand {
 	private Double total;
 	
 	public CreateSaleBusinessIntelligenceCommand(Sale s) {
-		this.productName = s.itemId.toString();
+		this.productName = s.itemName.toString();
 		this.quantity = Integer.parseInt(s.quantity.toString());
 		this.price = Double.parseDouble(s.productPrice.toString());
 		this.total = this.quantity * this.price;
