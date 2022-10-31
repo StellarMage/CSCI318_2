@@ -47,7 +47,7 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        populateComprisingParts(command.getComprisingParts());
+        this.comprisingParts = populateComprisingParts(command.getComprisingParts());
 
     }
     
@@ -60,7 +60,7 @@ public class Product extends AbstractAggregateRoot<Product>{
 		return this;
     }
     
-    private void populateComprisingParts(String[][] c) {
+    private ComprisingPart[] populateComprisingParts(String[][] c) {
         ComprisingPart[] comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
@@ -69,6 +69,7 @@ public class Product extends AbstractAggregateRoot<Product>{
             log.info("Long.parseLong: " + c[i][1]);
             log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
         }
+        return comprisingParts;
     }
     
     public Long getId(){
