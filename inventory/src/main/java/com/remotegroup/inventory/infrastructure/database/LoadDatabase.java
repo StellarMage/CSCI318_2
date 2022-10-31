@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.remotegroup.inventory.domain.model.aggregates.Part;
+import com.remotegroup.inventory.domain.model.aggregates.Product;
 import com.remotegroup.inventory.domain.model.commands.CreatePartCommand;
+import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.services.IInventoryService;
 import com.remotegroup.inventory.domain.model.valueobjects.SupplierId;
 import com.remotegroup.inventory.infrastructure.persistence.PartRepository;
@@ -35,8 +38,28 @@ class LoadDatabase {
 		  //assuming 2 suppliers
 		  CreatePartCommand com1 = new CreatePartCommand(ids.get(0).toString(),"Bike Frame", "The frame of a bike.", 657);
 		  CreatePartCommand com2 = new CreatePartCommand(ids.get(1).toString(), "Bike Wheel", "The wheel for a bike.", 1453);
-		  log.info("Preloaded Part:  " + service.createPart(com1));
-		  log.info("Preloaded Part:  " + service.createPart(com2));;
+		  
+		  Part part1 = service.createPart(com2);
+		  Part part2 = service.createPart(com1);
+		  
+		  log.info("Preloaded Part:  " + part1);
+		  log.info("Preloaded Part:  " + part2);;
+		  
+		  String[][] bikeParts = {{part1.getPartId().toString(), "1"},{part2.getPartId().toString(), "2"}};
+		  
+		  CreateProductCommand com3 = new CreateProductCommand("Marin Road Bike", "$1499.00", "-", bikeParts, 8);
+		  CreateProductCommand com4 = new CreateProductCommand("Touring Mountain Bike", "$2599.00", "-", bikeParts, 2);
+		  CreateProductCommand com5 = new CreateProductCommand("Basic 1-Speed Bike", "$399.00", "-", bikeParts, 20);
+		  
+		  
+		  Product product1 = service.createProduct(com3);
+		  Product product2 = service.createProduct(com4);
+		  Product product3 = service.createProduct(com5);
+		  
+		  log.info("Preloaded Product:  "+product1);
+		  log.info("Preloaded Product:  "+product2);
+		  log.info("Preloaded Product:  "+product3);
+		  
 	  };
   }
 }
