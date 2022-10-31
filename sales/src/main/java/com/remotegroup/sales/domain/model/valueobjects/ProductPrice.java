@@ -23,6 +23,10 @@ public class ProductPrice implements Serializable{
 		ProductPrice e = (ProductPrice) o;
 		return productPrice.equals(e.productPrice);
 	}
+
+	public String getValue(){
+		return this.productPrice;
+	}
 	
 	@Override
 	public int hashCode() {

@@ -75,8 +75,8 @@ public class InStoreSale extends Sale {
 
     @Override
     public String toString() {
-        return super.toString() +"InStoreSale { store id='" + this.storeId + '\'' 
-        + ", receipt='" + this.receiptNo + '\''
+        return super.toString() +"InStoreSale { store id='" + this.storeId.getValue() + '\'' 
+        + ", receipt='" + this.receiptNo.getValue() + '\''
          + '}';
     }
 }

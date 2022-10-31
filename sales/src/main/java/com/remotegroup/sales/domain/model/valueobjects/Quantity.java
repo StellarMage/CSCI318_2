@@ -23,6 +23,10 @@ public class Quantity implements Serializable{
 		Quantity e = (Quantity) o;
 		return quantity.equals(e.quantity);
 	}
+
+	public String getValue(){
+		return this.quantity;
+	}
 	
 	@Override
 	public int hashCode() {
