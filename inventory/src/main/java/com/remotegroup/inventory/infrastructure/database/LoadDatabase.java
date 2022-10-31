@@ -38,8 +38,10 @@ class LoadDatabase {
 			ObjectMapper mapper = new ObjectMapper();
 		  	String url = "http://localhost:8082/suppliers/ids";
 			JsonNode supplierIds = restTemplate.getForObject(url, JsonNode.class);
+			log.info("Preloaded supplierIds:  " + supplierIds);
 		  
 			List<SupplierId> ids = mapper.convertValue(supplierIds, new TypeReference<List<SupplierId>>() {});
+			log.info("Preloaded ids:  " + ids);
 			//assuming 2 suppliers
 			CreatePartCommand com1 = new CreatePartCommand(ids.get(0).toString(),"Bike Frame", "The frame of a bike.", 657);
 			CreatePartCommand com2 = new CreatePartCommand(ids.get(1).toString(), "Bike Wheel", "The wheel for a bike.", 1453);
@@ -48,7 +50,7 @@ class LoadDatabase {
 			Part part2 = service.createPart(com1);
 			
 			log.info("Preloaded Part:  " + part1);
-			log.info("Preloaded Part:  " + part2);;
+			log.info("Preloaded Part:  " + part2);
 			
 			String[][] bikeParts = {{part1.getPartId().toString(), "1"},{part2.getPartId().toString(), "2"}};
 			

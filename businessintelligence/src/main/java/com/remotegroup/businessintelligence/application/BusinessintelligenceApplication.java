@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @ComponentScan({"com.remotegroup"})
-@EntityScan("com.remotegroup.businessintelligence.businessIntelligence.domain.aggregates")
+@EntityScan("com.remotegroup.businessintelligence.domain.model.aggregates")
 @EnableJpaRepositories("com.remotegroup.businessintelligence.infrastructure.persistence")
 public class BusinessintelligenceApplication {
 
