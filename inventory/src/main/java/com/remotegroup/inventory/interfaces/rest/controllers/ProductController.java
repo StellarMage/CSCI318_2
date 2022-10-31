@@ -32,6 +32,11 @@ public class ProductController {
 	  return inventoryService.getProducts();
 	}
 	
+	@GetMapping("/products/ids")
+	List<String> getProductIds(){
+		return inventoryService.getProductIds();
+	}
+	
 	//use case: create product
 	@PostMapping("/product")
 	Product newProduct(@RequestBody CreateProductCommand c) {
