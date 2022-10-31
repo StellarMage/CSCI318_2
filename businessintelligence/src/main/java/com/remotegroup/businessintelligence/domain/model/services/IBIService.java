@@ -17,5 +17,6 @@ public interface IBIService {
 	public abstract BusinessIntelligence replaceBusinessIntelligence(UpdateBusinessIntelligenceCommand bI);
 	
 	public abstract BusinessIntelligence getBusinessIntelligenceById(BusinessIntelligenceId id);
-	List<BusinessIntelligence> all();
+	public abstract List<BusinessIntelligence> getBusinessIntelligences();
+	List<BusinessIntelligenceId> getBusinessIntelligenceIds();
 }
