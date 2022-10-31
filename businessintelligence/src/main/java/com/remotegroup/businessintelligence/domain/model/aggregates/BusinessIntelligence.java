@@ -121,11 +121,11 @@ public class BusinessIntelligence extends AbstractAggregateRoot<BusinessIntellig
 
     @Override
     public String toString() {
-        return "BusinessIntillgence{" + "businessIntelligenceId=" + this.businessIntelligenceId + '\''
-        + ", productName='" + this.productName + '\'' 
-        + ", quantity='" + this.quantity + '\'' 
-        + ", price='" + this.price + '\''
-         + ", total='" + this.total + '\''
+        return "BusinessIntillgence{" + "businessIntelligenceId=" + this.businessIntelligenceId.getValue() + '\''
+        + ", productName='" + this.productName.getValue() + '\'' 
+        + ", quantity='" + this.quantity.getValue() + '\'' 
+        + ", price='" + this.price.getValue() + '\''
+         + ", total='" + this.total.getValue() + '\''
          + '}';
     }
 }

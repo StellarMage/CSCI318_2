@@ -24,6 +24,10 @@ public class SaleId implements Serializable{
 		SaleId e = (SaleId) o;
 		return saleId.equals(e.saleId);
 	}
+
+	public String getValue(){
+		return saleId;
+	}
 	
 	@Override
 	public int hashCode() {

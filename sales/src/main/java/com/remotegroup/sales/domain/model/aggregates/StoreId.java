@@ -24,6 +24,10 @@ public class StoreId implements Serializable{
 		StoreId e = (StoreId) o;
 		return storeId.equals(e.storeId);
 	}
+
+	public String getValue(){
+		return storeId;
+	}
 	
 	@Override
 	public int hashCode() {

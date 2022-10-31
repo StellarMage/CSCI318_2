@@ -23,6 +23,10 @@ public class BusinessIntelligenceId implements Serializable {
 		BusinessIntelligenceId e = (BusinessIntelligenceId) o;
 		return businessIntelligenceId.equals(e.businessIntelligenceId);
 	}
+
+	public String getValue(){
+		return businessIntelligenceId;
+	}
 	
 	@Override
 	public int hashCode() {

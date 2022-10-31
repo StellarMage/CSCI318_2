@@ -23,6 +23,10 @@ public class CustomerName implements Serializable{
 		CustomerName e = (CustomerName) o;
 		return customerName.equals(e.customerName);
 	}
+
+	public String getValue(){
+		return customerName;
+	}
 	
 	@Override
 	public int hashCode() {

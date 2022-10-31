@@ -80,8 +80,8 @@ public class OnlineSale extends Sale {
     @Override
     public String toString() {
         return super.toString() +"OnlineSale{"
-        + " CustomerName id='" + this.customerName + '\'' 
-        + ", address='" + this.address + '\''
+        + " CustomerName id='" + this.customerName.getValue() + '\'' 
+        + ", address='" + this.address.getValue() + '\''
          + '}';
     }
 }

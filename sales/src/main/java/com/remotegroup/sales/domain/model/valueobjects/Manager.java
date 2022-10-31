@@ -23,6 +23,10 @@ public class Manager implements Serializable{
 		Manager e = (Manager) o;
 		return manager.equals(e.manager);
 	}
+
+	public String getValue(){
+		return manager;
+	}
 	
 	@Override
 	public int hashCode() {

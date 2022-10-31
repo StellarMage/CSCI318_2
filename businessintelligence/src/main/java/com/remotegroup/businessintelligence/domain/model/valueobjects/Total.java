@@ -27,6 +27,10 @@ public class Total implements Serializable {
 		Total e = (Total) o;
 		return total.equals(e.total);
 	}
+
+	public Double getValue(){
+		return total;
+	}
 	
 	@Override
 	public int hashCode() {

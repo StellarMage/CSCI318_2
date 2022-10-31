@@ -23,6 +23,10 @@ public class ItemName implements Serializable{
 		ItemName e = (ItemName) o;
 		return itemName.equals(e.itemName);
 	}
+
+	public String getValue(){
+		return itemName;
+	}
 	
 	@Override
 	public int hashCode() {
