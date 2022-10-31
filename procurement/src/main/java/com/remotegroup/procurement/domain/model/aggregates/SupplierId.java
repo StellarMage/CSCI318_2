@@ -23,6 +23,10 @@ public class SupplierId implements Serializable {
 		SupplierId e = (SupplierId) o;
 		return supplierId.equals(e.supplierId);
 	}
+
+	public String getValue(){
+		return this.supplierId;
+	}
 	
 	@Override
 	public int hashCode() {

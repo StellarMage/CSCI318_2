@@ -24,6 +24,10 @@ public class CompanyName implements Serializable{
 		return name.equals(e.name);
 	}
 	
+	public String getValue(){
+		return this.name;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(name);

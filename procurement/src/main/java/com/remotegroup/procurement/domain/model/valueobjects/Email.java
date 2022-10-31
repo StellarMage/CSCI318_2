@@ -36,6 +36,10 @@ public class Email implements Serializable {
 			return true;
 		}else {return false;}
 	}
+
+	public String getValue(){
+		return this.email;
+	}
 	
 	//equality 
 	@Override

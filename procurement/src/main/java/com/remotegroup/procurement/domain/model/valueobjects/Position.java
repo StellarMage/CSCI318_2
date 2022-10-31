@@ -23,6 +23,10 @@ public class Position implements Serializable {
 		Position e = (Position) o;
 		return position.equals(e.position);
 	}
+
+	public String getValue(){
+		return this.position;
+	}
 	
 	@Override
 	public int hashCode() {

@@ -25,6 +25,10 @@ public class ContactId implements Serializable{
 		return contactId.equals(e.contactId);
 	}
 	
+	public String getValue(){
+		return this.contactId;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(contactId);
