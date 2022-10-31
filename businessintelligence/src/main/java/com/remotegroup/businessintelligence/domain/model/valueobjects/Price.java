@@ -23,6 +23,10 @@ public class Price implements Serializable {
 		Price e = (Price) o;
 		return price.equals(e.price);
 	}
+
+	public Double getValue(){
+		return price;
+	}
 	
 	@Override
 	public int hashCode() {

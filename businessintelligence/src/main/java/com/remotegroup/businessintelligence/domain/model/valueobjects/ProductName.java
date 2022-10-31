@@ -23,6 +23,10 @@ public class ProductName implements Serializable {
 		ProductName e = (ProductName) o;
 		return productName.equals(e.productName);
 	}
+
+	public String getValue(){
+		return productName;
+	}
 	
 	@Override
 	public int hashCode() {
