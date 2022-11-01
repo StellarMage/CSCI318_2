@@ -84,7 +84,9 @@ public class SaleService implements ISaleService{
 		String saleIdStr = UUID.randomUUID().toString().toUpperCase();
 		createSaleCommand.setSaleId(saleIdStr);
 		
-		return saleRepository.save(new Sale(createSaleCommand));
+		Sale createdSale = saleRepository.save(new Sale(createSaleCommand));
+
+		return createdSale;
 	}
 
 	@Override
