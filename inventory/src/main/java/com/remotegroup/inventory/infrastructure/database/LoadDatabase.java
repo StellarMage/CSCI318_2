@@ -69,9 +69,9 @@ class LoadDatabase {
 			log.info("Preloaded Part:  " + bikeParts[1][1]);
 			log.info("Preloaded Part:  " + bikeParts);
 
-			CreateProductCommand com3 = new CreateProductCommand("Marin Road Bike", "$1499.00", "-", bikeParts, 8);
-			CreateProductCommand com4 = new CreateProductCommand("Touring Mountain Bike", "$2599.00", "-", bikeParts, 2);
-			CreateProductCommand com5 = new CreateProductCommand("Basic 1-Speed Bike", "$399.00", "-", bikeParts, 20);
+			CreateProductCommand com3 = new CreateProductCommand("Marin Road Bike", "1499.00", "-", bikeParts, 8);
+			CreateProductCommand com4 = new CreateProductCommand("Touring Mountain Bike", "2599.00", "-", bikeParts, 2);
+			CreateProductCommand com5 = new CreateProductCommand("Basic 1-Speed Bike", "399.00", "-", bikeParts, 20);
 
 			log.info("Preloaded Product:  "+ com3);
 			log.info("Preloaded Product:  "+ com4);
@@ -84,6 +84,10 @@ class LoadDatabase {
 			log.info("Preloaded Product:  "+product1);
 			log.info("Preloaded Product:  "+product2);
 			log.info("Preloaded Product:  "+product3);
+
+			log.info("Preloaded ComprisingParts:  "+product1.getComprisingParts());
+			log.info("Preloaded ComprisingParts:  "+product2.getComprisingParts());
+			log.info("Preloaded ComprisingParts:  "+product3.getComprisingParts());
 		  
 	  };
   }

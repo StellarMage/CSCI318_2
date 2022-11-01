@@ -9,6 +9,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.inventory.domain.model.aggregates.ComprisingPart;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.PartId;
@@ -51,7 +55,9 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public Product updateProduct(UpdateProductCommand command) {
-		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("productId", match->match.exact());
 		

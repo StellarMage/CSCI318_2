@@ -46,7 +46,7 @@ import com.remotegroup.sales.infrastructure.persistence.SaleRepository;
 import com.remotegroup.sales.infrastructure.persistence.StoreRepository;
 import com.remotegroup.sales.interfaces.kafka.KafkaController;
 import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
-import com.remotegroup.sales.shareddomain.Product;
+import com.remotegroup.shareddomain.model.aggregates.Product;
 
 @Service
 public class SaleService implements ISaleService{
