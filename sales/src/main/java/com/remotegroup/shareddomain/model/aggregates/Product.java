@@ -1,6 +1,5 @@
-package com.remotegroup.inventory.domain.model.aggregates;
+package com.remotegroup.shareddomain.model.aggregates;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -13,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
-import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
-import com.remotegroup.inventory.domain.model.commands.UpdateProductCommand;
-import com.remotegroup.inventory.domain.model.valueobjects.Comment;
-import com.remotegroup.inventory.domain.model.valueobjects.Name;
-import com.remotegroup.inventory.domain.model.valueobjects.Price;
-import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
+import com.remotegroup.shareddomain.model.commands.CreateProductCommand;
+import com.remotegroup.shareddomain.model.commands.UpdateProductCommand;
+import com.remotegroup.shareddomain.model.valueobjects.Comment;
+import com.remotegroup.shareddomain.model.valueobjects.Name;
+import com.remotegroup.shareddomain.model.valueobjects.Price;
+import com.remotegroup.shareddomain.model.valueobjects.StockQuantity;
 
 @Entity
 public class Product extends AbstractAggregateRoot<Product>{
@@ -47,7 +46,7 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        populateComprisingParts(command.getComprisingParts());
+        this.comprisingParts = populateComprisingParts(command.getComprisingParts());
 
     }
     
@@ -60,15 +59,16 @@ public class Product extends AbstractAggregateRoot<Product>{
 		return this;
     }
     
-    private void populateComprisingParts(String[][] c) {
-        comprisingParts = new ComprisingPart[c.length];
+    private ComprisingPart[] populateComprisingParts(String[][] c) {
+        ComprisingPart[] comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
             log.info("c: " + Arrays.deepToString(c));
-            log.info("PartId: " + new PartId(c[i][0]));
-            log.info("Long.parseLong: " + Long.parseLong(c[i][1]));
+            log.info("PartId: " + c[i][0]);
+            log.info("Long.parseLong: " + c[i][1]);
             log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
         }
+        return comprisingParts;
     }
     
     public Long getId(){

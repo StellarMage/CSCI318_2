@@ -5,7 +5,7 @@ import com.remotegroup.sales.domain.model.aggregates.SaleId;
 import com.remotegroup.sales.domain.model.commands.CreateSaleCommand;
 import com.remotegroup.sales.domain.model.commands.UpdateSaleCommand;
 import com.remotegroup.sales.domain.model.services.ISaleService;
-import com.remotegroup.sales.shareddomain.*;
+import com.remotegroup.shareddomain.model.aggregates.Product;
 
 import java.util.List;
 

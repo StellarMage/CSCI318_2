@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.remotegroup.sales.shareddomain.Product;
+import com.remotegroup.shareddomain.model.aggregates.Product;
 
 @Component
 public class KafkaListeners {
