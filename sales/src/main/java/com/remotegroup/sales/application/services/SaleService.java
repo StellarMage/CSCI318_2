@@ -47,6 +47,7 @@ import com.remotegroup.sales.infrastructure.persistence.StoreRepository;
 import com.remotegroup.sales.interfaces.kafka.KafkaController;
 import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
 import com.remotegroup.sales.shareddomain.Product;
+import com.remotegroup.sales.shareddomain.events.SaleEvent;
 
 @Service
 public class SaleService implements ISaleService{
@@ -389,7 +390,7 @@ public class SaleService implements ISaleService{
 	}
 
 	@Override
-	public void sendSale(Sale s) throws JsonProcessingException {
+	public void sendSale(SaleEvent s) throws JsonProcessingException {
       	String jsonString = mapper.writeValueAsString(s);
 		log.info("JSON " + jsonString);
 		controller.bISendSale(jsonString);

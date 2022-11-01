@@ -3,21 +3,19 @@ package com.remotegroup.businessintelligence.interfaces.kafka;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.businessintelligence.domain.model.aggregates.BusinessIntelligence;
 import com.remotegroup.businessintelligence.domain.model.commands.CreateSaleBusinessIntelligenceCommand;
 import com.remotegroup.businessintelligence.domain.model.services.IBIService;
 import com.remotegroup.businessintelligence.infrastructure.persistence.BusinessIntelligenceRepository;
-import com.remotegroup.businessintelligence.interfaces.rest.BusinessIntelligenceController;
+import com.remotegroup.shareddomain.events.SaleEvent;
 import com.remotegroup.shareddomain.model.aggregates.Sale;
 
 @Component
@@ -38,9 +36,9 @@ public class KafkaListeners {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
         log.info("JSON String Received");
-        Sale dataReceived;
+        SaleEvent dataReceived;
         try {
-            dataReceived = mapper.readValue(data, Sale.class);
+            dataReceived = mapper.readValue(data, SaleEvent.class);
             log.info("Converting JtS: " + dataReceived);
             CreateSaleBusinessIntelligenceCommand c = new CreateSaleBusinessIntelligenceCommand(dataReceived);
             BusinessIntelligence dataConverted = service.newSaleBusinessIntelligence(c);
@@ -57,9 +55,9 @@ public class KafkaListeners {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
         log.info("JSON String Received");
-        Sale dataReceived;
+        SaleEvent dataReceived;
         try {
-            dataReceived = mapper.readValue(data, Sale.class);
+            dataReceived = mapper.readValue(data, SaleEvent.class);
             log.info("Converting JtS: " + dataReceived);
         CreateSaleBusinessIntelligenceCommand c = new CreateSaleBusinessIntelligenceCommand(dataReceived);
         BusinessIntelligence dataConverted = service.newSaleBusinessIntelligence(c);

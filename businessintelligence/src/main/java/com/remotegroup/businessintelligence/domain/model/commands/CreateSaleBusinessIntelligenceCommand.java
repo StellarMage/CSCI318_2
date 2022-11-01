@@ -1,6 +1,7 @@
 package com.remotegroup.businessintelligence.domain.model.commands;
 
-import com.remotegroup.shareddomain.model.aggregates.Sale;
+import com.remotegroup.shareddomain.events.SaleEvent;
+import com.remotegroup.shareddomain.events.SaleEventData;
 
 public class CreateSaleBusinessIntelligenceCommand {
 
@@ -10,10 +11,11 @@ public class CreateSaleBusinessIntelligenceCommand {
 	private Double price;
 	private Double total;
 	
-	public CreateSaleBusinessIntelligenceCommand(Sale s) {
-		this.productName = s.itemName.toString();
-		this.quantity = Integer.parseInt(s.quantity.toString());
-		this.price = Double.parseDouble(s.productPrice.toString());
+	public CreateSaleBusinessIntelligenceCommand(SaleEvent s) {
+		SaleEventData d = s.getData();
+		this.productName = d.getItemName();
+		this.quantity = d.getQuantity();
+		this.price = d.getProductPrice();
 		this.total = this.quantity * this.price;
 	}
 

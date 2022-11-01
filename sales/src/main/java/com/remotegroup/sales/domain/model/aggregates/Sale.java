@@ -16,6 +16,7 @@ import com.remotegroup.sales.domain.model.valueobjects.ItemId;
 import com.remotegroup.sales.domain.model.valueobjects.ItemName;
 import com.remotegroup.sales.domain.model.valueobjects.ProductPrice;
 import com.remotegroup.sales.domain.model.valueobjects.Quantity;
+import com.remotegroup.sales.shareddomain.events.SaleEvent;
 
 @Entity
 public class Sale extends AbstractAggregateRoot<Sale>{
@@ -43,6 +44,7 @@ public class Sale extends AbstractAggregateRoot<Sale>{
         this.quantity = new Quantity(command.getQuantity());
         this.dataTime = new DataTime(command.getDataTime());
         this.productPrice = new ProductPrice(command.getProductPrice());
+        addDomainEvent(new SaleEvent(this));
     }
 
     public Sale updateSale(UpdateSaleCommand command) {
@@ -136,5 +138,9 @@ public class Sale extends AbstractAggregateRoot<Sale>{
         + ", dataTime='" + this.dataTime.getValue() + '\''
         + ", ProductPrice='" + this.productPrice.getValue() + '\''
         + '}';
+    }
+    
+    public void addDomainEvent(Object event) {
+    	registerEvent(event);
     }
 }
