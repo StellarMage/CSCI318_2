@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.remotegroup.shareddomain.model.commands.CreateProductCommand;
 import com.remotegroup.shareddomain.model.commands.UpdateProductCommand;
 import com.remotegroup.shareddomain.model.valueobjects.Comment;
@@ -24,16 +25,22 @@ public class Product extends AbstractAggregateRoot<Product>{
     private @Id @GeneratedValue Long id;
     
     @Embedded
+    @JsonProperty("productId")
     private ProductId productId;
     @Embedded
+    @JsonProperty("name")
     private Name name;
     @Embedded
+    @JsonProperty("price")
     private Price price;
     @Embedded
+    @JsonProperty("comment")
     private Comment comment;
     @Embedded
+    @JsonProperty("comprisingParts")
     private ComprisingPart[] comprisingParts; 
     @Embedded
+    @JsonProperty("stockQuantity")
     private StockQuantity stockQuantity;
 
     private static final Logger log = LoggerFactory.getLogger(Product.class);
@@ -133,6 +140,12 @@ public class Product extends AbstractAggregateRoot<Product>{
 
     @Override
     public String toString() {
+        log.info("productId: " + this.productId);
+        log.info("name: " + this.name);
+        log.info("price: " + String.valueOf(this.price));
+        log.info("comment: " + this.comment);
+        log.info("comprisingParts: " + Arrays.deepToString(this.comprisingParts));
+        log.info("stockQuantity: " + this.stockQuantity);
         return "Product{" + "productId=" + this.productId.getValue() + '\''
         + ", name='" + this.name.getValue() + '\''
         + ", price='" + String.valueOf(this.price.getValue()) + '\''

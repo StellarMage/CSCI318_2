@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class Comment implements Serializable{
 
@@ -12,7 +14,7 @@ public class Comment implements Serializable{
 	
 	Comment(){}
 	
-	public Comment(String id) {this.comment = id;}
+	public Comment(@JsonProperty("comment") String id) {this.comment = id;}
 	
 	public String toString() {return this.comment;}
 	

@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class ComprisingPart implements Serializable{
 	
@@ -15,12 +17,10 @@ public class ComprisingPart implements Serializable{
 	
 	ComprisingPart(){}
 	
-	public ComprisingPart(PartId id, Long quantity){
+	public ComprisingPart(@JsonProperty("comprisingParts") PartId id, Long quantity){
 		this.part = id;
 		this.quantity = quantity;
 	}
-	
-	
 	
 	public PartId getPart() {
 		return part;
