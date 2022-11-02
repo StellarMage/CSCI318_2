@@ -54,7 +54,7 @@ public class ContactController {
 	//use case: get contact by id
 
 	@GetMapping("/contact/{id}")
-	EntityModel<Contact> one(@PathVariable String id) {
+	Contact one(@PathVariable String id) {
 		return procurementService.getContact(new ContactId(id));
 	}
 }
