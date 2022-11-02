@@ -92,17 +92,7 @@ public class SaleService implements ISaleService{
 	@Override
 	public Sale updateSale(UpdateSaleCommand updateSaleCommand) {
 		
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		Sale sExample = new Sale();
-		sExample.setSaleId(new SaleId(updateSaleCommand.getSaleId()));
-		Example<Sale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<Sale> returnSales =  saleRepository.findAll(example);
-		Sale sale = returnSales.get(0);
-		
+		Sale sale = getSale(new SaleId(updateSaleCommand.getSaleId()));
 		//update sale
 		sale.updateSale(updateSaleCommand);
 		
@@ -112,31 +102,14 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public Sale getSale(SaleId id) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-			.withMatcher("saleId", match->match.exact());
-		Sale sExample = new Sale();
-		sExample.setSaleId(id);
-		Example<Sale> example = Example.of(sExample, matcher);
-
-		//store sale in object
-		List<Sale> returnSales =  saleRepository.findAll(example);
-		Sale sale = returnSales.get(0);
-		return sale;
+		List<Sale> sl = getSales();
+		return sl.stream().filter(s-> {return s.getSaleId().equals(id);}).findAny().orElse(null);
 	}
 
 	@Override
 	public void deleteSale(SaleId id) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		Sale sExample = new Sale();
-		sExample.setSaleId(id);
-		Example<Sale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<Sale> returnSales =  saleRepository.findAll(example);
-		Sale sale = returnSales.get(0);
+
+		Sale sale = getSale(id);
 		
 		saleRepository.delete(sale);
 	}
@@ -164,45 +137,22 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public InStoreSale updateSale(UpdateInStoreSaleCommand s) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		InStoreSale sExample = new InStoreSale();
-		sExample.setSaleId(new SaleId(s.getSaleId()));
-		Example<InStoreSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
-		InStoreSale sale = returnSales.get(0);
+		InStoreSale sale = getInStoreSale(new SaleId(s.getSaleId()));
 		
 		return sale.updateInStoreSale(s);
 	}
 
 	@Override
 	public InStoreSale getInStoreSale(SaleId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		InStoreSale sExample = new InStoreSale();
-		sExample.setSaleId(id);
-		Example<InStoreSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
-		InStoreSale sale = returnSales.get(0);
-		return sale;
+		List<InStoreSale> sl = getInStoreSales();
+		return sl.stream().filter(s-> {return s.getSaleId().equals(id);}).findAny().orElse(null);
+	
 	}
 
 	@Override
 	public void deleteInStoreSale(SaleId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		InStoreSale sExample = new InStoreSale();
-		sExample.setSaleId(id);
-		Example<InStoreSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<InStoreSale> returnSales =  inStoreSaleRepository.findAll(example);
-		InStoreSale sale = returnSales.get(0);
+
+		InStoreSale sale = getInStoreSale(id);
 		
 		inStoreSaleRepository.delete(sale);
 		
@@ -248,47 +198,21 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public OnlineSale updateSale(UpdateOnlineSaleCommand s) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		OnlineSale sExample = new OnlineSale();
-		sExample.setSaleId(new SaleId(s.getSaleId()));
-		Example<OnlineSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
-		OnlineSale sale = returnSales.get(0);
+		OnlineSale sale = getOnlineSale(new SaleId(s.getSaleId()));
 		return sale.updateOnlineSale(s);
 
 	}
 
 	@Override
 	public OnlineSale getOnlineSale(SaleId id) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		OnlineSale sExample = new OnlineSale();
-		sExample.setSaleId(id);
-		Example<OnlineSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
-		OnlineSale sale = returnSales.get(0);
-		return sale;
+		List<OnlineSale> sl = getOnlineSales();
+		return sl.stream().filter(s-> {return s.getSaleId().equals(id);}).findAny().orElse(null);
+	
 	}
 
 	@Override
 	public void deleteOnlineSale(SaleId id) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		OnlineSale sExample = new OnlineSale();
-		sExample.setSaleId(id);
-		Example<OnlineSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<OnlineSale> returnSales =  onlineSaleRepository.findAll(example);
-		OnlineSale sale = returnSales.get(0);
+		OnlineSale sale = getOnlineSale(id);
 		onlineSaleRepository.delete(sale);
 		
 	}
@@ -318,33 +242,16 @@ public class SaleService implements ISaleService{
 
 	@Override
 	public void deleteBackOrderSale(SaleId id) {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		BackOrderSale sExample = new BackOrderSale();
-		sExample.setSaleId(id);
-		Example<BackOrderSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<BackOrderSale> returnSales =  backOrderSaleRepository.findAll(example);
-		BackOrderSale sale = returnSales.get(0);
+		BackOrderSale sale = getBackOrderSale(id);
 		backOrderSaleRepository.delete(sale);
 		
 	}
 
 	@Override
-	public BackOrderSale getBackOrderSale(SaleId id) throws BackOrderSaleNotFoundException {
-		//find the sale by saleId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("saleId", match->match.exact());
-		BackOrderSale sExample = new BackOrderSale();
-		sExample.setSaleId(id);
-		Example<BackOrderSale> example = Example.of(sExample, matcher);
-		
-		//store sale in object
-		List<BackOrderSale> returnSales =  backOrderSaleRepository.findAll(example);
-		BackOrderSale sale = returnSales.get(0);
-		return sale;
+	public BackOrderSale getBackOrderSale(SaleId id) {
+		List<BackOrderSale> sl = getBackOrderSales();
+		return sl.stream().filter(s-> {return s.getSaleId().equals(id);}).findAny().orElse(null);
+	
 	}
 
 	@Override
