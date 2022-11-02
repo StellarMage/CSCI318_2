@@ -5,14 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.remotegroup.inventory.domain.model.aggregates.ComprisingPart;
 import com.remotegroup.inventory.domain.model.aggregates.Part;
 import com.remotegroup.inventory.domain.model.aggregates.PartId;
