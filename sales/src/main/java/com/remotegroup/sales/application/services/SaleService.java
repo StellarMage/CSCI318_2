@@ -2,7 +2,11 @@ package com.remotegroup.sales.application.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +52,7 @@ import com.remotegroup.sales.interfaces.kafka.KafkaController;
 import com.remotegroup.sales.interfaces.kafka.KafkaListeners;
 import com.remotegroup.sales.shareddomain.events.SaleEvent;
 import com.remotegroup.shareddomain.model.aggregates.Product;
+import com.remotegroup.shareddomain.model.aggregates.ProductId;
 
 @Service
 public class SaleService implements ISaleService{
@@ -57,13 +62,18 @@ public class SaleService implements ISaleService{
 	@Autowired private final OnlineSaleRepository onlineSaleRepository;
 	@Autowired private final BackOrderSaleRepository backOrderSaleRepository;
 	@Autowired private final StoreRepository storeRepository;
+	@Autowired private final ISaleService service;
 	private final RestTemplate restTemplate;
 	@Autowired private final  KafkaController controller;
 	@Autowired private final  KafkaListeners kafkaListeners;
 	private static final Logger log = LoggerFactory.getLogger(SaleService.class);
 	private ObjectMapper mapper = new ObjectMapper();
+	private boolean randomTestToggle = false;
+	private Integer i = 0;
+ 	private Random random = new Random();
+	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(0);
 	
-	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, StoreRepository st, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners){
+	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, StoreRepository st, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners, ISaleService service){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
 		this.storeRepository = st;
@@ -72,6 +82,7 @@ public class SaleService implements ISaleService{
 		this.restTemplate = restTemplateBuilder.build();
 		this.controller = controller;
 		this.kafkaListeners = kafkaListeners;
+		this.service = service;
 	}
 	
 	@Override
@@ -312,5 +323,40 @@ public class SaleService implements ISaleService{
 		controller.bISendUpdateSale(jsonString);
 	}
 	
-	//
+	@Override
+	public void randomTest() {
+		randomTestToggle = true;
+		executor.scheduleAtFixedRate(randomTest, 0, 2, TimeUnit.SECONDS);
+	}
+
+	Runnable randomTest = new Runnable() {
+		public void run() {
+			if (randomTestToggle = true) {
+				i++;
+				String url = "http://localhost:8081/products/ids";
+				JsonNode productIds = restTemplate.getForObject(url, JsonNode.class);
+				List<ProductId> ids = mapper.convertValue(productIds, new TypeReference<List<ProductId>>() {});
+				Integer min = 0;
+				Integer max = ids.size() - 1;
+				ProductId rand = ids.get(random.nextInt(max - min) + min);
+				String pUrl = "http://localhost:8081/product/" + rand.toString();
+				JsonNode jProd = restTemplate.getForObject(pUrl, JsonNode.class);
+				Product prod = mapper.convertValue(jProd, new TypeReference<Product>() {});
+				CreateSaleCommand c = new CreateSaleCommand(rand.toString(), prod.getName().toString(), "1", i +"-11-2022", prod.getPrice().toString());
+				try {
+					service.createSale(c);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+			} else {
+				i = 0;
+				executor.shutdown();
+			}
+		}
+	};
+
+	@Override
+	public void randomTestEnd(){
+		randomTestToggle = false;
+	}
 }

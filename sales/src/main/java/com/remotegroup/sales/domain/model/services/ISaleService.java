@@ -58,4 +58,7 @@ public interface ISaleService {
 	public abstract void sendUpdateSale(Sale s) throws JsonProcessingException;
 	
 	public abstract Store createStore(CreateStoreCommand c);
+
+	public abstract void randomTest();
+	public abstract void randomTestEnd();
 }

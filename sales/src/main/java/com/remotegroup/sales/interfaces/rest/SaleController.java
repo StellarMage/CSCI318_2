@@ -74,4 +74,14 @@ public class SaleController {
 	List<SaleId> getSaleIds(){
 		return salesService.getSaleIds();
 	}
+
+	@PostMapping("sale/randomTest")
+	void randomTest(){
+		salesService.randomTest();
+	}
+
+	@PostMapping("sale/randomTest/end")
+	void randomTestEnd(){
+		salesService.randomTestEnd();
+	}
 };
