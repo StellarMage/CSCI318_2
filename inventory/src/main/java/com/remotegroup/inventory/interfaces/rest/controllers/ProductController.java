@@ -62,10 +62,10 @@ public class ProductController {
 	}
 
 	//use case: Look up all parts by product
-	@GetMapping("/product/parts/{id}")
+	/*@GetMapping("/product/parts/{id}")
 	List<Part> getPartByProduct(@PathVariable String id){
 		return inventoryService.getPartByProduct(new ProductId(id));
-	}
+	}*/
 	
 	@GetMapping("/product/check/{itemId}")
 	boolean checkInventory(@PathVariable String itemId) {

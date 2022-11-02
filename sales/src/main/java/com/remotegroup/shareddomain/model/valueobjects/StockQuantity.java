@@ -14,7 +14,7 @@ public class StockQuantity implements Serializable{
 	
 	StockQuantity(){}
 	
-	public StockQuantity(@JsonProperty("stockQuantity") int id) {this.stockQuantity = id;}
+	public StockQuantity(@JsonProperty("value") int id) {this.stockQuantity = id;}
 	
 	public int get() {return this.stockQuantity;}
 	

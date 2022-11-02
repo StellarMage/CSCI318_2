@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class StockQuantity implements Serializable{
 
@@ -12,7 +14,7 @@ public class StockQuantity implements Serializable{
 	
 	StockQuantity(){}
 	
-	public StockQuantity(int id) {this.stockQuantity = id;}
+	public StockQuantity(@JsonProperty("value") int id) {this.stockQuantity = id;}
 	
 	public int get() {return this.stockQuantity;}
 	

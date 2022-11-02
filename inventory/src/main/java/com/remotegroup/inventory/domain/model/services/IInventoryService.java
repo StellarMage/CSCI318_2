@@ -19,7 +19,7 @@ public interface IInventoryService {
 	public abstract Product updateProduct(UpdateProductCommand c);
 	public abstract void deleteProduct(ProductId id);
 	public abstract Product getProduct(ProductId id);
-	public abstract List<Part> getPartByProduct(ProductId id);
+	//public abstract List<Part> getPartByProduct(ProductId id);
 	
 	public abstract List<Part> getParts();
 	public abstract Part createPart(CreatePartCommand c);

@@ -14,7 +14,7 @@ public class SupplierId implements Serializable {
 	
 	SupplierId(){}
 	
-	public SupplierId(@JsonProperty("productId") String id) {this.supplierId = id;}
+	public SupplierId(@JsonProperty("value") String id) {this.supplierId = id;}
 	
 	public String toString() {return this.supplierId;}
 	

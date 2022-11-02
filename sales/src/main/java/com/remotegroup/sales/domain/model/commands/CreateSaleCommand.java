@@ -1,5 +1,7 @@
 package com.remotegroup.sales.domain.model.commands;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CreateSaleCommand {
 
 	protected String saleId;
@@ -11,7 +13,7 @@ public class CreateSaleCommand {
 
 	public CreateSaleCommand() {}
 	
-	public CreateSaleCommand(String itemId, String itemName, String quantity, String dataTime, String productPrice) {
+	public CreateSaleCommand(@JsonProperty("productId") String itemId,@JsonProperty("name") String itemName,@JsonProperty("quantity") String quantity,@JsonProperty("dataTime") String dataTime,@JsonProperty("price") String productPrice) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.quantity = quantity;

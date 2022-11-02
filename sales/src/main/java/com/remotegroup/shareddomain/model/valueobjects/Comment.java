@@ -14,7 +14,7 @@ public class Comment implements Serializable{
 	
 	Comment(){}
 	
-	public Comment(@JsonProperty("comment") String id) {this.comment = id;}
+	public Comment(@JsonProperty("value") String id) {this.comment = id;}
 	
 	public String toString() {return this.comment;}
 	

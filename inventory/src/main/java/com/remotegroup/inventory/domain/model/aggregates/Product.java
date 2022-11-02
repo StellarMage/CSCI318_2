@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.remotegroup.inventory.domain.model.commands.CreateProductCommand;
 import com.remotegroup.inventory.domain.model.commands.UpdateProductCommand;
 import com.remotegroup.inventory.domain.model.valueobjects.Comment;
@@ -24,17 +25,17 @@ import com.remotegroup.inventory.domain.model.valueobjects.StockQuantity;
 public class Product extends AbstractAggregateRoot<Product>{
     private @Id @GeneratedValue Long id;
     
-    @Embedded
+    @Embedded @JsonProperty("productId")
     private ProductId productId;
-    @Embedded
+    @Embedded @JsonProperty("name")
     private Name name;
-    @Embedded
+    @Embedded @JsonProperty("price")
     private Price price;
-    @Embedded
+    @Embedded @JsonProperty("comment")
     private Comment comment;
-    @Embedded
-    private ComprisingPart[] comprisingParts; 
-    @Embedded
+    //@Embedded
+    //private ComprisingPart[] comprisingParts; 
+    @Embedded @JsonProperty("stockQuantity")
     private StockQuantity stockQuantity;
 
     private static final Logger log = LoggerFactory.getLogger(Product.class);
@@ -47,7 +48,7 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        populateComprisingParts(command.getComprisingParts());
+       // populateComprisingParts(command.getComprisingParts());
 
     }
     
@@ -56,11 +57,11 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        populateComprisingParts(command.getComprisingParts());
+        //populateComprisingParts(command.getComprisingParts());
 		return this;
     }
     
-    private void populateComprisingParts(String[][] c) {
+    /*private void populateComprisingParts(String[][] c) {
         comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
@@ -69,7 +70,7 @@ public class Product extends AbstractAggregateRoot<Product>{
             log.info("Long.parseLong: " + Long.parseLong(c[i][1]));
             log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
         }
-    }
+    }*/
     
     public Long getId(){
         return this.id;
@@ -98,12 +99,12 @@ public class Product extends AbstractAggregateRoot<Product>{
     public Comment setComment(Comment comment){
         return this.comment;
     }
-    public ComprisingPart[] getComprisingParts(){
+    /*public ComprisingPart[] getComprisingParts(){
         return this.comprisingParts;
     }
     public ComprisingPart[] setComprisingParts(ComprisingPart[] comprisingParts){
         return this.comprisingParts;
-    }
+    }*/
     public StockQuantity getStockQuantity(){
         return this.stockQuantity;
     }
@@ -122,7 +123,7 @@ public class Product extends AbstractAggregateRoot<Product>{
         && Objects.equals(this.name, product.name)
         && Objects.equals(this.price, product.price) 
         && Objects.equals(this.comment, product.comment)
-        && Objects.equals(this.comprisingParts, product.comprisingParts)
+        //&& Objects.equals(this.comprisingParts, product.comprisingParts)
         && Objects.equals(this.stockQuantity, product.stockQuantity);
     }
 
@@ -145,7 +146,7 @@ public class Product extends AbstractAggregateRoot<Product>{
         + ", name='" + this.name.getValue() + '\''
         + ", price='" + String.valueOf(this.price.getValue()) + '\''
         + ", comment='" + this.comment.getValue() + '\'' 
-        + ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
+        //+ ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
         + ", stockQuantity='" + this.stockQuantity.getValue() + '\''
         + '}';
     }

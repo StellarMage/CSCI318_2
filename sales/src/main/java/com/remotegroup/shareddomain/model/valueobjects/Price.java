@@ -14,7 +14,7 @@ public class Price implements Serializable{
 	
 	Price(){}
 	
-	public Price(@JsonProperty("price") String id) {this.price = id;}
+	public Price(@JsonProperty("value") String id) {this.price = id;}
 	
 	public String toString() {return this.price;}
 	

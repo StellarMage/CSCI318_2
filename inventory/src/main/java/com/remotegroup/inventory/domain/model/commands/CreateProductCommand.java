@@ -9,15 +9,15 @@ public class CreateProductCommand {
     private String name;
     private String price;
     private String comment;
-    private String[][] comprisingParts; // [ [partId, amount], ... ]
+    //private String[][] comprisingParts; // [ [partId, amount], ... ]
     private int stockQuantity;
 	private static final Logger log = LoggerFactory.getLogger(CreateProductCommand.class);
 
-    public CreateProductCommand(String name, String price, String comment, String[][] comprisingParts, int stockQuantity) {
+    public CreateProductCommand(String name, String price, String comment, /*String[][] comprisingParts,*/ int stockQuantity) {
 		this.name = name;
 		this.price = price;
         this.comment = comment;
-        this.comprisingParts = comprisingParts;
+        //this.comprisingParts = comprisingParts;
         this.stockQuantity = stockQuantity;
 	}
 
@@ -45,12 +45,12 @@ public class CreateProductCommand {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-    public String[][] getComprisingParts() {
+    /*public String[][] getComprisingParts() {
 		return comprisingParts;
 	}
 	public void setComprisingParts(String[][] comprisingParts) {
 		this.comprisingParts = comprisingParts;
-	}
+	}*/
     public int getStockQuantity() {
 		return stockQuantity;
 	}

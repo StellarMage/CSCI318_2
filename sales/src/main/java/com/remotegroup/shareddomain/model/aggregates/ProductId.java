@@ -1,5 +1,6 @@
 package com.remotegroup.shareddomain.model.aggregates;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Embeddable;

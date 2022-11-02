@@ -14,7 +14,7 @@ public class Name implements Serializable{
 	
 	Name(){}
 	
-	public Name(@JsonProperty("name") String id) {this.name = id;}
+	public Name(@JsonProperty("value") String id) {this.name = id;}
 	
 	public String toString() {return this.name;}
 	

@@ -103,11 +103,11 @@ public class InventoryService implements IInventoryService{
 		return product;
 	}*/
 
-	@Override
+	/*@Override
 	public List<Part> getPartByProduct(ProductId id){
 		Product p = getProduct(id);
 
-		ComprisingPart[] parts = p.getComprisingParts();
+		//ComprisingPart[] parts = p.getComprisingParts();
 
 		List<Part> pList = new ArrayList<Part>();
 		for(int c=0; c<parts.length; c++) {
@@ -116,7 +116,7 @@ public class InventoryService implements IInventoryService{
 		}
 		return pList;
 		
-	}
+	}*/
 
 	
 	//================================== Parts
@@ -173,7 +173,7 @@ public class InventoryService implements IInventoryService{
 				return true;
 			}else {
 				//check for all parts
-				ComprisingPart[] parts = p.getComprisingParts();
+				/*ComprisingPart[] parts = p.getComprisingParts();
 				for(int c=0; c<parts.length;c++) {
 					PartId partId = parts[c].getPart();
 					Long quantity = parts[c].getQuantity();
@@ -181,7 +181,7 @@ public class InventoryService implements IInventoryService{
 					if(part.getStockQuantity().get() < quantity) {
 						return false;
 					}
-				}
+				}*/
 				return true;
 			}
 		}catch(Exception e) {

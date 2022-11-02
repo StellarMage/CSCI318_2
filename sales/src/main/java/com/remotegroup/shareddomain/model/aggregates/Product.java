@@ -1,5 +1,6 @@
 package com.remotegroup.shareddomain.model.aggregates;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -24,23 +25,17 @@ import com.remotegroup.shareddomain.model.valueobjects.StockQuantity;
 public class Product extends AbstractAggregateRoot<Product>{
     private @Id @GeneratedValue Long id;
     
-    @Embedded
-    @JsonProperty("productId")
+    @Embedded @JsonProperty("productId")
     private ProductId productId;
-    @Embedded
-    @JsonProperty("name")
+    @Embedded @JsonProperty("name")
     private Name name;
-    @Embedded
-    @JsonProperty("price")
+    @Embedded @JsonProperty("price")
     private Price price;
-    @Embedded
-    @JsonProperty("comment")
+    @Embedded @JsonProperty("comment")
     private Comment comment;
-    @Embedded
-    @JsonProperty("comprisingParts")
-    private ComprisingPart[] comprisingParts; 
-    @Embedded
-    @JsonProperty("stockQuantity")
+    //@Embedded
+    //private ComprisingPart[] comprisingParts; 
+    @Embedded @JsonProperty("stockQuantity")
     private StockQuantity stockQuantity;
 
     private static final Logger log = LoggerFactory.getLogger(Product.class);
@@ -53,7 +48,7 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        this.comprisingParts = populateComprisingParts(command.getComprisingParts());
+       // populateComprisingParts(command.getComprisingParts());
 
     }
     
@@ -62,21 +57,20 @@ public class Product extends AbstractAggregateRoot<Product>{
 		this.price = new Price(command.getPrice());
         this.comment = new Comment(command.getComment());
         this.stockQuantity = new StockQuantity(command.getStockQuantity());
-        populateComprisingParts(command.getComprisingParts());
+        //populateComprisingParts(command.getComprisingParts());
 		return this;
     }
     
-    private ComprisingPart[] populateComprisingParts(String[][] c) {
-        ComprisingPart[] comprisingParts = new ComprisingPart[c.length];
+    /*private void populateComprisingParts(String[][] c) {
+        comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
             log.info("c: " + Arrays.deepToString(c));
-            log.info("PartId: " + c[i][0]);
-            log.info("Long.parseLong: " + c[i][1]);
+            log.info("PartId: " + new PartId(c[i][0]));
+            log.info("Long.parseLong: " + Long.parseLong(c[i][1]));
             log.info("comprisingParts: " + Arrays.deepToString(comprisingParts));
         }
-        return comprisingParts;
-    }
+    }*/
     
     public Long getId(){
         return this.id;
@@ -105,12 +99,12 @@ public class Product extends AbstractAggregateRoot<Product>{
     public Comment setComment(Comment comment){
         return this.comment;
     }
-    public ComprisingPart[] getComprisingParts(){
+    /*public ComprisingPart[] getComprisingParts(){
         return this.comprisingParts;
     }
     public ComprisingPart[] setComprisingParts(ComprisingPart[] comprisingParts){
         return this.comprisingParts;
-    }
+    }*/
     public StockQuantity getStockQuantity(){
         return this.stockQuantity;
     }
@@ -129,8 +123,16 @@ public class Product extends AbstractAggregateRoot<Product>{
         && Objects.equals(this.name, product.name)
         && Objects.equals(this.price, product.price) 
         && Objects.equals(this.comment, product.comment)
-        && Objects.equals(this.comprisingParts, product.comprisingParts)
+        //&& Objects.equals(this.comprisingParts, product.comprisingParts)
         && Objects.equals(this.stockQuantity, product.stockQuantity);
+    }
+
+    public boolean equals(ProductId id) {
+        if (this.productId == id)
+            return true;
+        if (!(id instanceof ProductId))
+            return false;
+        return Objects.equals(this.productId, id);
     }
 
     @Override
@@ -140,17 +142,11 @@ public class Product extends AbstractAggregateRoot<Product>{
 
     @Override
     public String toString() {
-        log.info("productId: " + this.productId);
-        log.info("name: " + this.name);
-        log.info("price: " + String.valueOf(this.price));
-        log.info("comment: " + this.comment);
-        log.info("comprisingParts: " + Arrays.deepToString(this.comprisingParts));
-        log.info("stockQuantity: " + this.stockQuantity);
         return "Product{" + "productId=" + this.productId.getValue() + '\''
         + ", name='" + this.name.getValue() + '\''
         + ", price='" + String.valueOf(this.price.getValue()) + '\''
         + ", comment='" + this.comment.getValue() + '\'' 
-        + ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
+        //+ ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
         + ", stockQuantity='" + this.stockQuantity.getValue() + '\''
         + '}';
     }

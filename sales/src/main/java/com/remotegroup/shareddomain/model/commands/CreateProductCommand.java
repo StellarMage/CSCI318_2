@@ -1,5 +1,7 @@
 package com.remotegroup.shareddomain.model.commands;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,5 +58,15 @@ public class CreateProductCommand {
 	}
 	public void setStockQuantity(int stockQuantity) {
 		this.stockQuantity = stockQuantity;
+    }
+	@Override
+    public String toString() {
+        return "Product{" + "productId=" + this.productId + '\''
+        + ", name='" + this.name + '\''
+        + ", price='" + String.valueOf(this.price) + '\''
+        + ", comment='" + this.comment + '\'' 
+        + ", comprisingParts='" + Arrays.deepToString(this.comprisingParts) + '\''
+        + ", stockQuantity='" + this.stockQuantity + '\''
+        + '}';
     }
 }

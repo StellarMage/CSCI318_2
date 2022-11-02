@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class Price implements Serializable{
 
@@ -12,7 +14,7 @@ public class Price implements Serializable{
 	
 	Price(){}
 	
-	public Price(String id) {this.price = id;}
+	public Price(@JsonProperty("value") String id) {this.price = id;}
 	
 	public String toString() {return this.price;}
 	
