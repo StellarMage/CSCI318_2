@@ -24,9 +24,6 @@ public class PartId implements Serializable{
 		return partId.equals(e.partId);
 	}
 	
-	public String getValue(){
-		return partId;
-	}
 
 	@Override
 	public int hashCode() {
