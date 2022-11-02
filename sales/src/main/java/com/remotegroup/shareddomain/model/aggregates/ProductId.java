@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class ProductId {
     
@@ -11,7 +13,7 @@ public class ProductId {
 	
 	ProductId(){}
 	
-	public ProductId(String id) {this.productId = id;}
+	public ProductId(@JsonProperty("value") String id) {this.productId = id;}
 	
 	public String toString() {return this.productId;}
 	

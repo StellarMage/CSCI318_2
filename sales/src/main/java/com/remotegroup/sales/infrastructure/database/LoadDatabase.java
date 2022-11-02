@@ -32,10 +32,6 @@ import com.remotegroup.shareddomain.model.valueobjects.SupplierId;
 
 @Configuration
 class LoadDatabase {
-
-  @Autowired Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-  @Autowired ObjectMapper mapper;
-  @Autowired Random random;
   
   @Autowired
   ISaleService service;
@@ -44,6 +40,9 @@ class LoadDatabase {
   CommandLineRunner initDatabase(BackOrderSaleRepository bRepository, InStoreSaleRepository iRepository, OnlineSaleRepository oRepository, 
 		  SaleRepository saRepository, StoreRepository stRepository, RestTemplateBuilder restTemplateBuilder) {
       RestTemplate restTemplate = restTemplateBuilder.build();
+      Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+      ObjectMapper mapper = new ObjectMapper();
+      Random random = new Random();
 
 	  return args -> {
 		  
@@ -52,21 +51,28 @@ class LoadDatabase {
 		  
 		  log.info("Preloading store:  "+service.createStore(c1));
 		  log.info("Preloading store:  "+service.createStore(c2));
+
+		  String url = "http://localhost:8081/products/ids";
+      JsonNode productIds = restTemplate.getForObject(url, JsonNode.class);
+      List<ProductId> ids = mapper.convertValue(productIds, new TypeReference<List<ProductId>>() {});
       
-			mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-			mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-		  String url = "http://localhost:8082/suppliers/ids";
-      JsonNode supplierIds = restTemplate.getForObject(url, JsonNode.class);
-      List<ProductId> ids = mapper.convertValue(supplierIds, new TypeReference<List<ProductId>>() {});
+      log.info("Preloading ids:  "+ ids);
+
       Integer min = 0;
       Integer max = ids.size() - 1;
-      ProductId rand1 = ids.get(random.nextInt(max - min) + min);
-      ProductId rand2 = ids.get(random.nextInt(max - min) + min);
+      Integer rand1 = random.nextInt(max - min) + min;
+      Integer rand2 = random.nextInt(max - min) + min;
 
-      String pUrl1 = "http://localhost:8081/product/" + rand1.toString();
-      String pUrl2 = "http://localhost:8081/product/" + rand2.toString();
+      log.info("Preloading Product:  " + rand1);
+		  log.info("Preloading Product:  " + rand2);
+
+      String pUrl1 = "http://localhost:8081/product/" + rand1;
+      String pUrl2 = "http://localhost:8081/product/" + rand2;
       Product prod1 = restTemplate.getForObject(pUrl1, Product.class);
       Product prod2 = restTemplate.getForObject(pUrl2, Product.class);
+
+      log.info("Preloading Product:  " + prod1);
+		  log.info("Preloading Product:  " + prod2);
 
       CreateSaleCommand c3 = new CreateSaleCommand(rand1.toString(), prod1.getName().toString(), "3", "31-10-2022", prod1.getPrice().toString());
 		  CreateSaleCommand c4 = new CreateSaleCommand(rand2.toString(), prod2.getName().toString(), "2", "31-10-2022", prod2.getPrice().toString());

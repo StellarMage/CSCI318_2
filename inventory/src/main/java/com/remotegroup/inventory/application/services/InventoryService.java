@@ -89,16 +89,22 @@ public class InventoryService implements IInventoryService{
 	}
 	
 	@Override
-	public List<String> getProductIds(){
-		List<String> ids = new ArrayList<String>();
+	public List<ProductId> getProductIds(){
+		List<ProductId> ids = new ArrayList<ProductId>();
 		List<Product> products = getProducts();
 		for(int i=0;i<products.size();i++) {
-			ids.add(products.get(i).getProductId().toString());
+			ids.add(products.get(i).getProductId());
 		}
 		return ids;
 	}
+
+	public Product getProduct(ProductId productId) {
+		List<Product> products = getProducts();
+        return products.stream()
+		.filter(p -> {return p.equals(productId);}).findAny().orElse(null);
+    }
 	
-	@Override
+	/*@Override
 	public Product getProduct(ProductId id) {
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withMatcher("productId", match->match.exact());
@@ -107,11 +113,11 @@ public class InventoryService implements IInventoryService{
 		pExample.setProductId(id);
 		Example<Product> example = Example.of(pExample, matcher);
 		
-		List<Product> returnProducts =  prRepo.findAll(example);
+		List<Product> returnProducts =  prRepo.findByProductId(example);
 		
 		Product product = returnProducts.get(0);
 		return product;
-	}
+	}*/
 
 	@Override
 	public List<Part> getPartByProduct(ProductId id){

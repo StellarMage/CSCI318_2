@@ -30,5 +30,5 @@ public interface IInventoryService {
 	
 	public abstract boolean checkInventory(ProductId itemId);
 	//public abstract void procurementRequest(BackOrderSale b);
-	List<String> getProductIds();
+	List<ProductId> getProductIds();
 }

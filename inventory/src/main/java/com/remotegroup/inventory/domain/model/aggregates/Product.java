@@ -61,7 +61,7 @@ public class Product extends AbstractAggregateRoot<Product>{
     }
     
     private void populateComprisingParts(String[][] c) {
-        comprisingParts = new ComprisingPart[c.length];
+        ComprisingPart[] comprisingParts = new ComprisingPart[c.length];
     	for(int i = 0; i < c.length; i++) {
         	comprisingParts[i] = new ComprisingPart(new PartId(c[i][0]), Long.parseLong(c[i][1]));
             log.info("c: " + Arrays.deepToString(c));
@@ -124,6 +124,14 @@ public class Product extends AbstractAggregateRoot<Product>{
         && Objects.equals(this.comment, product.comment)
         && Objects.equals(this.comprisingParts, product.comprisingParts)
         && Objects.equals(this.stockQuantity, product.stockQuantity);
+    }
+
+    public boolean equals(ProductId pId) {
+        if (this.productId == pId)
+            return true;
+        if (!(pId instanceof ProductId))
+            return false;
+        return Objects.equals(this.productId, pId);
     }
 
     @Override
