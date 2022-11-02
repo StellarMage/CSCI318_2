@@ -72,23 +72,17 @@ class LoadDatabase {
       log.info("Preloading ProductUrl:  " + pUrl1);
 		  log.info("Preloading ProductUrl:  " + pUrl2);
 
-      JsonNode jProd1 = restTemplate.getForObject(pUrl1, JsonNode.class);
+      Product prod1 = restTemplate.getForObject(pUrl1, Product.class);
+      Product prod2 = restTemplate.getForObject(pUrl2, Product.class);
+
+      /*JsonNode jProd1 = restTemplate.getForObject(pUrl1, JsonNode.class);
       JsonNode jProd2 = restTemplate.getForObject(pUrl2, JsonNode.class);
 
       log.info("jProd1: " + jProd1);
       log.info("jProd2: " + jProd2);
 
-      //String jsonString1 = mapper.writeValueAsString(jProd1);
-      //String jsonString2 = mapper.writeValueAsString(jProd1);
-
-      //log.info("JSON: " + jsonString1);
-      //log.info("JSON: " + jsonString2);
-
-      //log.info("Preloading prod: " + restTemplate.getForObject(pUrl1, Product.class));
-      //log.info("Preloading prod: " + restTemplate.getForObject(pUrl2, Product.class));
-
       Product prod1 = mapper.convertValue(jProd1, new TypeReference<Product>() {});
-      Product prod2 = mapper.convertValue(jProd2, new TypeReference<Product>() {});
+      Product prod2 = mapper.convertValue(jProd2, new TypeReference<Product>() {});*/
 
       log.info("Preloading Product:  " + prod1);
 		  log.info("Preloading Product:  " + prod2);

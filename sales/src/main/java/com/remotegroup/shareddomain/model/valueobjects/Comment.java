@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Embeddable
 public class Comment implements Serializable{
 
+	@JsonProperty("value")
 	private String comment;
 	
 	Comment(){}

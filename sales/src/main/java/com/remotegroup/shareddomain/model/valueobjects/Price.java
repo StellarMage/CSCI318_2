@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Embeddable
 public class Price implements Serializable{
 
+	@JsonProperty("value")
 	private String price;
 	
 	Price(){}
