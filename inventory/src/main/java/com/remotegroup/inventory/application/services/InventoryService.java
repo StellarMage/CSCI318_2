@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -34,6 +36,7 @@ public class InventoryService implements IInventoryService{
 	//@Autowired private final PartModelAssembler prAssembler;
 	@Autowired private final PartRepository paRepo;
 	//@Autowired private final PartModelAssembler paAssembler;
+	private static final Logger log = LoggerFactory.getLogger(InventoryService.class);
 	
 	InventoryService(ProductRepository prRepo, PartRepository paRepo){
 		this.paRepo = paRepo;
@@ -100,8 +103,10 @@ public class InventoryService implements IInventoryService{
 
 	public Product getProduct(ProductId productId) {
 		List<Product> products = getProducts();
-        return products.stream()
+		Product resultProduct = products.stream()
 		.filter(p -> {return p.equals(productId);}).findAny().orElse(null);
+        log.info("Product: " + resultProduct);
+		return resultProduct;
     }
 	
 	/*@Override

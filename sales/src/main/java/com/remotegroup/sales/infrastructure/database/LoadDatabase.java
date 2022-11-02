@@ -60,16 +60,22 @@ class LoadDatabase {
 
       Integer min = 0;
       Integer max = ids.size() - 1;
-      Integer rand1 = random.nextInt(max - min) + min;
-      Integer rand2 = random.nextInt(max - min) + min;
+      ProductId rand1 = ids.get(random.nextInt(max - min) + min);
+      ProductId rand2 = ids.get(random.nextInt(max - min) + min);
 
-      log.info("Preloading Product:  " + rand1);
-		  log.info("Preloading Product:  " + rand2);
+      log.info("Preloading ProductId:  " + rand1);
+		  log.info("Preloading ProductId:  " + rand2);
 
-      String pUrl1 = "http://localhost:8081/product/" + rand1;
-      String pUrl2 = "http://localhost:8081/product/" + rand2;
-      Product prod1 = restTemplate.getForObject(pUrl1, Product.class);
-      Product prod2 = restTemplate.getForObject(pUrl2, Product.class);
+      String pUrl1 = "http://localhost:8081/product/" + rand1.toString();
+      String pUrl2 = "http://localhost:8081/product/" + rand2.toString();
+
+      log.info("Preloading ProductUrl:  " + pUrl1);
+		  log.info("Preloading ProductUrl:  " + pUrl2);
+
+      JsonNode jProd1 = restTemplate.getForObject(pUrl1, JsonNode.class);
+      JsonNode jProd2 = restTemplate.getForObject(pUrl2, JsonNode.class);
+      Product prod1 = mapper.convertValue(jProd1, new TypeReference<Product>() {});
+      Product prod2 = mapper.convertValue(jProd2, new TypeReference<Product>() {});
 
       log.info("Preloading Product:  " + prod1);
 		  log.info("Preloading Product:  " + prod2);

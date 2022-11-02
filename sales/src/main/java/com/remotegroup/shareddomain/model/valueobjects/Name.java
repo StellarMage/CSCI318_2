@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class Name implements Serializable{
 
@@ -12,7 +14,7 @@ public class Name implements Serializable{
 	
 	Name(){}
 	
-	public Name(String id) {this.name = id;}
+	public Name(@JsonProperty("name") String id) {this.name = id;}
 	
 	public String toString() {return this.name;}
 	
