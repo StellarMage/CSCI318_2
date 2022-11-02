@@ -62,7 +62,7 @@ public class SaleService implements ISaleService{
 	@Autowired private final OnlineSaleRepository onlineSaleRepository;
 	@Autowired private final BackOrderSaleRepository backOrderSaleRepository;
 	@Autowired private final StoreRepository storeRepository;
-	@Autowired private final ISaleService service;
+	private ISaleService service;
 	private final RestTemplate restTemplate;
 	@Autowired private final  KafkaController controller;
 	@Autowired private final  KafkaListeners kafkaListeners;
@@ -73,7 +73,7 @@ public class SaleService implements ISaleService{
  	private Random random = new Random();
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(0);
 	
-	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, StoreRepository st, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners, ISaleService service){
+	SaleService(SaleRepository saleRepository, InStoreSaleRepository i, StoreRepository st, OnlineSaleRepository o, BackOrderSaleRepository b, RestTemplateBuilder restTemplateBuilder, KafkaController controller, KafkaListeners kafkaListeners){
 		this.saleRepository = saleRepository;
 		this.inStoreSaleRepository = i;
 		this.storeRepository = st;
@@ -82,7 +82,6 @@ public class SaleService implements ISaleService{
 		this.restTemplate = restTemplateBuilder.build();
 		this.controller = controller;
 		this.kafkaListeners = kafkaListeners;
-		this.service = service;
 	}
 	
 	@Override
