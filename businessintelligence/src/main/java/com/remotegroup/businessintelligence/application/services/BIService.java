@@ -30,15 +30,7 @@ public class BIService implements IBIService{
 	
 	@Override
 	public void deleteBusinessIntelligence(BusinessIntelligenceId id){
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("businessIntelligenceId", match->match.exact());
-		BusinessIntelligence bIExample = new BusinessIntelligence();
-		bIExample.setBusinessIntelligenceId(id);
-		Example<BusinessIntelligence> example = Example.of(bIExample, matcher);
-		
-		//store businessIntelligence in object
-		List<BusinessIntelligence> returnBusinessIntelligences =  bIRepo.findAll(example);
-		BusinessIntelligence BusinessIntelligence = returnBusinessIntelligences.get(0);
+		BusinessIntelligence BusinessIntelligence = getBusinessIntelligenceById(id);
 		
 		bIRepo.delete(BusinessIntelligence);
 	}
@@ -61,16 +53,7 @@ public class BIService implements IBIService{
 
 	@Override
 	public BusinessIntelligence replaceBusinessIntelligence(UpdateBusinessIntelligenceCommand bI){
-		//find the businessIntelligence by businessIntelligenceId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("businessIntelligenceId", match->match.exact());
-		BusinessIntelligence bIExample = new BusinessIntelligence();
-		bIExample.setBusinessIntelligenceId(new BusinessIntelligenceId(bI.getBusinessIntelligenceId()));
-		Example<BusinessIntelligence> example = Example.of(bIExample, matcher);
-		
-		//store businessIntelligence in object
-		List<BusinessIntelligence> returnBusinessIntelligences =  bIRepo.findAll(example);
-		BusinessIntelligence businessIntelligence = returnBusinessIntelligences.get(0);
+		BusinessIntelligence businessIntelligence = getBusinessIntelligenceById(new BusinessIntelligenceId(bI.getBusinessIntelligenceId()));
 		
 		//update businessIntelligence
 		businessIntelligence.updateBusinessIntelligence(bI);
@@ -81,17 +64,8 @@ public class BIService implements IBIService{
 	
 	@Override
 	public BusinessIntelligence getBusinessIntelligenceById(BusinessIntelligenceId id){
-		//find the businessIntelligence by businessIntelligenceId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-		.withMatcher("businessIntelligenceId", match->match.exact());
-		BusinessIntelligence bIExample = new BusinessIntelligence();
-		bIExample.setBusinessIntelligenceId(id);
-		Example<BusinessIntelligence> example = Example.of(bIExample, matcher);
-
-		//store businessIntelligence in object
-		List<BusinessIntelligence> returnBusinessIntelligences =  bIRepo.findAll(example);
-		BusinessIntelligence BusinessIntelligence = returnBusinessIntelligences.get(0);
-		return BusinessIntelligence;
+		List<BusinessIntelligence> bis = getBusinessIntelligences();
+		return bis.stream().filter(bi->{return bi.getBusinessIntelligenceId().equals(id);}).findAny().orElseGet(null);
 	}
 
 	@Override

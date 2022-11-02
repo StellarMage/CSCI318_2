@@ -32,7 +32,7 @@ public interface IProcurementService {
 	public abstract Contact updateContact (UpdateContactCommand c);
 	
 	public abstract CollectionModel<EntityModel<Contact>> getContacts();
-	public abstract EntityModel<Contact> getContact(ContactId id);
+	public abstract Contact getContact(ContactId id);
 	List<SupplierId> getSupplierIds();
 
 	//public abstract void procurementListener(String data);

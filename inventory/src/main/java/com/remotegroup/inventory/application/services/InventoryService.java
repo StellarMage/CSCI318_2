@@ -58,35 +58,14 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public Product updateProduct(UpdateProductCommand command) {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("productId", match->match.exact());
-		
-		Product pExample = new Product();
-		pExample.setProductId(new ProductId(command.getProductId()));
-		Example<Product> example = Example.of(pExample, matcher);
-		
-		List<Product> returnProducts =  prRepo.findAll(example);
-		
-		Product product = returnProducts.get(0);
+		Product product = getProduct(new ProductId(command.getProductId()));
 		product.updateProduct(command);
 		return prRepo.save(product);
 	}
 
 	@Override
 	public void deleteProduct(ProductId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("productId", match->match.exact());
-		
-		Product pExample = new Product();
-		pExample.setProductId(id);
-		Example<Product> example = Example.of(pExample, matcher);
-		
-		List<Product> returnProducts =  prRepo.findAll(example);
-		
-		Product product = returnProducts.get(0);
+		Product product = getProduct(id);
 		prRepo.delete(product);
 		
 	}
@@ -158,16 +137,7 @@ public class InventoryService implements IInventoryService{
 	@Override
 	public Part updatePart(UpdatePartCommand command) {
 		
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("partId", match->match.exact());
-		
-		Part sExample = new Part();
-		sExample.setPartId(new PartId(command.getPartId()));
-		Example<Part> example = Example.of(sExample, matcher);
-		
-		List<Part> returnParts =  paRepo.findAll(example);
-		
-		Part part = returnParts.get(0);
+		Part part = getPart(new PartId(command.getPartId()));
 		
 		part.updatePart(command);
 		return paRepo.save(part);
@@ -175,16 +145,8 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public void deletePart(PartId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("partId", match->match.exact());
 		
-		Part sExample = new Part();
-		sExample.setPartId(id);
-		Example<Part> example = Example.of(sExample, matcher);
-		
-		List<Part> returnParts =  paRepo.findAll(example);
-		
-		Part part = returnParts.get(0);
+		Part part = getPart(id);
 		
 		paRepo.delete(part);
 		
@@ -192,17 +154,9 @@ public class InventoryService implements IInventoryService{
 
 	@Override
 	public Part getPart(PartId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("partId", match->match.exact());
-		
-		Part sExample = new Part();
-		sExample.setPartId(id);
-		Example<Part> example = Example.of(sExample, matcher);
-		
-		List<Part> returnParts =  paRepo.findAll(example);
-		
-		Part part = returnParts.get(0);
-		return part;
+		List<Part> pt = getParts();
+        return pt.stream()
+		.filter(p -> {return p.equals(id);}).findAny().orElse(null);
 	}
 	
 	@Override

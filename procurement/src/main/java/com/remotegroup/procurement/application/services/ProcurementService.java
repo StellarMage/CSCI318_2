@@ -44,16 +44,7 @@ public class ProcurementService implements IProcurementService{
 	
 	@Override
 	public void deleteSupplier(SupplierId id) {
-		//find the supplier by supplierId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("supplierId", match->match.exact());
-		Supplier sExample = new Supplier();
-		sExample.setSupplierId(id);
-		Example<Supplier> example = Example.of(sExample, matcher);
-		
-		//store supplier in object
-		List<Supplier> returnSuppliers =  sRepo.findAll(example);
-		Supplier supplier = returnSuppliers.get(0);
+		Supplier supplier = getSupplier(id);
 		
 		sRepo.delete(supplier);
 	}
@@ -83,17 +74,7 @@ public class ProcurementService implements IProcurementService{
 
 	@Override
 	public Supplier updateSupplier(UpdateSupplierCommand updateSupplierCommand) {
-		
-		//find the supplier by supplierId
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("supplierId", match->match.exact());
-		Supplier sExample = new Supplier();
-		sExample.setSupplierId(new SupplierId(updateSupplierCommand.getSupplierId()));
-		Example<Supplier> example = Example.of(sExample, matcher);
-		
-		//store supplier in object
-		List<Supplier> returnSuppliers =  sRepo.findAll(example);
-		Supplier supplier = returnSuppliers.get(0);
+		Supplier supplier = getSupplier(new SupplierId(updateSupplierCommand.getSupplierId()));
 		
 		//update supplier
 		supplier.updateSupplier(updateSupplierCommand);
@@ -104,17 +85,9 @@ public class ProcurementService implements IProcurementService{
 
 	@Override
 	public Supplier getSupplier(SupplierId id) {
-			//find the supplier by supplierId
-			ExampleMatcher matcher = ExampleMatcher.matching()
-					.withMatcher("supplierId", match->match.exact());
-			Supplier sExample = new Supplier();
-			sExample.setSupplierId(id);
-			Example<Supplier> example = Example.of(sExample, matcher);
-			
-			//store supplier in object
-			List<Supplier> returnSuppliers =  sRepo.findAll(example);
-			Supplier supplier = returnSuppliers.get(0);
-			return supplier;
+		List<Supplier> sl = getSuppliers();
+		return sl.stream().filter(s-> {return s.getSupplierId().equals(id);}).findAny().orElse(null);
+	
 			
 	}
 
@@ -122,14 +95,7 @@ public class ProcurementService implements IProcurementService{
 	
 	@Override
 	public void deleteContact(ContactId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("contactId", match->match.exact());
-		Contact sExample = new Contact();
-		sExample.setContactId(id);
-		Example<Contact> example = Example.of(sExample, matcher);
-		
-		List<Contact> returnContacts =  cRepo.findAll(example);
-		Contact contact = returnContacts.get(0);
+		Contact contact = getContact(id);
 		cRepo.delete(contact);
 		
 	}
@@ -153,14 +119,7 @@ public class ProcurementService implements IProcurementService{
 
 	@Override
 	public Contact updateContact(UpdateContactCommand command) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("contactId", match->match.exact());
-		Contact sExample = new Contact();
-		sExample.setContactId(new ContactId(command.getContactId()));
-		Example<Contact> example = Example.of(sExample, matcher);
-		
-		List<Contact> returnContacts =  cRepo.findAll(example);
-		Contact contact = returnContacts.get(0);
+		Contact contact = getContact(new ContactId(command.getContactId()));
 		
 		contact.updateContact(command);
 		
@@ -168,16 +127,10 @@ public class ProcurementService implements IProcurementService{
 	}
 
 	@Override
-	public EntityModel<Contact> getContact(ContactId id) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withMatcher("contactId", match->match.exact());
-		Contact sExample = new Contact();
-		sExample.setContactId(id);
-		Example<Contact> example = Example.of(sExample, matcher);
-		
-		List<Contact> returnContacts =  cRepo.findAll(example);
-		Contact contact = returnContacts.get(0);
-			return cAssembler.toModel(contact);
+	public Contact getContact(ContactId id) {
+		List<Contact> sl = getContacts().getContent().stream().map(e -> { return e.getContent();}).collect(Collectors.toList());
+		return sl.stream().filter(s-> {return s.getContactId().equals(id);}).findAny().orElse(null);
+	
 	}
 
 	/*
