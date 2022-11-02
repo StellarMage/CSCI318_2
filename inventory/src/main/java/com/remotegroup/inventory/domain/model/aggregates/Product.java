@@ -126,12 +126,12 @@ public class Product extends AbstractAggregateRoot<Product>{
         && Objects.equals(this.stockQuantity, product.stockQuantity);
     }
 
-    public boolean equals(ProductId pId) {
-        if (this.productId == pId)
+    public boolean equals(ProductId id) {
+        if (this.productId == id)
             return true;
-        if (!(pId instanceof ProductId))
+        if (!(id instanceof ProductId))
             return false;
-        return Objects.equals(this.productId, pId);
+        return Objects.equals(this.productId, id);
     }
 
     @Override
